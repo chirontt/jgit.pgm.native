@@ -1,7 +1,6 @@
 {
   "resources":{
   "includes":[
-    {"pattern":"\\Qjetty-dir.css\\E"}, 
     {"pattern":"\\QMETA-INF/services/java.nio.file.spi.FileSystemProvider\\E"}, 
     {"pattern":"\\QMETA-INF/services/org.apache.sshd.server.subsystem.SubsystemFactory\\E"}, 
     {"pattern":"\\QMETA-INF/services/org.eclipse.jetty.http.HttpFieldPreEncoder\\E"}, 
@@ -9,6 +8,7 @@
     {"pattern":"\\QMETA-INF/services/org.eclipse.jgit.lib.GpgSigner\\E"}, 
     {"pattern":"\\QMETA-INF/services/org.eclipse.jgit.pgm.TextBuiltin\\E"}, 
     {"pattern":"\\QMETA-INF/services/org.eclipse.jgit.transport.SshSessionFactory\\E"}, 
+    {"pattern":"\\Qjetty-dir.css\\E"}, 
     {"pattern":"\\Qlog4j.properties\\E"}, 
     {"pattern":"\\Qmozilla/public-suffix-list.txt\\E"}, 
     {"pattern":"\\Qorg/apache/http/client/version.properties\\E"}, 
@@ -20,6 +20,9 @@
     {"pattern":"\\Qorg/slf4j/impl/StaticLoggerBinder.class\\E"}
   ]},
   "bundles":[
+    {"name":"com.sun.swing.internal.plaf.basic.resources.basic"}, 
+    {"name":"com.sun.swing.internal.plaf.metal.resources.metal"}, 
+    {"name":"org.eclipse.jgit.awtui.UIText"}, 
     {"name":"org.eclipse.jgit.gitrepo.internal.RepoText"}, 
     {"name":"org.eclipse.jgit.gpg.bc.internal.BCText"}, 
     {"name":"org.eclipse.jgit.internal.JGitText"}, 
@@ -30,6 +33,7 @@
     {"name":"org.eclipse.jgit.pgm.internal.CLIText"}, 
     {"name":"org.eclipse.jgit.transport.http.apache.internal.HttpApacheText"}, 
     {"name":"org.kohsuke.args4j.Messages"}, 
-    {"name":"org.kohsuke.args4j.spi.Messages"}
+    {"name":"org.kohsuke.args4j.spi.Messages"}, 
+    {"name":"sun.awt.resources.awt"}
   ]
 }

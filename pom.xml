@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.chirontt</groupId>
+    <artifactId>jgit.pgm.native</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>jgit</name> <!-- name of the resulting native executable -->
+    <description>JGit PGM native executable built by GraalVM</description>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <client.maven.plugin.version>0.1.39</client.maven.plugin.version> <!-- requires GraalVM 21.1+ -->
+        <jgit.release.version>5.11.0.202103091610-r</jgit.release.version>
+        <graalvm.version>21.1.0</graalvm.version>
+        <xz.version>1.8</xz.version>
+        <jgit.mainClass>org.eclipse.jgit.pgm.Main</jgit.mainClass>
+        <jgit.args></jgit.args>
+        <!-- system properties for the application when run by exec:exec command;
+             can be specified on the command line with -Dsys.props="..."
+        -->
+        <sys.props></sys.props>
+        <run.time.init>org.eclipse.jgit.internal.storage.file.WindowCache,org.eclipse.jgit.lib.internal.WorkQueue,org.eclipse.jgit.lib.RepositoryCache,org.eclipse.jgit.transport.HttpAuthMethod,org.eclipse.jgit.util.FileUtils</run.time.init>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.pgm</artifactId>
+            <version>${jgit.release.version}</version>
+        </dependency>
+        <!-- optional, but required by GraalVM native-image build -->
+        <dependency>
+            <groupId>org.tukaani</groupId>
+            <artifactId>xz</artifactId>
+            <version>${xz.version}</version>
+        </dependency>
+        <!-- for compiling GraalVM substitution classes -->
+        <dependency>
+            <groupId>org.graalvm.nativeimage</groupId>
+            <artifactId>svm</artifactId>
+            <version>${graalvm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <!-- GraalVM's agent to generate (or merge with) native-image configuration files -->
+                        <!-- argument>-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image</argument -->
+                        <argument>${sys.props}</argument>
+                        <argument>-classpath</argument>
+                        <classpath/>
+                        <argument>${jgit.mainClass}</argument>
+                        <argument>"${jgit.args}"</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.gluonhq</groupId>
+                <artifactId>client-maven-plugin</artifactId>
+                <version>${client.maven.plugin.version}</version>
+                <configuration>
+                    <mainClass>${jgit.mainClass}</mainClass>
+                    <nativeImageArgs>
+                        <nativeImageArg>--initialize-at-run-time=${run.time.init}</nativeImageArg>
+                    </nativeImageArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

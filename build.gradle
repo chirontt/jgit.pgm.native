@@ -13,9 +13,7 @@ group = 'com.github.chirontt'
 description = 'JGit PGM native executable built by GraalVM'
 
 ext {
-    //main class suitable for GraalVM native image build
-    //(replacing the original org.eclipse.jgit.pgm.Main class)
-    mainClassName = 'org.eclipse.jgit.pgm.NativeMain'
+    mainClassName = 'org.eclipse.jgit.pgm.Main'
     jgitReleaseVersion = '5.11.0.202103091610-r'
     graalvmVersion = '21.1.0'
     xzVersion = '1.8'
@@ -31,29 +29,11 @@ compileJava {
     options.encoding = 'UTF-8'
 }
 
-configurations {
-    initialPGMConfig
-}
-
 dependencies {
-    //initial classpath configuration for JGit PGM as fetched from Maven Central
-    //(excluding the JGit UI module which uses AWT/Swing classes)
-    initialPGMConfig("org.eclipse.jgit:org.eclipse.jgit.pgm:$jgitReleaseVersion") {
-        exclude group: 'org.eclipse.jgit', module: 'org.eclipse.jgit.ui'
-    }
-    //optional, but required by GraalVM native-image build
-    initialPGMConfig "org.tukaani:xz:$xzVersion"
+    implementation "org.eclipse.jgit:org.eclipse.jgit.pgm:$jgitReleaseVersion"
 
-    //implementation config is the above initialPGMConfig but excluding the original PGM module...
-    //(as the original PGM module contains references to AWT/Swing classes)
-    configurations.initialPGMConfig.resolvedConfiguration.resolvedArtifacts.forEach {
-        if (it.moduleVersion.id.name != 'org.eclipse.jgit.pgm') {
-            implementation "${it.moduleVersion.id.group}:${it.moduleVersion.id.name}:${it.moduleVersion.id.version}"
-        }
-    }
-    //...and replacing it with our modified PGM module suitable for GraalVM native image build
-    //(i.e. no AWT/Swing classes referenced)
-    implementation files("lib/org.eclipse.jgit.pgm-${jgitReleaseVersion}-MODIFIED.jar")
+    //optional, but required by GraalVM native-image build
+    implementation "org.tukaani:xz:$xzVersion"
 
     //for compiling GraalVM substitution classes
     compileOnly "org.graalvm.nativeimage:svm:$graalvmVersion"
@@ -65,6 +45,10 @@ application {
 }
 
 run {
+    //get system properties specified from the command line (for debugging, etc.)
+    //and pass them on to the running application's JVM
+    systemProperties = System.getProperties()
+
     //use the following jvmArgs for as many different run scenarios as possible,
     //and for all the code-execution paths as much as possible,
     //to generate (or merge with) the GraalVM native-image configuration files
@@ -76,17 +60,7 @@ run {
 
 gluonClient {
     //packages/classes to be initialized at native image build time
-    def buildTimeInitClasses = [
-        'com.google.gson',
-        'com.sun.beans.introspect.PropertyInfo',
-        'com.sun.beans.introspect.ClassInfo',
-        'java.beans.Introspector',
-        'org.apache.log4j',
-        'org.apache.sshd',
-        'org.eclipse.jetty',
-        'org.eclipse.jgit',
-        'org.slf4j',
-    ]
+    def buildTimeInitClasses = file('src/main/resources/META-INF/substrate/config/initbuildtime').getText('UTF-8').trim()
 
     //packages/classes to be initialized at native image run time
     def runTimeInitClasses = [
@@ -98,10 +72,10 @@ gluonClient {
     ]
 
     compilerArgs = [
-        '--initialize-at-build-time=' + buildTimeInitClasses.join(','),
+        '--initialize-at-build-time=' + buildTimeInitClasses,
         '--initialize-at-run-time=' + runTimeInitClasses.join(','),
         '--report-unsupported-elements-at-runtime',
-//        '--allow-incomplete-classpath',
+        '-Djava.awt.headless=false',
     ]
 }
 

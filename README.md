@@ -18,18 +18,13 @@ This project aims to produce platform-specific, native executable `jgit` of the 
 using the [GraalVM native-image](https://www.graalvm.org/reference-manual/native-image) utility,
 complementing the shell archive distribution.
 
-Gradle build script is provided for building the project. The JGit version used here is 5.11.0.
+Gradle and Maven build scripts are provided for building the project. The JGit version used here is 5.11.0.
 
 ## Caveat
 
-The original org.eclipse.jgit.pgm jar package, as distributed from
-[Maven Central](https://repo1.maven.org/maven2/org/eclipse/jgit/org.eclipse.jgit.pgm/5.11.0.202103091610-r/org.eclipse.jgit.pgm-5.11.0.202103091610-r.jar),
-can't be used by the
-GraalVM native-image utility, as it contains references to AWT/Swing classes which are not (yet)
-supported for native image generation.
-
-Instead, a modified org.eclipse.jgit.pgm jar file in the `lib` folder is used in this project,
-as detailed in [lib/README.md](lib).
+Starting with GraalVM 21.1.0 version, AWT/Swing classes are supported in the native-image compilation,
+but the resulting executable is still not working properly. Thus the `jgit glog` command doesn't work
+in the resulting `jgit` native image, even though there are no compile errors during the build.
 
 ## Build pre-requisites
 
@@ -43,6 +38,10 @@ from Gluon to build the native executable from Gradle with GraalVM.
 
 The GraalVM native-image utility will use the configuration files in
 `src/main/resources/META-INF/native-image` folder to assist in the native image generation.
+
+Gluon also provides the [client-maven-plugin](https://github.com/gluonhq/client-maven-plugin)
+which is used in this project's Maven build script and works similarly to the above
+client-gradle-plugin.
 
 ## Gradle build tasks
 
@@ -63,7 +62,7 @@ The resulting `jgit` executable file is:
 
 	build/client/x86_64-linux/jgit
 
-(or if building on a Windows machine:
+(or if building on a Windows machine, the executable file is:
 
 	build\client\x86_64-windows\jgit.exe
 
@@ -85,12 +84,54 @@ which can then be run directly (with relevant parameters):
 
 )
 
+## Maven build tasks
+
+To compile and run the JGit PGM in standard JVM with Maven, execute the
+`compile` then `exec:exec` task with relevant parameters as needed:
+
+	mvnw compile
+	mvnw exec:exec -Djgit.args="--version"
+	mvnw exec:exec -Djgit.args="\"ls-remote <some-repo-url>\""
+	mvnw exec:exec -Djgit.args="\"clone <some-repo-url>\""
+	etc.
+
+To produce a native executable, execute the `client:build` task:
+
+	mvnw client:build
+
+The `client:build` task would take a while to compile the application and link into an executable file.
+The resulting `jgit` executable file is:
+
+	target/client/x86_64-linux/jgit
+
+(or if building on a Windows machine, the executable file is:
+
+	target\client\x86_64-windows\jgit.exe
+
+)
+
+which can then be run directly (with relevant parameters):
+
+	./target/client/x86_64-linux/jgit --version
+	./target/client/x86_64-linux/jgit ls-remote <some-repo-url>
+	./target/client/x86_64-linux/jgit clone <some-repo-url>
+	etc.
+
+(or if building on a Windows machine:
+
+	target\client\x86_64-windows\jgit.exe --version
+	target\client\x86_64-windows\jgit.exe ls-remote <some-repo-url>
+	target\client\x86_64-windows\jgit.exe clone <some-repo-url>
+	etc.
+
+)
+
 ## Compressed executable
 
-The resulting `jgit` native executable can be further reduced in size via compression,
-using the [UPX](https://upx.github.io) utility, as described
-[here](https://medium.com/graalvm/compressed-graalvm-native-images-4d233766a214).
+The resulting `jgit` native executable, whether produced by Gradle or Maven build script,
+can be further reduced in size via compression, using the [UPX](https://upx.github.io) utility,
+as described [here](https://medium.com/graalvm/compressed-graalvm-native-images-4d233766a214).
 
 As an example, the resulting `jgit.exe` native application file produced in Windows is
-normally 82MB in size, but is compressed to 22MB with the UPX command: `upx --best jgit.exe`
+normally 99MB in size, but is compressed to 26MB with the UPX command: `upx --best jgit.exe`
 

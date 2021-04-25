@@ -1,2 +1,402 @@
 [
+{
+  "name":"java.awt.AWTEvent",
+  "fields":[
+    {"name":"bdata"}, 
+    {"name":"consumed"}, 
+    {"name":"id"}
+  ]
+},
+{
+  "name":"java.awt.AlphaComposite",
+  "fields":[
+    {"name":"extraAlpha"}, 
+    {"name":"rule"}
+  ]
+},
+{
+  "name":"java.awt.Color",
+  "methods":[{"name":"getRGB","parameterTypes":[] }]
+},
+{
+  "name":"java.awt.Component",
+  "fields":[
+    {"name":"appContext"}, 
+    {"name":"background"}, 
+    {"name":"cursor"}, 
+    {"name":"enabled"}, 
+    {"name":"focusable"}, 
+    {"name":"foreground"}, 
+    {"name":"graphicsConfig"}, 
+    {"name":"height"}, 
+    {"name":"parent"}, 
+    {"name":"peer"}, 
+    {"name":"visible"}, 
+    {"name":"width"}, 
+    {"name":"x"}, 
+    {"name":"y"}
+  ],
+  "methods":[
+    {"name":"getFont_NoClientCode","parameterTypes":[] }, 
+    {"name":"getLocationOnScreen_NoTreeLock","parameterTypes":[] }, 
+    {"name":"getToolkitImpl","parameterTypes":[] }, 
+    {"name":"isEnabledImpl","parameterTypes":[] }
+  ]
+},
+{
+  "name":"java.awt.Container",
+  "fields":[{"name":"layoutMgr"}]
+},
+{
+  "name":"java.awt.Cursor",
+  "fields":[
+    {"name":"pData"}, 
+    {"name":"type"}
+  ],
+  "methods":[{"name":"setPData","parameterTypes":["long"] }]
+},
+{
+  "name":"java.awt.Dialog",
+  "fields":[
+    {"name":"title"}, 
+    {"name":"undecorated"}
+  ]
+},
+{
+  "name":"java.awt.Dimension",
+  "fields":[
+    {"name":"height"}, 
+    {"name":"width"}
+  ]
+},
+{
+  "name":"java.awt.Font",
+  "fields":[
+    {"name":"name"}, 
+    {"name":"pData"}, 
+    {"name":"size"}, 
+    {"name":"style"}
+  ],
+  "methods":[
+    {"name":"getFont","parameterTypes":["java.lang.String"] }, 
+    {"name":"getFontPeer","parameterTypes":[] }
+  ]
+},
+{
+  "name":"java.awt.FontMetrics",
+  "fields":[{"name":"font"}],
+  "methods":[{"name":"getHeight","parameterTypes":[] }]
+},
+{
+  "name":"java.awt.Frame",
+  "fields":[{"name":"undecorated"}]
+},
+{
+  "name":"java.awt.Insets",
+  "fields":[
+    {"name":"bottom"}, 
+    {"name":"left"}, 
+    {"name":"right"}, 
+    {"name":"top"}
+  ],
+  "methods":[{"name":"<init>","parameterTypes":["int","int","int","int"] }]
+},
+{
+  "name":"java.awt.Point",
+  "fields":[
+    {"name":"x"}, 
+    {"name":"y"}
+  ],
+  "methods":[{"name":"<init>","parameterTypes":["int","int"] }]
+},
+{
+  "name":"java.awt.Rectangle",
+  "fields":[
+    {"name":"height"}, 
+    {"name":"width"}, 
+    {"name":"x"}, 
+    {"name":"y"}
+  ],
+  "methods":[{"name":"<init>","parameterTypes":["int","int","int","int"] }]
+},
+{
+  "name":"java.awt.SequencedEvent",
+  "methods":[{"name":"<init>","parameterTypes":["java.awt.AWTEvent"] }]
+},
+{
+  "name":"java.awt.Toolkit",
+  "methods":[
+    {"name":"getDefaultToolkit","parameterTypes":[] }, 
+    {"name":"getFontMetrics","parameterTypes":["java.awt.Font"] }
+  ]
+},
+{
+  "name":"java.awt.Window",
+  "fields":[
+    {"name":"autoRequestFocus"}, 
+    {"name":"locationByPlatform"}, 
+    {"name":"securityWarningHeight"}, 
+    {"name":"securityWarningWidth"}, 
+    {"name":"warningString"}
+  ],
+  "methods":[
+    {"name":"calculateSecurityWarningPosition","parameterTypes":["double","double","double","double"] }, 
+    {"name":"getWarningString","parameterTypes":[] }
+  ]
+},
+{
+  "name":"java.awt.Window$Type"
+},
+{
+  "name":"java.awt.desktop.UserSessionEvent$Reason",
+  "fields":[
+    {"name":"CONSOLE"}, 
+    {"name":"LOCK"}, 
+    {"name":"REMOTE"}, 
+    {"name":"UNSPECIFIED"}
+  ]
+},
+{
+  "name":"java.awt.event.ComponentEvent",
+  "methods":[{"name":"<init>","parameterTypes":["java.awt.Component","int"] }]
+},
+{
+  "name":"java.awt.event.InputEvent",
+  "fields":[{"name":"modifiers"}],
+  "methods":[{"name":"getButtonDownMasks","parameterTypes":[] }]
+},
+{
+  "name":"java.awt.event.KeyEvent",
+  "fields":[
+    {"name":"extendedKeyCode"}, 
+    {"name":"keyChar"}, 
+    {"name":"keyCode"}, 
+    {"name":"primaryLevelUnicode"}, 
+    {"name":"rawCode"}, 
+    {"name":"scancode"}
+  ],
+  "methods":[{"name":"<init>","parameterTypes":["java.awt.Component","int","long","int","int","char","int"] }]
+},
+{
+  "name":"java.awt.event.MouseEvent",
+  "fields":[
+    {"name":"button"}, 
+    {"name":"causedByTouchEvent"}, 
+    {"name":"x"}, 
+    {"name":"y"}
+  ],
+  "methods":[{"name":"<init>","parameterTypes":["java.awt.Component","int","long","int","int","int","int","int","int","boolean","int"] }]
+},
+{
+  "name":"java.awt.geom.AffineTransform",
+  "fields":[
+    {"name":"m00"}, 
+    {"name":"m01"}, 
+    {"name":"m02"}, 
+    {"name":"m10"}, 
+    {"name":"m11"}, 
+    {"name":"m12"}
+  ]
+},
+{
+  "name":"java.awt.geom.GeneralPath",
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"<init>","parameterTypes":["int","byte[]","int","float[]","int"] }
+  ]
+},
+{
+  "name":"java.awt.geom.Path2D",
+  "fields":[
+    {"name":"numTypes"}, 
+    {"name":"pointTypes"}, 
+    {"name":"windingRule"}
+  ]
+},
+{
+  "name":"java.awt.geom.Path2D$Float",
+  "fields":[{"name":"floatCoords"}]
+},
+{
+  "name":"java.awt.geom.Point2D$Float",
+  "fields":[
+    {"name":"x"}, 
+    {"name":"y"}
+  ],
+  "methods":[{"name":"<init>","parameterTypes":["float","float"] }]
+},
+{
+  "name":"java.awt.geom.Rectangle2D$Float",
+  "fields":[
+    {"name":"height"}, 
+    {"name":"width"}, 
+    {"name":"x"}, 
+    {"name":"y"}
+  ],
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"<init>","parameterTypes":["float","float","float","float"] }
+  ]
+},
+{
+  "name":"java.awt.image.ColorModel",
+  "fields":[
+    {"name":"colorSpace"}, 
+    {"name":"colorSpaceType"}, 
+    {"name":"isAlphaPremultiplied"}, 
+    {"name":"is_sRGB"}, 
+    {"name":"nBits"}, 
+    {"name":"numComponents"}, 
+    {"name":"pData"}, 
+    {"name":"supportsAlpha"}, 
+    {"name":"transparency"}
+  ],
+  "methods":[{"name":"getRGBdefault","parameterTypes":[] }]
+},
+{
+  "name":"java.awt.image.DirectColorModel",
+  "methods":[{"name":"<init>","parameterTypes":["int","int","int","int"] }]
+},
+{
+  "name":"java.awt.image.IndexColorModel",
+  "fields":[
+    {"name":"allgrayopaque"}, 
+    {"name":"lookupcache"}, 
+    {"name":"map_size"}, 
+    {"name":"rgb"}, 
+    {"name":"transparent_index"}
+  ]
+},
+{
+  "name":"java.lang.ClassLoader",
+  "methods":[{"name":"getPlatformClassLoader","parameterTypes":[] }]
+},
+{
+  "name":"java.lang.Enum",
+  "methods":[{"name":"name","parameterTypes":[] }]
+},
+{
+  "name":"java.lang.Thread",
+  "methods":[{"name":"currentThread","parameterTypes":[] }]
+},
+{
+  "name":"java.util.Locale",
+  "methods":[{"name":"forLanguageTag","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"java.util.Locale[]"
+},
+{
+  "name":"sun.awt.AWTAutoShutdown",
+  "methods":[
+    {"name":"notifyToolkitThreadBusy","parameterTypes":[] }, 
+    {"name":"notifyToolkitThreadFree","parameterTypes":[] }
+  ]
+},
+{
+  "name":"sun.awt.EmbeddedFrame"
+},
+{
+  "name":"sun.awt.ExtendedKeyCodes",
+  "methods":[{"name":"getExtendedKeyCodeForChar","parameterTypes":["int"] }]
+},
+{
+  "name":"sun.awt.FontDescriptor",
+  "fields":[
+    {"name":"nativeName"}, 
+    {"name":"useUnicode"}
+  ]
+},
+{
+  "name":"sun.awt.LightweightFrame"
+},
+{
+  "name":"sun.awt.PlatformFont",
+  "fields":[
+    {"name":"componentFonts"}, 
+    {"name":"fontConfig"}
+  ],
+  "methods":[{"name":"makeConvertedMultiFontString","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"sun.awt.SunHints",
+  "fields":[{"name":"INTVAL_STROKE_PURE"}]
+},
+{
+  "name":"sun.awt.SunToolkit",
+  "methods":[{"name":"isTouchKeyboardAutoShowEnabled","parameterTypes":[] }]
+},
+{
+  "name":"sun.awt.TimedWindowEvent",
+  "methods":[{"name":"<init>","parameterTypes":["java.awt.Window","int","java.awt.Window","int","int","long"] }]
+},
+{
+  "name":"sun.awt.im.InputMethodWindow"
+},
+{
+  "name":"sun.awt.image.SunVolatileImage",
+  "fields":[{"name":"volSurfaceManager"}]
+},
+{
+  "name":"sun.awt.image.VolatileSurfaceManager",
+  "fields":[{"name":"sdCurrent"}]
+},
+{
+  "name":"sun.font.CharToGlyphMapper",
+  "methods":[{"name":"charToGlyph","parameterTypes":["int"] }]
+},
+{
+  "name":"sun.font.Font2D",
+  "methods":[
+    {"name":"canDisplay","parameterTypes":["char"] }, 
+    {"name":"charToGlyph","parameterTypes":["int"] }, 
+    {"name":"charToVariationGlyph","parameterTypes":["int","int"] }, 
+    {"name":"getMapper","parameterTypes":[] }, 
+    {"name":"getTableBytes","parameterTypes":["int"] }
+  ]
+},
+{
+  "name":"sun.font.FontStrike",
+  "methods":[{"name":"getGlyphMetrics","parameterTypes":["int"] }]
+},
+{
+  "name":"sun.font.FreetypeFontScaler",
+  "methods":[{"name":"invalidateScaler","parameterTypes":[] }]
+},
+{
+  "name":"sun.font.GlyphList",
+  "fields":[
+    {"name":"images"}, 
+    {"name":"lcdRGBOrder"}, 
+    {"name":"lcdSubPixPos"}, 
+    {"name":"len"}, 
+    {"name":"positions"}, 
+    {"name":"usePositions"}, 
+    {"name":"x"}, 
+    {"name":"y"}
+  ]
+},
+{
+  "name":"sun.font.PhysicalStrike",
+  "fields":[{"name":"pScalerContext"}],
+  "methods":[
+    {"name":"adjustPoint","parameterTypes":["java.awt.geom.Point2D$Float"] }, 
+    {"name":"getGlyphPoint","parameterTypes":["int","int"] }
+  ]
+},
+{
+  "name":"sun.font.StrikeMetrics",
+  "methods":[{"name":"<init>","parameterTypes":["float","float","float","float","float","float","float","float","float","float"] }]
+},
+{
+  "name":"sun.font.TrueTypeFont",
+  "methods":[
+    {"name":"readBlock","parameterTypes":["java.nio.ByteBuffer","int","int"] }, 
+    {"name":"readBytes","parameterTypes":["int","int"] }
+  ]
+},
+{
+  "name":"sun.font.Type1Font",
+  "methods":[{"name":"readFile","parameterTypes":["java.nio.ByteBuffer"] }]
+}
 ]
