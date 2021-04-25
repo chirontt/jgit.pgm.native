@@ -706,9 +706,6 @@
   "name":"org.eclipse.jgit.pgm.debug.RebuildCommitGraph"
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.RebuildRefTree"
-},
-{
   "name":"org.eclipse.jgit.pgm.debug.ShowCacheTree"
 },
 {

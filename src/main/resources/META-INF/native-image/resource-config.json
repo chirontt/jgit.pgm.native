@@ -1,19 +1,28 @@
 {
   "resources":{
   "includes":[
+    {"pattern":"\\Qjetty-dir.css\\E"}, 
+    {"pattern":"\\QMETA-INF/services/java.nio.file.spi.FileSystemProvider\\E"}, 
+    {"pattern":"\\QMETA-INF/services/org.apache.sshd.server.subsystem.SubsystemFactory\\E"}, 
+    {"pattern":"\\QMETA-INF/services/org.eclipse.jetty.http.HttpFieldPreEncoder\\E"}, 
+    {"pattern":"\\QMETA-INF/services/org.eclipse.jgit.lib.GpgSignatureVerifierFactory\\E"}, 
     {"pattern":"\\QMETA-INF/services/org.eclipse.jgit.lib.GpgSigner\\E"}, 
     {"pattern":"\\QMETA-INF/services/org.eclipse.jgit.pgm.TextBuiltin\\E"}, 
     {"pattern":"\\QMETA-INF/services/org.eclipse.jgit.transport.SshSessionFactory\\E"}, 
     {"pattern":"\\Qlog4j.properties\\E"}, 
     {"pattern":"\\Qmozilla/public-suffix-list.txt\\E"}, 
     {"pattern":"\\Qorg/apache/http/client/version.properties\\E"}, 
+    {"pattern":"\\Qorg/apache/sshd/sshd-version.properties\\E"}, 
+    {"pattern":"\\Qorg/eclipse/jetty/favicon.ico\\E"}, 
+    {"pattern":"\\Qorg/eclipse/jetty/http/encoding.properties\\E"}, 
+    {"pattern":"\\Qorg/eclipse/jetty/http/mime.properties\\E"}, 
+    {"pattern":"\\Qorg/eclipse/jetty/version/build.properties\\E"}, 
     {"pattern":"\\Qorg/slf4j/impl/StaticLoggerBinder.class\\E"}
   ]},
   "bundles":[
     {"name":"org.eclipse.jgit.gitrepo.internal.RepoText"}, 
     {"name":"org.eclipse.jgit.gpg.bc.internal.BCText"}, 
     {"name":"org.eclipse.jgit.internal.JGitText"}, 
-    {"name":"org.eclipse.jgit.internal.ketch.KetchText"}, 
     {"name":"org.eclipse.jgit.internal.storage.dfs.DfsText"}, 
     {"name":"org.eclipse.jgit.internal.transport.jsch.JSchText"}, 
     {"name":"org.eclipse.jgit.internal.transport.sshd.SshdText"}, 

@@ -7,23 +7,23 @@ to the native [git](https://git-scm.com) commands, to access Git repositories.
 Usually distributed as a jar package, JGit [PGM](https://github.com/eclipse/jgit/tree/master/org.eclipse.jgit.pgm)
 is also distributed as a stand-alone, self-contained (with all dependencies), executable shell archive,
 from Maven Central, like
-[this](https://repo.eclipse.org/content/groups/releases//org/eclipse/jgit/org.eclipse.jgit.pgm/5.10.0.202012080955-r/org.eclipse.jgit.pgm-5.10.0.202012080955-r.sh)
-of the 5.10.0 version. This shell archive is then normally renamed to `jgit` locally for ease of typing.
+[this](https://repo1.maven.org/maven2/org/eclipse/jgit/org.eclipse.jgit.pgm/5.11.0.202103091610-r/org.eclipse.jgit.pgm-5.11.0.202103091610-r.sh)
+of the 5.11.0 version. This shell archive is then normally renamed to `jgit` locally for ease of typing.
 
 On Linux, the shell archive can be run directly.
 On Windows, the shell archive can be run with the `java` command, like:
-`java -jar org.eclipse.jgit.pgm-5.10.0.202012080955-r.sh --version`
+`java -jar org.eclipse.jgit.pgm-5.11.0.202103091610-r.sh --version`
 
 This project aims to produce platform-specific, native executable `jgit` of the JGit PGM
 using the [GraalVM native-image](https://www.graalvm.org/reference-manual/native-image) utility,
 complementing the shell archive distribution.
 
-Gradle build script is provided for building the project. The JGit version used here is 5.10.0.
+Gradle build script is provided for building the project. The JGit version used here is 5.11.0.
 
 ## Caveat
 
 The original org.eclipse.jgit.pgm jar package, as distributed from
-[Maven Central](https://repo1.maven.org/maven2/org/eclipse/jgit/org.eclipse.jgit.pgm/5.10.0.202012080955-r/org.eclipse.jgit.pgm-5.10.0.202012080955-r.jar),
+[Maven Central](https://repo1.maven.org/maven2/org/eclipse/jgit/org.eclipse.jgit.pgm/5.11.0.202103091610-r/org.eclipse.jgit.pgm-5.11.0.202103091610-r.jar),
 can't be used by the
 GraalVM native-image utility, as it contains references to AWT/Swing classes which are not (yet)
 supported for native image generation.

@@ -73,7 +73,7 @@ public class NativeMain {
 	private ExecutorService gcExecutor;
 
 	/**
-	 * <p>Constructor for Main.</p>
+	 * <p>Constructor for NativeMain.</p>
 	 */
 	public NativeMain() {
 		HttpTransport.setConnectionFactory(new HttpClientConnectionFactory());

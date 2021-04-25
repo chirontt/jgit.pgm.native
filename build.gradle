@@ -1,6 +1,7 @@
 plugins {
     id 'application'
-    id 'com.gluonhq.client-gradle-plugin' version '0.1.36'  //requires GraalVM 21+
+    id 'org.openjfx.javafxplugin' version '0.0.9'  //requires JDK11+
+    id 'com.gluonhq.client-gradle-plugin' version '0.1.39'  //requires GraalVM 21.1+
 }
 
 wrapper {
@@ -15,7 +16,8 @@ ext {
     //main class suitable for GraalVM native image build
     //(replacing the original org.eclipse.jgit.pgm.Main class)
     mainClassName = 'org.eclipse.jgit.pgm.NativeMain'
-    jgitReleaseVersion = '5.10.0.202012080955-r'
+    jgitReleaseVersion = '5.11.0.202103091610-r'
+    graalvmVersion = '21.1.0'
     xzVersion = '1.8'
 }
 
@@ -35,7 +37,7 @@ configurations {
 
 dependencies {
     //initial classpath configuration for JGit PGM as fetched from Maven Central
-	//(excluding the JGit UI module which uses AWT/Swing classes)
+    //(excluding the JGit UI module which uses AWT/Swing classes)
     initialPGMConfig("org.eclipse.jgit:org.eclipse.jgit.pgm:$jgitReleaseVersion") {
         exclude group: 'org.eclipse.jgit', module: 'org.eclipse.jgit.ui'
     }
@@ -50,10 +52,11 @@ dependencies {
         }
     }
     //...and replacing it with our modified PGM module suitable for GraalVM native image build
-	//(i.e. no AWT/Swing classes referenced)
+    //(i.e. no AWT/Swing classes referenced)
     implementation files("lib/org.eclipse.jgit.pgm-${jgitReleaseVersion}-MODIFIED.jar")
 
-    compileOnly 'org.graalvm.nativeimage:svm:21.0.0.2'
+    //for compiling GraalVM substitution classes
+    compileOnly "org.graalvm.nativeimage:svm:$graalvmVersion"
 }
 
 application {
@@ -80,15 +83,18 @@ gluonClient {
         'java.beans.Introspector',
         'org.apache.log4j',
         'org.apache.sshd',
+        'org.eclipse.jetty',
         'org.eclipse.jgit',
         'org.slf4j',
     ]
 
     //packages/classes to be initialized at native image run time
     def runTimeInitClasses = [
+        'org.eclipse.jgit.internal.storage.file.WindowCache',
         'org.eclipse.jgit.lib.internal.WorkQueue',
         'org.eclipse.jgit.lib.RepositoryCache',
         'org.eclipse.jgit.transport.HttpAuthMethod',
+        'org.eclipse.jgit.util.FileUtils',
     ]
 
     compilerArgs = [
