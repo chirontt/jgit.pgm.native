@@ -1,0 +1,14 @@
+[
+{
+  "name":"sun.awt.X11.XToolkit",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.awt.X11FontManager",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.awt.X11GraphicsEnvironment",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+}
+]

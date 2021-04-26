@@ -941,6 +941,10 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"sun.java2d.marlin.DMarlinRenderingEngine",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"sun.security.pkcs.SignerInfo[]"
 },
 {

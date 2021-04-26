@@ -87,6 +87,7 @@
                     <mainClass>${jgit.mainClass}</mainClass>
                     <nativeImageArgs>
                         <nativeImageArg>--initialize-at-run-time=${run.time.init}</nativeImageArg>
+                        <nativeImageArg>-Djava.awt.headless=false</nativeImageArg>
                     </nativeImageArgs>
                 </configuration>
             </plugin>
