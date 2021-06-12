@@ -1,20 +1,21 @@
 plugins {
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.9'  //requires JDK11+
-    id 'com.gluonhq.client-gradle-plugin' version '0.1.39'  //requires GraalVM 21.1+
+    id 'org.openjfx.javafxplugin' version '0.0.10'  //requires JDK11+
+    id 'com.gluonhq.client-gradle-plugin' version '0.1.40'  //requires GraalVM 21.1+
 }
 
 wrapper {
-    gradleVersion = "6.8.3"
+    gradleVersion = "7.0.2"
     distributionType = Wrapper.DistributionType.ALL
 }
 
 group = 'com.github.chirontt'
+version = '5.11.1'
 description = 'JGit PGM native executable built by GraalVM'
 
 ext {
     mainClassName = 'org.eclipse.jgit.pgm.Main'
-    jgitReleaseVersion = '5.11.0.202103091610-r'
+    jgitReleaseVersion = '5.11.1.202105131744-r'
     graalvmVersion = '21.1.0'
     xzVersion = '1.8'
 }

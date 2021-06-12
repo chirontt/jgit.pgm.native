@@ -4,7 +4,7 @@
 
     <groupId>com.github.chirontt</groupId>
     <artifactId>jgit.pgm.native</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>5.11.1</version>
     <packaging>jar</packaging>
 
     <name>jgit</name> <!-- name of the resulting native executable -->
@@ -14,8 +14,8 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <client.maven.plugin.version>0.1.39</client.maven.plugin.version> <!-- requires GraalVM 21.1+ -->
-        <jgit.release.version>5.11.0.202103091610-r</jgit.release.version>
+        <client.maven.plugin.version>0.1.40</client.maven.plugin.version> <!-- requires GraalVM 21.1+ -->
+        <jgit.release.version>5.11.1.202105131744-r</jgit.release.version>
         <graalvm.version>21.1.0</graalvm.version>
         <xz.version>1.8</xz.version>
         <jgit.mainClass>org.eclipse.jgit.pgm.Main</jgit.mainClass>
