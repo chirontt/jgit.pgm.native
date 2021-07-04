@@ -350,6 +350,56 @@
   "methods":[{"name":"<init>","parameterTypes":["java.awt.Window","int","java.awt.Window","int","int","long"] }]
 },
 {
+  "name":"sun.awt.X11.XBaseWindow",
+  "fields":[{"name":"window"}],
+  "methods":[{"name":"getWindow","parameterTypes":[] }]
+},
+{
+  "name":"sun.awt.X11.XContentWindow"
+},
+{
+  "name":"sun.awt.X11.XErrorHandlerUtil",
+  "methods":[
+    {"name":"globalErrorHandler","parameterTypes":["long","long"] }, 
+    {"name":"init","parameterTypes":["long"] }
+  ]
+},
+{
+  "name":"sun.awt.X11.XFramePeer"
+},
+{
+  "name":"sun.awt.X11.XToolkit",
+  "fields":[
+    {"name":"modLockIsShiftLock"}, 
+    {"name":"numLockMask"}
+  ]
+},
+{
+  "name":"sun.awt.X11.XWindow",
+  "fields":[
+    {"name":"drawState"}, 
+    {"name":"graphicsConfig"}, 
+    {"name":"target"}
+  ]
+},
+{
+  "name":"sun.awt.X11GraphicsConfig",
+  "fields":[
+    {"name":"aData"}, 
+    {"name":"bitsPerPixel"}, 
+    {"name":"screen"}
+  ]
+},
+{
+  "name":"sun.awt.X11GraphicsDevice",
+  "fields":[{"name":"screen"}],
+  "methods":[{"name":"addDoubleBufferVisual","parameterTypes":["int"] }]
+},
+{
+  "name":"sun.awt.X11InputMethodBase",
+  "fields":[{"name":"pData"}]
+},
+{
   "name":"sun.awt.im.InputMethodWindow"
 },
 {
@@ -372,6 +422,34 @@
     {"name":"charToVariationGlyph","parameterTypes":["int","int"] }, 
     {"name":"getMapper","parameterTypes":[] }, 
     {"name":"getTableBytes","parameterTypes":["int"] }
+  ]
+},
+{
+  "name":"sun.font.FontConfigManager$FcCompFont",
+  "fields":[
+    {"name":"allFonts"}, 
+    {"name":"fcName"}, 
+    {"name":"firstFont"}
+  ]
+},
+{
+  "name":"sun.font.FontConfigManager$FontConfigFont",
+  "fields":[
+    {"name":"familyName"}, 
+    {"name":"fontFile"}, 
+    {"name":"fullName"}, 
+    {"name":"styleStr"}
+  ],
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.font.FontConfigManager$FontConfigFont[]"
+},
+{
+  "name":"sun.font.FontConfigManager$FontConfigInfo",
+  "fields":[
+    {"name":"cacheDirs"}, 
+    {"name":"fcVersion"}
   ]
 },
 {
@@ -605,81 +683,6 @@
 {
   "name":"sun.java2d.pipe.ShapeSpanIterator",
   "fields":[{"name":"pData"}]
-},
-{
-  "name":"sun.awt.X11.XBaseWindow",
-  "fields":[{"name":"window"}],
-  "methods":[{"name":"getWindow","parameterTypes":[] }]
-},
-{
-  "name":"sun.awt.X11.XContentWindow"
-},
-{
-  "name":"sun.awt.X11.XErrorHandlerUtil",
-  "methods":[{"name":"init","parameterTypes":["long"] }]
-},
-{
-  "name":"sun.awt.X11.XFramePeer"
-},
-{
-  "name":"sun.awt.X11.XToolkit",
-  "fields":[
-    {"name":"modLockIsShiftLock"}, 
-    {"name":"numLockMask"}
-  ]
-},
-{
-  "name":"sun.awt.X11.XWindow",
-  "fields":[
-    {"name":"drawState"}, 
-    {"name":"graphicsConfig"}, 
-    {"name":"target"}
-  ]
-},
-{
-  "name":"sun.awt.X11GraphicsConfig",
-  "fields":[
-    {"name":"aData"}, 
-    {"name":"bitsPerPixel"}, 
-    {"name":"screen"}
-  ]
-},
-{
-  "name":"sun.awt.X11GraphicsDevice",
-  "fields":[{"name":"screen"}],
-  "methods":[{"name":"addDoubleBufferVisual","parameterTypes":["int"] }]
-},
-{
-  "name":"sun.awt.X11InputMethodBase",
-  "fields":[{"name":"pData"}]
-},
-{
-  "name":"sun.font.FontConfigManager$FcCompFont",
-  "fields":[
-    {"name":"allFonts"}, 
-    {"name":"fcName"}, 
-    {"name":"firstFont"}
-  ]
-},
-{
-  "name":"sun.font.FontConfigManager$FontConfigFont",
-  "fields":[
-    {"name":"familyName"}, 
-    {"name":"fontFile"}, 
-    {"name":"fullName"}, 
-    {"name":"styleStr"}
-  ],
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.font.FontConfigManager$FontConfigFont[]"
-},
-{
-  "name":"sun.font.FontConfigManager$FontConfigInfo",
-  "fields":[
-    {"name":"cacheDirs"}, 
-    {"name":"fcVersion"}
-  ]
 },
 {
   "name":"sun.java2d.xr.XRBackendNative",
