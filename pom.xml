@@ -14,16 +14,18 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <client.maven.plugin.version>0.1.40</client.maven.plugin.version> <!-- requires GraalVM 21.1+ -->
+        <native.maven.plugin.version>0.9.1</native.maven.plugin.version>
         <jgit.release.version>5.12.0.202106070339-r</jgit.release.version>
         <graalvm.version>21.1.0</graalvm.version>
         <xz.version>1.8</xz.version>
-        <jgit.mainClass>org.eclipse.jgit.pgm.Main</jgit.mainClass>
+        <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
         <jgit.args></jgit.args>
         <!-- system properties for the application when run by exec:exec command;
              can be specified on the command line with -Dsys.props="..."
         -->
         <sys.props></sys.props>
+        <nativeImageDirName>native-image-${current.platform}</nativeImageDirName>
+        <build.time.init>com.google.gson,com.sun.beans.introspect.ClassInfo,com.sun.beans.introspect.PropertyInfo,java.beans.Introspector,org.apache.log4j,org.apache.sshd,org.eclipse.jetty,org.eclipse.jgit,org.slf4j</build.time.init>
         <run.time.init>org.eclipse.jgit.internal.storage.file.WindowCache,org.eclipse.jgit.lib.internal.WorkQueue,org.eclipse.jgit.lib.RepositoryCache,org.eclipse.jgit.transport.HttpAuthMethod,org.eclipse.jgit.util.FileUtils</run.time.init>
     </properties>
 
@@ -49,6 +51,12 @@
     </dependencies>
 
     <build>
+        <resources>
+            <!-- include the GraalVM native-image configuration files -->
+            <resource>
+                <directory>src/graal-cfg/${current.platform}</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -70,7 +78,7 @@
                     <executable>java</executable>
                     <arguments>
                         <!-- GraalVM's agent to generate (or merge with) native-image configuration files -->
-                        <!-- argument>-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image</argument -->
+                        <!-- argument>-agentlib:native-image-agent=config-merge-dir=src/graal-cfg/${current.platform}/META-INF/native-image</argument -->
                         <argument>${sys.props}</argument>
                         <argument>-classpath</argument>
                         <classpath/>
@@ -79,18 +87,160 @@
                     </arguments>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.gluonhq</groupId>
-                <artifactId>client-maven-plugin</artifactId>
-                <version>${client.maven.plugin.version}</version>
-                <configuration>
-                    <mainClass>${jgit.mainClass}</mainClass>
-                    <nativeImageArgs>
-                        <nativeImageArg>--initialize-at-run-time=${run.time.init}</nativeImageArg>
-                        <nativeImageArg>-Djava.awt.headless=false</nativeImageArg>
-                    </nativeImageArgs>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <name>linux</name>
+                </os>
+            </activation>
+            <properties>
+                <current.platform>linux</current.platform>
+            </properties>
+        </profile>
+        <profile>
+            <id>macosx</id>
+            <activation>
+                <os>
+                    <name>mac os x</name>
+                </os>
+            </activation>
+            <properties>
+                <current.platform>macos</current.platform>
+            </properties>
+        </profile>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <current.platform>windows</current.platform>
+            </properties>
+        </profile>
+        <!-- platform-specific profiles for native image generation -->
+        <profile>
+            <id>native-linux</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>${native.maven.plugin.version}</version>
+                        <executions>
+                            <!-- execution>
+                                <id>test-native</id>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <phase>test</phase>
+                            </execution -->
+                            <execution>
+                                <id>build-native</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
+                            <imageName>${project.name}</imageName>
+                            <mainClass>${jgit.mainClass}</mainClass>
+                            <buildArgs>
+                                -Djava.awt.headless=false
+                                --no-fallback
+                                --enable-http
+                                --enable-https
+                                --report-unsupported-elements-at-runtime
+                                --native-image-info
+                                -H:+TraceNativeToolUsage
+                                -H:TempDirectory=${project.build.directory}/tmp/${nativeImageDirName}
+                                -H:Path=${project.build.directory}/${nativeImageDirName}
+                            </buildArgs>
+                            <skip>false</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>native-windows</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>${native.maven.plugin.version}</version>
+                        <executions>
+                            <!-- execution>
+                                <id>test-native</id>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <phase>test</phase>
+                            </execution -->
+                            <execution>
+                                <id>build-native</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
+                            <imageName>${project.name}</imageName>
+                            <mainClass>${jgit.mainClass}</mainClass>
+                            <buildArgs>
+                                --no-fallback
+                                --enable-http
+                                --enable-https
+                                --report-unsupported-elements-at-runtime
+                                --native-image-info
+                                -H:+TraceNativeToolUsage
+                                -H:TempDirectory=${project.build.directory}/tmp/${nativeImageDirName}
+                                -H:Path=${project.build.directory}/${nativeImageDirName}
+                            </buildArgs>
+                            <skip>false</skip>
+                        </configuration>
+                    </plugin>
+                    <!-- copy the font config files from the JDK -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.2.0</version>
+                        <executions>
+                            <execution>
+                                <id>copy-font-config-files</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/${nativeImageDirName}/lib</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${java.home}/lib</directory>
+                                            <includes>
+                                                <include>fontconfig.bfc</include>
+                                                <include>fontconfig.properties.src</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>

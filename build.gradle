@@ -1,11 +1,10 @@
 plugins {
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.10'  //requires JDK11+
-    id 'com.gluonhq.client-gradle-plugin' version '0.1.40'  //requires GraalVM 21.1+
+    id 'org.mikeneck.graalvm-native-image' version '1.4.1'
 }
 
 wrapper {
-    gradleVersion = "7.0.2"
+    gradleVersion = "7.1.1"
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -14,10 +13,25 @@ version = '5.12.0'
 description = 'JGit PGM native executable built by GraalVM'
 
 ext {
-    mainClassName = 'org.eclipse.jgit.pgm.Main'
+    mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
     jgitReleaseVersion = '5.12.0.202106070339-r'
     graalvmVersion = '21.1.0'
     xzVersion = '1.8'
+    currentPlatform = getCurrentPlatform()
+    nativeImageDirName = "native-image-$currentPlatform"
+}
+
+//detect the OS (assuming 64-bit, on Intel/AMD hardware)
+private static String getCurrentPlatform() {
+    def currentOS = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem;
+    if (currentOS.isWindows()) {
+        return 'windows'
+    } else if (currentOS.isLinux()) {
+        return 'linux'
+    } else if (currentOS.isMacOsX()) {
+        return 'macos'
+    }
+    return 'unknown'
 }
 
 repositories {
@@ -40,6 +54,15 @@ dependencies {
     compileOnly "org.graalvm.nativeimage:svm:$graalvmVersion"
 }
 
+sourceSets {
+    main {
+        resources {
+            //include current platform's GraalVM native-image configuration files
+            srcDirs = ["src/graal-cfg/$currentPlatform"]
+        }
+    }
+}
+
 application {
     mainClass = project.mainClassName
     applicationName = project.name
@@ -53,15 +76,43 @@ run {
     //use the following jvmArgs for as many different run scenarios as possible,
     //and for all the code-execution paths as much as possible,
     //to generate (or merge with) the GraalVM native-image configuration files
-    //in the src/main/resources/META-INF/native-image directory.
+    //in the src/graal-cfg/$currentPlatform/META-INF/native-image directory.
     //This directory is read by GraalVM during the native-image build.
 
-    //jvmArgs = ["-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image"]
+    //jvmArgs = ["-agentlib:native-image-agent=config-merge-dir=src/graal-cfg/$currentPlatform/META-INF/native-image"]
 }
 
-gluonClient {
+//copy the font config files from the JDK
+task copyFontConfigFiles(type: Copy) {
+    def jdkHome = System.getProperty('java.home')
+    from ("$jdkHome/lib") {
+        include 'fontconfig.bfc', 'fontconfig.properties.src'
+    }
+    into "$buildDir/$nativeImageDirName/lib"
+}
+
+nativeImage {
+    graalVmHome = System.getProperty('java.home')
+    buildType { org.mikeneck.graalvm.BuildTypeSelector build ->
+        build.executable {
+            main = project.mainClassName
+        }
+    }
+    executableName = project.name
+    outputDirectory = file("$buildDir/$nativeImageDirName")
+
     //packages/classes to be initialized at native image build time
-    def buildTimeInitClasses = file('src/main/resources/META-INF/substrate/config/initbuildtime').getText('UTF-8').trim()
+    def buildTimeInitClasses = [
+        'com.google.gson',
+        'com.sun.beans.introspect.ClassInfo',
+        'com.sun.beans.introspect.PropertyInfo',
+        'java.beans.Introspector',
+        'org.apache.log4j',
+        'org.apache.sshd',
+        'org.eclipse.jetty',
+        'org.eclipse.jgit',
+        'org.slf4j',
+    ]
 
     //packages/classes to be initialized at native image run time
     def runTimeInitClasses = [
@@ -72,11 +123,27 @@ gluonClient {
         'org.eclipse.jgit.util.FileUtils',
     ]
 
-    compilerArgs = [
-        '--initialize-at-build-time=' + buildTimeInitClasses,
-        '--initialize-at-run-time=' + runTimeInitClasses.join(','),
-        '--report-unsupported-elements-at-runtime',
-        '-Djava.awt.headless=false',
-    ]
+    arguments {
+		if (currentPlatform == 'linux') {
+            add '-Djava.awt.headless=false'
+        }
+        add '--no-fallback'
+        add '--enable-all-security-services'
+        add '--enable-url-protocols=http,https'
+        add '--initialize-at-build-time=' + buildTimeInitClasses.join(',')
+        add '--initialize-at-run-time=' + runTimeInitClasses.join(',')
+        add '--report-unsupported-elements-at-runtime'
+        add '--native-image-info'
+        add '-H:+TraceNativeToolUsage'
+        add "-H:TempDirectory=$buildDir/tmp/$nativeImageDirName"
+    }
+
+    if (currentPlatform == 'windows') {
+        finalizedBy copyFontConfigFiles
+    }
+}
+
+generateNativeImageConfig {
+    enabled = false
 }
 

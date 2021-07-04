@@ -20,12 +20,6 @@ complementing the shell archive distribution.
 
 Gradle and Maven build scripts are provided for building the project. The JGit version used here is 5.12.0.
 
-## Caveat
-
-Starting with GraalVM 21.1.0 version, AWT/Swing classes are supported in the native-image compilation,
-but the resulting executable is still not working properly. Thus the `jgit glog` command doesn't work
-in the resulting `jgit` native image, even though there are no compile errors during the build.
-
 ## Build pre-requisites
 
 The [GraalVM native-image](https://www.graalvm.org/reference-manual/native-image) page
@@ -33,15 +27,8 @@ shows how to set up GraalVM and its native-image utility for common platforms.
 [Gluon](https://gluonhq.com/) also provides some setup [details](https://docs.gluonhq.com/#_platforms)
 for GraalVM native-image creation.
 
-This project's Gradle build script uses the [client-gradle-plugin](https://github.com/gluonhq/client-gradle-plugin)
-from Gluon to build the native executable from Gradle with GraalVM.
-
 The GraalVM native-image utility will use the configuration files in
-`src/main/resources/META-INF/native-image` folder to assist in the native image generation.
-
-Gluon also provides the [client-maven-plugin](https://github.com/gluonhq/client-maven-plugin)
-which is used in this project's Maven build script and works similarly to the above
-client-gradle-plugin.
+`src/graal-cfg/<platform>/META-INF/native-image` folder to assist in the native image generation.
 
 ## Gradle build tasks
 
@@ -51,35 +38,38 @@ with relevant parameters as needed:
 	gradlew run --args="--version"
 	gradlew run --args="ls-remote <some-repo-url>"
 	gradlew run --args="clone <some-repo-url>"
+	gradlew run --args="glog"
 	etc.
 
-To produce a native executable, execute the `nativeBuild` task:
+To produce a native executable, execute the `nativeImage` task:
 
-	gradlew nativeBuild
+	gradlew nativeImage
 
-The `nativeBuild` task would take a while to compile the application and link into an executable file.
+The `nativeImage` task would take a while to compile the application and link into an executable file.
 The resulting `jgit` executable file is:
 
-	build/client/x86_64-linux/jgit
+	build/native-image-linux/jgit
 
 (or if building on a Windows machine, the executable file is:
 
-	build\client\x86_64-windows\jgit.exe
+	build\native-image-windows\jgit.exe
 
 )
 
 which can then be run directly (with relevant parameters):
 
-	./build/client/x86_64-linux/jgit --version
-	./build/client/x86_64-linux/jgit ls-remote <some-repo-url>
-	./build/client/x86_64-linux/jgit clone <some-repo-url>
+	./build/native-image-linux/jgit --version
+	./build/native-image-linux/jgit ls-remote <some-repo-url>
+	./build/native-image-linux/jgit clone <some-repo-url>
+	./build/native-image-linux/jgit glog
 	etc.
 
 (or if building on a Windows machine:
 
-	build\client\x86_64-windows\jgit.exe --version
-	build\client\x86_64-windows\jgit.exe ls-remote <some-repo-url>
-	build\client\x86_64-windows\jgit.exe clone <some-repo-url>
+	build\native-image-windows\jgit.exe --version
+	build\native-image-windows\jgit.exe ls-remote <some-repo-url>
+	build\native-image-windows\jgit.exe clone <some-repo-url>
+	build\native-image-windows\jgit.exe glog
 	etc.
 
 )
@@ -93,35 +83,43 @@ To compile and run the JGit PGM in standard JVM with Maven, execute the
 	mvnw exec:exec -Djgit.args="--version"
 	mvnw exec:exec -Djgit.args="\"ls-remote <some-repo-url>\""
 	mvnw exec:exec -Djgit.args="\"clone <some-repo-url>\""
+	mvnw exec:exec -Djgit.args="glog"
 	etc.
 
-To produce a native executable, execute the `client:build` task:
+To produce a native executable, execute the `package` task for specific platform
+profile (e.g. for Linux):
 
-	mvnw client:build
+	mvnw package -Pnative-linux
 
-The `client:build` task would take a while to compile the application and link into an executable file.
+or if building on a Windows machine:
+
+	mvnw package -Pnative-windows
+
+The `package` task would take a while to compile the application and link into an executable file.
 The resulting `jgit` executable file is:
 
-	target/client/x86_64-linux/jgit
+	target/native-image-linux/jgit
 
 (or if building on a Windows machine, the executable file is:
 
-	target\client\x86_64-windows\jgit.exe
+	target\native-image-windows\jgit.exe
 
 )
 
 which can then be run directly (with relevant parameters):
 
-	./target/client/x86_64-linux/jgit --version
-	./target/client/x86_64-linux/jgit ls-remote <some-repo-url>
-	./target/client/x86_64-linux/jgit clone <some-repo-url>
+	./target/native-image-linux/jgit --version
+	./target/native-image-linux/jgit ls-remote <some-repo-url>
+	./target/native-image-linux/jgit clone <some-repo-url>
+	./target/native-image-linux/jgit glog
 	etc.
 
 (or if building on a Windows machine:
 
-	target\client\x86_64-windows\jgit.exe --version
-	target\client\x86_64-windows\jgit.exe ls-remote <some-repo-url>
-	target\client\x86_64-windows\jgit.exe clone <some-repo-url>
+	target\native-image-windows\jgit.exe --version
+	target\native-image-windows\jgit.exe ls-remote <some-repo-url>
+	target\native-image-windows\jgit.exe clone <some-repo-url>
+	target\native-image-windows\jgit.exe glog
 	etc.
 
 )
@@ -133,5 +131,5 @@ can be further reduced in size via compression, using the [UPX](https://upx.gith
 as described [here](https://medium.com/graalvm/compressed-graalvm-native-images-4d233766a214).
 
 As an example, the resulting `jgit.exe` native application file produced in Windows is
-normally 99MB in size, but is compressed to 26MB with the UPX command: `upx --best jgit.exe`
+normally 91MB in size, but is compressed to 24MB with the UPX command: `upx --best jgit.exe`
 
