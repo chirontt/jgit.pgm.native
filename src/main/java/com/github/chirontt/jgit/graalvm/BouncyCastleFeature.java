@@ -14,6 +14,10 @@ import com.oracle.svm.core.annotate.AutomaticFeature;
 
 import java.security.Security;
 
+/**
+ * derived from
+ * https://github.com/micronaut-projects/micronaut-oracle-cloud/blob/master/oraclecloud-sdk/src/main/java/io/micronaut/oraclecloud/clients/BouncyCastleFeature.java
+ */
 @AutomaticFeature
 public class BouncyCastleFeature implements Feature {
 
@@ -34,9 +38,12 @@ public class BouncyCastleFeature implements Feature {
         //all org.bouncycastle packages are initialized at build time,
         //but some specific classes need be re-intialized at runtime
         //due to static SecureRandom seeding
-        rci.rerunInitialization(CryptoServicesRegistrar.class, "for substitutions");
-        rci.rerunInitialization(DRBG.Default.class, "for substitutions");
-        rci.rerunInitialization(DRBG.NonceAndIV.class, "for substitutions");
+        rci.rerunInitialization(CryptoServicesRegistrar.class,
+                                "See https://github.com/micronaut-projects/micronaut-oracle-cloud/pull/17#discussion_r472955378");
+        rci.rerunInitialization(DRBG.Default.class,
+                                "See https://github.com/micronaut-projects/micronaut-oracle-cloud/pull/17#discussion_r472955378");
+        rci.rerunInitialization(DRBG.NonceAndIV.class,
+                                "See https://github.com/micronaut-projects/micronaut-oracle-cloud/pull/17#discussion_r472955378");
     }
 
 }
