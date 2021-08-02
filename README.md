@@ -131,5 +131,5 @@ can be further reduced in size via compression, using the [UPX](https://upx.gith
 as described [here](https://medium.com/graalvm/compressed-graalvm-native-images-4d233766a214).
 
 As an example, the resulting `jgit.exe` native application file produced in Windows is
-normally 91MB in size, but is compressed to 24MB with the UPX command: `upx --best jgit.exe`
+normally 73MB in size, but is compressed to 20MB with the UPX command: `upx --best jgit.exe`
 

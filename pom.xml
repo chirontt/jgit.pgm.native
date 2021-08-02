@@ -16,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <native.maven.plugin.version>0.9.2</native.maven.plugin.version>
         <jgit.release.version>5.12.0.202106070339-r</jgit.release.version>
-        <graalvm.version>21.1.0</graalvm.version>
+        <graalvm.version>21.2.0</graalvm.version>
         <xz.version>1.8</xz.version>
         <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
         <jgit.args></jgit.args>
@@ -24,7 +24,7 @@
              can be specified on the command line with -Dsys.props="..."
         -->
         <sys.props></sys.props>
-        <nativeImageDirName>native-image-${current.platform}</nativeImageDirName>
+        <native.image.dir.name>native-image-${current.platform}</native.image.dir.name>
         <!-- packages/classes to be initialized at native image build time -->
         <build.time.init>com.google.gson,com.sun.beans.introspect.ClassInfo,com.sun.beans.introspect.PropertyInfo,java.beans.Introspector,org.apache.log4j,org.apache.sshd,org.eclipse.jetty,org.eclipse.jgit,org.slf4j</build.time.init>
         <!-- packages/classes to be initialized at native image run time -->
@@ -157,6 +157,7 @@
                             <mainClass>${jgit.mainClass}</mainClass>
                             <buildArgs>
                                 <buildArg>-Djava.awt.headless=false</buildArg>
+                                <buildArg>--gc=epsilon</buildArg>  <!-- no garbage collector -->
                                 <buildArg>--no-fallback</buildArg>
                                 <buildArg>--enable-http</buildArg>
                                 <buildArg>--enable-https</buildArg>
@@ -164,9 +165,10 @@
                                 <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
                                 <buildArg>--report-unsupported-elements-at-runtime</buildArg>
                                 <buildArg>--native-image-info</buildArg>
-                                <buildArg>-H:+TraceNativeToolUsage</buildArg>
-                                <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${nativeImageDirName}</buildArg>
-                                <buildArg>-H:Path=${project.build.directory}/${nativeImageDirName}</buildArg>
+                                <buildArg>--verbose</buildArg>
+                                <!-- buildArg>-H:+TraceNativeToolUsage</buildArg -->
+                                <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
+                                <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
                             </buildArgs>
                             <skip>false</skip>
                         </configuration>
@@ -203,6 +205,7 @@
                             <imageName>${project.name}</imageName>
                             <mainClass>${jgit.mainClass}</mainClass>
                             <buildArgs>
+                                <buildArg>--gc=epsilon</buildArg>  <!-- no garbage collector -->
                                 <buildArg>--no-fallback</buildArg>
                                 <buildArg>--enable-http</buildArg>
                                 <buildArg>--enable-https</buildArg>
@@ -210,9 +213,10 @@
                                 <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
                                 <buildArg>--report-unsupported-elements-at-runtime</buildArg>
                                 <buildArg>--native-image-info</buildArg>
-                                <buildArg>-H:+TraceNativeToolUsage</buildArg>
-                                <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${nativeImageDirName}</buildArg>
-                                <buildArg>-H:Path=${project.build.directory}/${nativeImageDirName}</buildArg>
+                                <buildArg>--verbose</buildArg>
+                                <!-- buildArg>-H:+TraceNativeToolUsage</buildArg -->
+                                <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
+                                <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
                             </buildArgs>
                             <skip>false</skip>
                         </configuration>
@@ -230,7 +234,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${project.build.directory}/${nativeImageDirName}/lib</outputDirectory>
+                                    <outputDirectory>${project.build.directory}/${native.image.dir.name}/lib</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>${java.home}/lib</directory>
@@ -243,6 +247,34 @@
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                    <!-- remove unneeded .dll files -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <id>remove-unneeded-dll-files</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <target>
+                                <move todir="${project.build.directory}/tmp/${native.image.dir.name}">
+                                    <fileset dir="${project.build.directory}/${native.image.dir.name}">
+                                        <include name="*.dll"/>
+                                        <include name="*.txt"/>
+                                        <!-- keep the shim DLLs -->
+                                        <exclude name="java.dll"/>
+                                        <exclude name="jvm.dll"/>
+                                    </fileset>
+                                </move>
+                            </target>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
