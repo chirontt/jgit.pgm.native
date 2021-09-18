@@ -3,6 +3,9 @@
   "name":"byte[]"
 },
 {
+  "name":"char[]"
+},
+{
   "name":"com.sun.crypto.provider.AESCipher$General",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -19,6 +22,9 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"java.awt.Image"
+},
+{
   "name":"java.awt.SequencedEvent"
 },
 {
@@ -26,6 +32,7 @@
   "fields":[
     {"name":"VK_A"}, 
     {"name":"VK_BACK_SLASH"}, 
+    {"name":"VK_BACK_SPACE"}, 
     {"name":"VK_C"}, 
     {"name":"VK_CONTEXT_MENU"}, 
     {"name":"VK_COPY"}, 
@@ -38,6 +45,7 @@
     {"name":"VK_F10"}, 
     {"name":"VK_F2"}, 
     {"name":"VK_F8"}, 
+    {"name":"VK_H"}, 
     {"name":"VK_HOME"}, 
     {"name":"VK_INSERT"}, 
     {"name":"VK_KP_DOWN"}, 
@@ -45,6 +53,7 @@
     {"name":"VK_KP_RIGHT"}, 
     {"name":"VK_KP_UP"}, 
     {"name":"VK_LEFT"}, 
+    {"name":"VK_O"}, 
     {"name":"VK_PAGE_DOWN"}, 
     {"name":"VK_PAGE_UP"}, 
     {"name":"VK_PASTE"}, 
@@ -64,6 +73,12 @@
   "name":"java.beans.PropertyVetoException"
 },
 {
+  "name":"java.io.InputStream"
+},
+{
+  "name":"java.io.Reader"
+},
+{
   "name":"java.lang.Object",
   "allDeclaredFields":true,
   "allDeclaredMethods":true,
@@ -80,7 +95,26 @@
   "methods":[{"name":"getContextClassLoader","parameterTypes":[] }]
 },
 {
+  "name":"java.net.URL"
+},
+{
+  "name":"java.nio.ByteBuffer"
+},
+{
+  "name":"java.nio.CharBuffer"
+},
+{
   "name":"java.nio.file.Path"
+},
+{
+  "name":"java.rmi.MarshalledObject",
+  "methods":[
+    {"name":"<init>","parameterTypes":["java.lang.Object"] }, 
+    {"name":"get","parameterTypes":[] }
+  ]
+},
+{
+  "name":"java.rmi.Remote"
 },
 {
   "name":"java.security.AlgorithmParametersSpi"
@@ -98,6 +132,12 @@
   "name":"java.security.cert.PKIXRevocationChecker"
 },
 {
+  "name":"java.security.interfaces.ECPrivateKey"
+},
+{
+  "name":"java.security.interfaces.ECPublicKey"
+},
+{
   "name":"java.security.interfaces.RSAPrivateKey"
 },
 {
@@ -107,13 +147,31 @@
   "name":"java.util.Date"
 },
 {
+  "name":"java.util.List"
+},
+{
   "name":"javax.security.auth.x500.X500Principal",
   "fields":[{"name":"thisX500Name"}],
   "methods":[{"name":"<init>","parameterTypes":["sun.security.x509.X500Name"] }]
 },
 {
+  "name":"javax.swing.plaf.basic.BasicOptionPaneUI",
+  "methods":[
+    {"name":"createUI","parameterTypes":["javax.swing.JComponent"] }, 
+    {"name":"loadActionMap","parameterTypes":["javax.swing.plaf.basic.LazyActionMap"] }
+  ]
+},
+{
   "name":"javax.swing.plaf.basic.BasicPanelUI",
   "methods":[{"name":"createUI","parameterTypes":["javax.swing.JComponent"] }]
+},
+{
+  "name":"javax.swing.plaf.basic.BasicPasswordFieldUI",
+  "methods":[{"name":"createUI","parameterTypes":["javax.swing.JComponent"] }]
+},
+{
+  "name":"javax.swing.plaf.basic.BasicRootPaneUI",
+  "methods":[{"name":"loadActionMap","parameterTypes":["javax.swing.plaf.basic.LazyActionMap"] }]
 },
 {
   "name":"javax.swing.plaf.basic.BasicTableHeaderUI",
@@ -148,6 +206,10 @@
 },
 {
   "name":"javax.swing.plaf.metal.MetalScrollPaneUI",
+  "methods":[{"name":"createUI","parameterTypes":["javax.swing.JComponent"] }]
+},
+{
+  "name":"javax.swing.plaf.metal.MetalTextFieldUI",
   "methods":[{"name":"createUI","parameterTypes":["javax.swing.JComponent"] }]
 },
 {
@@ -1024,6 +1086,10 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"sun.security.rsa.PSSParameters",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"sun.security.rsa.RSAKeyFactory$Legacy",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -1037,6 +1103,14 @@
 },
 {
   "name":"sun.security.rsa.RSASignature$SHA256withRSA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.ssl.KeyManagerFactoryImpl$SunX509",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.ssl.SSLContextImpl$DefaultSSLContext",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {

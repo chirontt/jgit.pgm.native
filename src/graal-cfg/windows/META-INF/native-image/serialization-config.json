@@ -1,2 +1,24 @@
 [
+  {
+  "name":"org.apache.http.auth.ChallengeState"
+  },
+  {
+  "name":"org.apache.http.impl.auth.BasicScheme"
+  },
+  {
+  "name":"org.apache.http.impl.auth.RFC2617Scheme",
+  "customTargetConstructorClass":"org.apache.http.impl.auth.AuthSchemeBase"
+  },
+  {
+  "name":"org.apache.http.impl.auth.RFC2617Scheme"
+  },
+  {
+  "name":"java.lang.Enum"
+  },
+  {
+  "name":"java.util.HashMap"
+  },
+  {
+  "name":"java.lang.String"
+  }
 ]

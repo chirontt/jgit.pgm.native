@@ -4,7 +4,7 @@
 
     <groupId>com.github.chirontt</groupId>
     <artifactId>jgit.pgm.native</artifactId>
-    <version>5.12.0</version>
+    <version>5.13.0</version>
     <packaging>jar</packaging>
 
     <name>jgit</name> <!-- name of the resulting native executable -->
@@ -14,10 +14,10 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <native.maven.plugin.version>0.9.2</native.maven.plugin.version>
-        <jgit.release.version>5.12.0.202106070339-r</jgit.release.version>
+        <native.maven.plugin.version>0.9.5</native.maven.plugin.version>
+        <jgit.release.version>5.13.0.202109080827-r</jgit.release.version>
         <graalvm.version>21.2.0</graalvm.version>
-        <xz.version>1.8</xz.version>
+        <xz.version>1.9</xz.version>
         <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
         <jgit.args></jgit.args>
         <!-- system properties for the application when run by exec:exec command;
@@ -88,6 +88,44 @@
                         <argument>"${jgit.args}"</argument>
                     </arguments>
                 </configuration>
+            </plugin>
+            <!-- create stand-alone executable uber jar including all dependencies -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>no-deps</shadedClassifierName>
+                            <filters>
+                                <filter>
+                                    <!-- exclude files that sign a jar -->
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>${jgit.mainClass}</Main-Class>
+                                        <Multi-Release>true</Multi-Release>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -219,6 +257,14 @@
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
                             </buildArgs>
                             <skip>false</skip>
+                            <!-- use the uber jar for native image compiling 
+                                 if long classpath is a problem in Windows
+                            -->
+                            <!-- classpath>
+                                <param>
+                                    ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
+                                </param>
+                            </classpath -->
                         </configuration>
                     </plugin>
                     <!-- copy the font config files from the JDK -->
@@ -248,7 +294,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- remove unneeded .dll files -->
+                    <!-- remove unneeded .dll/.txt files -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
