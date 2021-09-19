@@ -36,6 +36,31 @@
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit.pgm</artifactId>
             <version>${jgit.release.version}</version>
+            <exclusions>
+                <!-- exclude the transitive Apache HttpClient 4.5.13 -->
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpclient</artifactId>
+                </exclusion>
+            </exclusions> 
+        </dependency>
+        <!-- include the local Apache HttpClient 4.5.13 with fix for native image usage -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13-native-image-fix</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/httpclient-4.5.13-native-image-fix.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.11</version>
         </dependency>
         <!-- optional, but required by GraalVM native-image build -->
         <dependency>
@@ -88,6 +113,30 @@
                         <argument>"${jgit.args}"</argument>
                     </arguments>
                 </configuration>
+            </plugin>
+            <!-- addjars plugin is needed for the maven-shade-plugin
+                 to include the local httpclient-4.5.13-native-image-fix.jar -->
+            <plugin>
+                <groupId>com.googlecode.addjars-maven-plugin</groupId>
+                <artifactId>addjars-maven-plugin</artifactId>
+                <version>1.0.5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>add-jars</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/lib</directory>
+                                    <includes>
+                                        <include>httpclient-4.5.13-native-image-fix.jar</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <!-- create stand-alone executable uber jar including all dependencies -->
             <plugin>
@@ -209,6 +258,12 @@
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
                             </buildArgs>
                             <skip>false</skip>
+                            <!-- use the uber jar for native image compiling -->
+                            <classpath>
+                                <param>
+                                    ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
+                                </param>
+                            </classpath>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -257,14 +312,12 @@
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
                             </buildArgs>
                             <skip>false</skip>
-                            <!-- use the uber jar for native image compiling 
-                                 if long classpath is a problem in Windows
-                            -->
-                            <!-- classpath>
+                            <!-- use the uber jar for native image compiling -->
+                            <classpath>
                                 <param>
                                     ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
                                 </param>
-                            </classpath -->
+                            </classpath>
                         </configuration>
                     </plugin>
                     <!-- copy the font config files from the JDK -->
