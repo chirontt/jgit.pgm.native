@@ -258,7 +258,7 @@
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
                             </buildArgs>
                             <skip>false</skip>
-                            <!-- use the uber jar for native image compiling -->
+                            <!-- use the shaded uber jar for native image compiling -->
                             <classpath>
                                 <param>
                                     ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
@@ -312,7 +312,7 @@
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
                             </buildArgs>
                             <skip>false</skip>
-                            <!-- use the uber jar for native image compiling -->
+                            <!-- use the shaded uber jar for native image compiling -->
                             <classpath>
                                 <param>
                                     ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
