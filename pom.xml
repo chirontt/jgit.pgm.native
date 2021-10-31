@@ -253,6 +253,7 @@
                                 <buildArg>--report-unsupported-elements-at-runtime</buildArg>
                                 <buildArg>--native-image-info</buildArg>
                                 <buildArg>--verbose</buildArg>
+                                <buildArg>--allow-incomplete-classpath</buildArg>
                                 <!-- buildArg>-H:+TraceNativeToolUsage</buildArg -->
                                 <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
@@ -307,6 +308,7 @@
                                 <buildArg>--report-unsupported-elements-at-runtime</buildArg>
                                 <buildArg>--native-image-info</buildArg>
                                 <buildArg>--verbose</buildArg>
+                                <buildArg>--allow-incomplete-classpath</buildArg>
                                 <!-- buildArg>-H:+TraceNativeToolUsage</buildArg -->
                                 <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
