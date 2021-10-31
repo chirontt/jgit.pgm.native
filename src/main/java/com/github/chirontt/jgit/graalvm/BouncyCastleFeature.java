@@ -2,8 +2,6 @@ package com.github.chirontt.jgit.graalvm;
 
 import org.bouncycastle.crypto.CryptoServicesRegistrar;
 import org.bouncycastle.jcajce.provider.drbg.DRBG;
-import org.bouncycastle.jcajce.provider.drbg.DRBG.Default;
-import org.bouncycastle.jcajce.provider.drbg.DRBG.NonceAndIV;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.graalvm.nativeimage.ImageSingletons;
 import org.graalvm.nativeimage.hosted.Feature;
@@ -36,7 +34,7 @@ public class BouncyCastleFeature implements Feature {
         //command-line option for GraalVM's native-image command)
         RuntimeClassInitializationSupport rci = ImageSingletons.lookup(RuntimeClassInitializationSupport.class);
         //all org.bouncycastle packages are initialized at build time,
-        //but some specific classes need be re-intialized at runtime
+        //but some specific classes need be re-initialized at runtime
         //due to static SecureRandom seeding
         rci.rerunInitialization(CryptoServicesRegistrar.class,
                                 "See https://github.com/micronaut-projects/micronaut-oracle-cloud/pull/17#discussion_r472955378");

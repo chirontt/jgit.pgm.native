@@ -1,6 +1,6 @@
 plugins {
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.9.5'
+    id 'org.graalvm.buildtools.native' version '0.9.6'
 }
 
 wrapper {
@@ -15,7 +15,7 @@ description = 'JGit PGM native executable built by GraalVM'
 ext {
     mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
     jgitReleaseVersion = '5.13.0.202109080827-r'
-    graalvmVersion = '21.2.0'
+    graalvmVersion = '21.3.0'
     xzVersion = '1.9'
     currentPlatform = getCurrentPlatform()
     nativeImageDirName = "native-image-$currentPlatform"
@@ -155,6 +155,7 @@ graalvmNative {
 
             //packages/classes to be initialized at native image run time
             def runTimeInitClasses = [
+                'org.apache.sshd.common.config.keys.loader.AESPrivateKeyObfuscator$LazyKeyLengthsHolder',
                 'org.eclipse.jgit.internal.storage.file.WindowCache',
                 'org.eclipse.jgit.lib.internal.WorkQueue',
                 'org.eclipse.jgit.lib.RepositoryCache',
@@ -171,6 +172,7 @@ graalvmNative {
             buildArgs.add('--initialize-at-build-time=' + buildTimeInitClasses.join(','))
             buildArgs.add('--initialize-at-run-time=' + runTimeInitClasses.join(','))
             buildArgs.add('--native-image-info')
+            buildArgs.add('--allow-incomplete-classpath')
             buildArgs.add("-H:Path=$buildDir/$nativeImageDirName")
             buildArgs.add("-H:TempDirectory=$buildDir/tmp/$nativeImageDirName")
             //buildArgs.add('-H:+TraceNativeToolUsage')

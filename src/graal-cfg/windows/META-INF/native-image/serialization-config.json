@@ -1,23 +1,23 @@
 [
   {
-  "name":"org.apache.http.auth.ChallengeState"
+    "name":"java.lang.Enum"
   },
   {
-  "name":"org.apache.http.impl.auth.BasicScheme"
+    "name":"java.lang.String"
   },
   {
-  "name":"org.apache.http.impl.auth.RFC2617Scheme"
+    "name":"java.util.HashMap"
   },
   {
-  "name":"org.apache.http.impl.auth.AuthSchemeBase"
+    "name":"org.apache.http.auth.ChallengeState"
   },
   {
-  "name":"java.lang.Enum"
+    "name":"org.apache.http.impl.auth.AuthSchemeBase"
   },
   {
-  "name":"java.util.HashMap"
+    "name":"org.apache.http.impl.auth.BasicScheme"
   },
   {
-  "name":"java.lang.String"
+    "name":"org.apache.http.impl.auth.RFC2617Scheme"
   }
 ]
