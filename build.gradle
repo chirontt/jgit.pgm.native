@@ -1,6 +1,6 @@
 plugins {
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.9.6'
+    id 'org.graalvm.buildtools.native' version '0.9.7.1'
 }
 
 wrapper {
@@ -41,14 +41,7 @@ compileJava {
 }
 
 dependencies {
-    implementation("org.eclipse.jgit:org.eclipse.jgit.pgm:$jgitReleaseVersion") {
-        //exclude the transitive Apache HttpClient 4.5.13
-        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-    }
-    //include the local httpclient 4.5.13 version with fix for native image usage
-    implementation files('lib/httpclient-4.5.13-native-image-fix.jar')
-    implementation 'commons-logging:commons-logging:1.2'
-    implementation 'commons-codec:commons-codec:1.11'
+    implementation "org.eclipse.jgit:org.eclipse.jgit.pgm:$jgitReleaseVersion"
 
     //optional, but required by GraalVM native-image build
     implementation "org.tukaani:xz:$xzVersion"
@@ -106,6 +99,8 @@ task removeUnneededDllFiles {
                 exclude name: 'jvm.dll'
             }
         }
+        ant.move(file: "$buildDir/$nativeImageDirName/reports",
+                 tofile: "$buildDir/tmp/$nativeImageDirName/reports")
     }
 }
 

@@ -86,14 +86,9 @@ To compile and run the JGit PGM in standard JVM with Maven, execute the
 	mvnw exec:exec -Djgit.args="glog"
 	etc.
 
-To produce a native executable, execute the `package` task for specific platform
-profile (e.g. for Linux):
+To produce a native executable, execute the `package` task:
 
-	mvnw package -Pnative-linux
-
-or if building on a Windows machine:
-
-	mvnw package -Pnative-windows
+	mvnw package
 
 The `package` task would take a while to compile the application and link into an executable file.
 The resulting `jgit` executable file is:
@@ -131,5 +126,5 @@ can be further reduced in size via compression, using the [UPX](https://upx.gith
 as described [here](https://medium.com/graalvm/compressed-graalvm-native-images-4d233766a214).
 
 As an example, the resulting `jgit.exe` native application file produced in Windows is
-normally 75MB in size, but is compressed to 21MB with the UPX command: `upx --best jgit.exe`
+normally 76MB in size, but is compressed to 22MB with the UPX command: `upx --best jgit.exe`
 

@@ -14,7 +14,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <native.maven.plugin.version>0.9.6</native.maven.plugin.version>
+        <native.maven.plugin.version>0.9.7.1</native.maven.plugin.version>
         <jgit.release.version>5.13.0.202109080827-r</jgit.release.version>
         <graalvm.version>21.3.0</graalvm.version>
         <xz.version>1.9</xz.version>
@@ -36,31 +36,6 @@
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit.pgm</artifactId>
             <version>${jgit.release.version}</version>
-            <exclusions>
-                <!-- exclude the transitive Apache HttpClient 4.5.13 -->
-                <exclusion>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                </exclusion>
-            </exclusions> 
-        </dependency>
-        <!-- include the local Apache HttpClient 4.5.13 with fix for native image usage -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.13-native-image-fix</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/httpclient-4.5.13-native-image-fix.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.11</version>
         </dependency>
         <!-- optional, but required by GraalVM native-image build -->
         <dependency>
@@ -114,30 +89,6 @@
                     </arguments>
                 </configuration>
             </plugin>
-            <!-- addjars plugin is needed for the maven-shade-plugin
-                 to include the local httpclient-4.5.13-native-image-fix.jar -->
-            <plugin>
-                <groupId>com.googlecode.addjars-maven-plugin</groupId>
-                <artifactId>addjars-maven-plugin</artifactId>
-                <version>1.0.5</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>add-jars</goal>
-                        </goals>
-                        <configuration>
-                            <resources>
-                                <resource>
-                                    <directory>${basedir}/lib</directory>
-                                    <includes>
-                                        <include>httpclient-4.5.13-native-image-fix.jar</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <!-- create stand-alone executable uber jar including all dependencies -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -176,6 +127,84 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <version>${native.maven.plugin.version}</version>
+                <executions>
+                    <!-- execution>
+                        <id>test-native</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <phase>test</phase>
+                    </execution -->
+                    <execution>
+                        <id>build-native</id>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
+                    <imageName>${project.name}</imageName>
+                    <mainClass>${jgit.mainClass}</mainClass>
+                    <buildArgs>
+                        <buildArg>-Djava.awt.headless=false</buildArg> <!-- especially for Linux -->
+                        <buildArg>--gc=epsilon</buildArg>  <!-- no garbage collector -->
+                        <buildArg>--no-fallback</buildArg>
+                        <buildArg>--enable-http</buildArg>
+                        <buildArg>--enable-https</buildArg>
+                        <buildArg>--initialize-at-build-time=${build.time.init}</buildArg>
+                        <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
+                        <buildArg>--native-image-info</buildArg>
+                        <buildArg>--verbose</buildArg>
+                        <buildArg>--allow-incomplete-classpath</buildArg>
+                        <!-- buildArg>-H:+TraceNativeToolUsage</buildArg -->
+                        <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
+                        <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
+                    </buildArgs>
+                    <skip>false</skip>
+                    <!-- use the shaded uber jar for native image compiling -->
+                    <classpath>
+                        <param>
+                            ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
+                        </param>
+                    </classpath>
+                </configuration>
+            </plugin>
+            <!-- remove unneeded .dll/.txt files -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>remove-unneeded-dll-files</id>
+                        <phase>package</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <target>
+                        <move todir="${project.build.directory}/tmp/${native.image.dir.name}">
+                            <fileset dir="${project.build.directory}/${native.image.dir.name}">
+                                <include name="*.dll"/>
+                                <include name="*.txt"/>
+                                <!-- keep the shim DLLs -->
+                                <exclude name="java.dll"/>
+                                <exclude name="jvm.dll"/>
+                            </fileset>
+                        </move>
+                        <move file="${project.build.directory}/${native.image.dir.name}/reports"
+                              tofile="${project.build.directory}/tmp/${native.image.dir.name}/reports"/>
+                    </target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -212,116 +241,8 @@
             <properties>
                 <current.platform>windows</current.platform>
             </properties>
-        </profile>
-        <!-- platform-specific profiles for native image generation -->
-        <profile>
-            <id>native-linux</id>
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>org.graalvm.buildtools</groupId>
-                        <artifactId>native-maven-plugin</artifactId>
-                        <version>${native.maven.plugin.version}</version>
-                        <executions>
-                            <!-- execution>
-                                <id>test-native</id>
-                                <goals>
-                                    <goal>test</goal>
-                                </goals>
-                                <phase>test</phase>
-                            </execution -->
-                            <execution>
-                                <id>build-native</id>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                                <phase>package</phase>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
-                            <imageName>${project.name}</imageName>
-                            <mainClass>${jgit.mainClass}</mainClass>
-                            <buildArgs>
-                                <buildArg>-Djava.awt.headless=false</buildArg>
-                                <buildArg>--gc=epsilon</buildArg>  <!-- no garbage collector -->
-                                <buildArg>--no-fallback</buildArg>
-                                <buildArg>--enable-http</buildArg>
-                                <buildArg>--enable-https</buildArg>
-                                <buildArg>--initialize-at-build-time=${build.time.init}</buildArg>
-                                <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
-                                <buildArg>--report-unsupported-elements-at-runtime</buildArg>
-                                <buildArg>--native-image-info</buildArg>
-                                <buildArg>--verbose</buildArg>
-                                <buildArg>--allow-incomplete-classpath</buildArg>
-                                <!-- buildArg>-H:+TraceNativeToolUsage</buildArg -->
-                                <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
-                                <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
-                            </buildArgs>
-                            <skip>false</skip>
-                            <!-- use the shaded uber jar for native image compiling -->
-                            <classpath>
-                                <param>
-                                    ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
-                                </param>
-                            </classpath>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>native-windows</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.graalvm.buildtools</groupId>
-                        <artifactId>native-maven-plugin</artifactId>
-                        <version>${native.maven.plugin.version}</version>
-                        <executions>
-                            <!-- execution>
-                                <id>test-native</id>
-                                <goals>
-                                    <goal>test</goal>
-                                </goals>
-                                <phase>test</phase>
-                            </execution -->
-                            <execution>
-                                <id>build-native</id>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                                <phase>package</phase>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
-                            <imageName>${project.name}</imageName>
-                            <mainClass>${jgit.mainClass}</mainClass>
-                            <buildArgs>
-                                <buildArg>--gc=epsilon</buildArg>  <!-- no garbage collector -->
-                                <buildArg>--no-fallback</buildArg>
-                                <buildArg>--enable-http</buildArg>
-                                <buildArg>--enable-https</buildArg>
-                                <buildArg>--initialize-at-build-time=${build.time.init}</buildArg>
-                                <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
-                                <buildArg>--report-unsupported-elements-at-runtime</buildArg>
-                                <buildArg>--native-image-info</buildArg>
-                                <buildArg>--verbose</buildArg>
-                                <buildArg>--allow-incomplete-classpath</buildArg>
-                                <!-- buildArg>-H:+TraceNativeToolUsage</buildArg -->
-                                <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
-                                <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
-                            </buildArgs>
-                            <skip>false</skip>
-                            <!-- use the shaded uber jar for native image compiling -->
-                            <classpath>
-                                <param>
-                                    ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
-                                </param>
-                            </classpath>
-                        </configuration>
-                    </plugin>
                     <!-- copy the font config files from the JDK -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -348,34 +269,6 @@
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin>
-                    <!-- remove unneeded .dll/.txt files -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>3.0.0</version>
-                        <executions>
-                            <execution>
-                                <id>remove-unneeded-dll-files</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <target>
-                                <move todir="${project.build.directory}/tmp/${native.image.dir.name}">
-                                    <fileset dir="${project.build.directory}/${native.image.dir.name}">
-                                        <include name="*.dll"/>
-                                        <include name="*.txt"/>
-                                        <!-- keep the shim DLLs -->
-                                        <exclude name="java.dll"/>
-                                        <exclude name="jvm.dll"/>
-                                    </fileset>
-                                </move>
-                            </target>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
