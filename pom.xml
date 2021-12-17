@@ -4,7 +4,7 @@
 
     <groupId>com.github.chirontt</groupId>
     <artifactId>jgit.pgm.native</artifactId>
-    <version>5.13.0</version>
+    <version>6.0.0</version>
     <packaging>jar</packaging>
 
     <name>jgit</name> <!-- name of the resulting native executable -->
@@ -14,8 +14,8 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <native.maven.plugin.version>0.9.7.1</native.maven.plugin.version>
-        <jgit.release.version>5.13.0.202109080827-r</jgit.release.version>
+        <native.maven.plugin.version>0.9.8</native.maven.plugin.version>
+        <jgit.release.version>6.0.0.202111291000-r</jgit.release.version>
         <graalvm.version>21.3.0</graalvm.version>
         <xz.version>1.9</xz.version>
         <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
@@ -162,7 +162,7 @@
                         <buildArg>--native-image-info</buildArg>
                         <buildArg>--verbose</buildArg>
                         <buildArg>--allow-incomplete-classpath</buildArg>
-                        <!-- buildArg>-H:+TraceNativeToolUsage</buildArg -->
+                        <buildArg>-H:+TraceNativeToolUsage</buildArg>
                         <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
                         <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
                     </buildArgs>
@@ -201,7 +201,8 @@
                             </fileset>
                         </move>
                         <move file="${project.build.directory}/${native.image.dir.name}/reports"
-                              tofile="${project.build.directory}/tmp/${native.image.dir.name}/reports"/>
+                              tofile="${project.build.directory}/tmp/${native.image.dir.name}/reports"
+                              failonerror="false" quiet="true"/>
                     </target>
                 </configuration>
             </plugin>
