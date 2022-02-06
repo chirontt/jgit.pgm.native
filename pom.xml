@@ -11,12 +11,11 @@
     <description>JGit PGM native executable built by GraalVM</description>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <native.maven.plugin.version>0.9.8</native.maven.plugin.version>
+        <native.maven.plugin.version>0.9.9</native.maven.plugin.version>
         <jgit.release.version>6.0.0.202111291000-r</jgit.release.version>
-        <graalvm.version>21.3.0</graalvm.version>
+        <graalvm.version>22.0.0.2</graalvm.version>
         <xz.version>1.9</xz.version>
         <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
         <jgit.args></jgit.args>
@@ -29,6 +28,10 @@
         <build.time.init>com.google.gson,com.sun.beans.introspect.ClassInfo,com.sun.beans.introspect.PropertyInfo,java.beans.Introspector,org.apache.log4j,org.apache.sshd,org.eclipse.jetty,org.eclipse.jgit,org.slf4j</build.time.init>
         <!-- packages/classes to be initialized at native image run time -->
         <run.time.init>org.apache.sshd.common.config.keys.loader.AESPrivateKeyObfuscator$LazyKeyLengthsHolder,org.eclipse.jgit.internal.storage.file.WindowCache,org.eclipse.jgit.lib.internal.WorkQueue,org.eclipse.jgit.lib.RepositoryCache,org.eclipse.jgit.transport.HttpAuthMethod,org.eclipse.jgit.util.FileUtils</run.time.init>
+        <!-- flags to skip plugin execution or not in each environment -->
+        <skip.in.linux>true</skip.in.linux>
+        <skip.in.macos>true</skip.in.macos>
+        <skip.in.windows>true</skip.in.windows>
     </properties>
 
     <dependencies>
@@ -127,53 +130,123 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- native image build in Linux -->
             <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
                 <version>${native.maven.plugin.version}</version>
                 <executions>
                     <!-- execution>
-                        <id>test-native</id>
+                        <id>test-native-linux</id>
                         <goals>
                             <goal>test</goal>
                         </goals>
                         <phase>test</phase>
                     </execution -->
                     <execution>
-                        <id>build-native</id>
+                        <id>build-native-linux</id>
                         <goals>
                             <goal>build</goal>
                         </goals>
                         <phase>package</phase>
+                        <configuration>
+                            <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
+                            <imageName>${project.name}</imageName>
+                            <mainClass>${jgit.mainClass}</mainClass>
+                            <buildArgs>
+                                <buildArg>-Djava.awt.headless=false</buildArg> <!-- needed for Linux -->
+                                <buildArg>--gc=epsilon</buildArg>  <!-- no garbage collector -->
+                                <buildArg>--no-fallback</buildArg>
+                                <buildArg>--enable-http</buildArg>
+                                <buildArg>--enable-https</buildArg>
+                                <buildArg>--initialize-at-build-time=${build.time.init}</buildArg>
+                                <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
+                                <buildArg>--native-image-info</buildArg>
+                                <buildArg>--verbose</buildArg>
+                                <buildArg>--allow-incomplete-classpath</buildArg>
+                                <buildArg>-H:+TraceNativeToolUsage</buildArg>
+                                <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
+                                <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
+                            </buildArgs>
+                            <skip>${skip.in.linux}</skip>
+                            <!-- use the shaded uber jar for native image compiling -->
+                            <!-- classpath>
+                                <param>
+                                    ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
+                                </param>
+                            </classpath -->
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
-                    <imageName>${project.name}</imageName>
-                    <mainClass>${jgit.mainClass}</mainClass>
-                    <buildArgs>
-                        <buildArg>-Djava.awt.headless=false</buildArg> <!-- especially for Linux -->
-                        <buildArg>--gc=epsilon</buildArg>  <!-- no garbage collector -->
-                        <buildArg>--no-fallback</buildArg>
-                        <buildArg>--enable-http</buildArg>
-                        <buildArg>--enable-https</buildArg>
-                        <buildArg>--initialize-at-build-time=${build.time.init}</buildArg>
-                        <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
-                        <buildArg>--native-image-info</buildArg>
-                        <buildArg>--verbose</buildArg>
-                        <buildArg>--allow-incomplete-classpath</buildArg>
-                        <buildArg>-H:+TraceNativeToolUsage</buildArg>
-                        <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
-                        <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
-                    </buildArgs>
-                    <skip>false</skip>
-                    <!-- use the shaded uber jar for native image compiling -->
-                    <classpath>
-                        <param>
-                            ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
-                        </param>
-                    </classpath>
-                </configuration>
+            </plugin>
+            <!-- native image build in Windows -->
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <version>${native.maven.plugin.version}</version>
+                <executions>
+                    <!-- execution>
+                        <id>test-native-windows</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <phase>test</phase>
+                    </execution -->
+                    <execution>
+                        <id>build-native-windows</id>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
+                            <imageName>${project.name}</imageName>
+                            <mainClass>${jgit.mainClass}</mainClass>
+                            <buildArgs>
+                                <buildArg>--gc=epsilon</buildArg>  <!-- no garbage collector -->
+                                <buildArg>--no-fallback</buildArg>
+                                <buildArg>--enable-http</buildArg>
+                                <buildArg>--enable-https</buildArg>
+                                <buildArg>--initialize-at-build-time=${build.time.init}</buildArg>
+                                <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
+                                <buildArg>--native-image-info</buildArg>
+                                <buildArg>--verbose</buildArg>
+                                <buildArg>--allow-incomplete-classpath</buildArg>
+                                <buildArg>-H:+TraceNativeToolUsage</buildArg>
+                                <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
+                                <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
+                                <!-- temp fix for the link errors since GraalVM 21.3.0 for JDK17 version in Windows
+                                     (see https://github.com/oracle/graal/issues/4072#issuecomment-1025211870) -->
+                                <buildArg>-H:NativeLinkerOption=/export:JDK_LoadSystemLibrary</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_CallMethodByName</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_CallMethodByNameV</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_CallStaticMethodByName</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_ClassString</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_GetEnv</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_GetFieldByName</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_GetStaticFieldByName</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_IsInstanceOfByName</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_NewObjectByName</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_NewStringPlatform</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_SetFieldByName</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowArrayIndexOutOfBoundsException</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowByName</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowIOException</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowIllegalArgumentException</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowInternalError</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowNullPointerException</buildArg>
+                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowOutOfMemoryError</buildArg>
+                            </buildArgs>
+                            <skip>${skip.in.windows}</skip>
+                            <!-- use the shaded uber jar for native image compiling -->
+                            <classpath>
+                                <param>
+                                    ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
+                                </param>
+                            </classpath>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <!-- remove unneeded .dll/.txt files -->
             <plugin>
@@ -191,7 +264,8 @@
                 </executions>
                 <configuration>
                     <target>
-                        <move todir="${project.build.directory}/tmp/${native.image.dir.name}">
+                        <move todir="${project.build.directory}/tmp/${native.image.dir.name}"
+                              failonerror="false" quiet="true">
                             <fileset dir="${project.build.directory}/${native.image.dir.name}">
                                 <include name="*.dll"/>
                                 <include name="*.txt"/>
@@ -219,6 +293,7 @@
             </activation>
             <properties>
                 <current.platform>linux</current.platform>
+                <skip.in.linux>false</skip.in.linux>
             </properties>
         </profile>
         <profile>
@@ -230,6 +305,7 @@
             </activation>
             <properties>
                 <current.platform>macos</current.platform>
+                <skip.in.macos>false</skip.in.macos>
             </properties>
         </profile>
         <profile>
@@ -241,10 +317,11 @@
             </activation>
             <properties>
                 <current.platform>windows</current.platform>
+                <skip.in.windows>false</skip.in.windows>
             </properties>
             <build>
                 <plugins>
-                    <!-- copy the font config files from the JDK -->
+                    <!-- copy the font config files from the JDK in Windows -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-resources-plugin</artifactId>

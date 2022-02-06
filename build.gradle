@@ -1,10 +1,10 @@
 plugins {
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.9.8'
+    id 'org.graalvm.buildtools.native' version '0.9.9'
 }
 
 tasks.wrapper {
-    gradleVersion = '7.3.2'
+    gradleVersion = '7.3.3'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -15,7 +15,7 @@ description = 'JGit PGM native executable built by GraalVM'
 ext {
     mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
     jgitReleaseVersion = '6.0.0.202111291000-r'
-    graalvmVersion = '21.3.0'
+    graalvmVersion = '22.0.0.2'
     xzVersion = '1.9'
     currentPlatform = getCurrentPlatform()
     nativeImageDirName = "native-image-$currentPlatform"
@@ -90,14 +90,16 @@ task copyFontConfigFiles(type: Copy) {
 //remove unneeded .dll/.txt files
 task removeUnneededDllFiles {
     doLast {
-        ant.move(todir: "$buildDir/tmp/$nativeImageDirName") {
-            fileset(dir: "$buildDir/$nativeImageDirName") {
-                include name: '*.dll'
-                include name: '*.pdb'
-                include name: '*.txt'
-                //keep the shim DLLs
-                exclude name: 'java.dll'
-                exclude name: 'jvm.dll'
+        if (file("$buildDir/$nativeImageDirName").exists()) {
+            ant.move(todir: "$buildDir/tmp/$nativeImageDirName") {
+                fileset(dir: "$buildDir/$nativeImageDirName") {
+                    include name: '*.dll'
+                    include name: '*.pdb'
+                    include name: '*.txt'
+                    //keep the shim DLLs
+                    exclude name: 'java.dll'
+                    exclude name: 'jvm.dll'
+                }
             }
         }
         if (file("$buildDir/$nativeImageDirName/reports").exists()) {
@@ -167,7 +169,7 @@ graalvmNative {
             ]
 
             if (currentPlatform == 'linux') {
-                jvmArgs.add('-Djava.awt.headless=false')
+                jvmArgs.add('-Djava.awt.headless=false')  //needed for Linux
             }
 
             buildArgs.add('--gc=epsilon')  //no garbage collector
@@ -179,6 +181,30 @@ graalvmNative {
             buildArgs.add("-H:Path=$buildDir/$nativeImageDirName")
             buildArgs.add("-H:TempDirectory=$buildDir/tmp/$nativeImageDirName")
             buildArgs.add('-H:+TraceNativeToolUsage')
+
+            if (currentPlatform == 'windows') {
+                //temp fix for the link errors since GraalVM 21.3.0 for JDK17 version in Windows
+                //(see https://github.com/oracle/graal/issues/4072#issuecomment-1025211870)
+                buildArgs.add('-H:NativeLinkerOption=/export:JDK_LoadSystemLibrary')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_CallMethodByName')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_CallMethodByNameV')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_CallStaticMethodByName')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ClassString')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_GetEnv')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_GetFieldByName')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_GetStaticFieldByName')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_IsInstanceOfByName')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_NewObjectByName')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_NewStringPlatform')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_SetFieldByName')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowArrayIndexOutOfBoundsException')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowByName')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowIOException')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowIllegalArgumentException')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowInternalError')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowNullPointerException')
+                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowOutOfMemoryError')
+            }
 
             useFatJar = false
         }

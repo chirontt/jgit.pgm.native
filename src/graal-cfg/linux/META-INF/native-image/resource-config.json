@@ -64,13 +64,16 @@
   ]},
   "bundles":[
     {
-      "name":"com.sun.swing.internal.plaf.basic.resources.basic"
+      "name":"com.sun.swing.internal.plaf.basic.resources.basic",
+      "classNames":["com.sun.swing.internal.plaf.basic.resources.basic"]
     }, 
     {
-      "name":"com.sun.swing.internal.plaf.metal.resources.metal"
+      "name":"com.sun.swing.internal.plaf.metal.resources.metal",
+      "classNames":["com.sun.swing.internal.plaf.metal.resources.metal"]
     }, 
     {
-      "name":"org.eclipse.jgit.awtui.UIText"
+      "name":"org.eclipse.jgit.awtui.UIText",
+      "locales":[""]
     }, 
     {
       "name":"org.eclipse.jgit.gitrepo.internal.RepoText"
@@ -94,7 +97,8 @@
       "name":"org.eclipse.jgit.lfs.internal.LfsText"
     }, 
     {
-      "name":"org.eclipse.jgit.pgm.internal.CLIText"
+      "name":"org.eclipse.jgit.pgm.internal.CLIText",
+      "locales":[""]
     }, 
     {
       "name":"org.eclipse.jgit.transport.http.apache.internal.HttpApacheText"
@@ -106,7 +110,8 @@
       "name":"org.kohsuke.args4j.spi.Messages"
     }, 
     {
-      "name":"sun.awt.resources.awt"
+      "name":"sun.awt.resources.awt",
+      "classNames":["sun.awt.resources.awt"]
     }
   ]
 }
