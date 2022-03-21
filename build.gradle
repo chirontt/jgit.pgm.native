@@ -1,20 +1,20 @@
 plugins {
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.9.9'
+    id 'org.graalvm.buildtools.native' version '0.9.10'
 }
 
 tasks.wrapper {
-    gradleVersion = '7.3.3'
+    gradleVersion = '7.4.1'
     distributionType = Wrapper.DistributionType.ALL
 }
 
 group = 'com.github.chirontt'
-version = '6.0.0'
+version = '6.1.0'
 description = 'JGit PGM native executable built by GraalVM'
 
 ext {
     mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
-    jgitReleaseVersion = '6.0.0.202111291000-r'
+    jgitReleaseVersion = '6.1.0.202203080745-r'
     graalvmVersion = '22.0.0.2'
     xzVersion = '1.9'
     currentPlatform = getCurrentPlatform()
@@ -151,7 +151,6 @@ graalvmNative {
                 'com.sun.beans.introspect.ClassInfo',
                 'com.sun.beans.introspect.PropertyInfo',
                 'java.beans.Introspector',
-                'org.apache.log4j',
                 'org.apache.sshd',
                 'org.eclipse.jetty',
                 'org.eclipse.jgit',
@@ -215,6 +214,7 @@ tasks.named("nativeCompile") {
     //use the uber jar as long classpath becomes a problem in Windows:
     dependsOn uberJar
     classpathJar = uberJar.archiveFile
+
     if (currentPlatform == 'windows') {
         finalizedBy copyFontConfigFiles, removeUnneededDllFiles
     }

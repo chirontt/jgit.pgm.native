@@ -32,9 +32,6 @@
       "pattern":"\\Qjetty-dir.css\\E"
     }, 
     {
-      "pattern":"\\Qlog4j.properties\\E"
-    }, 
-    {
       "pattern":"\\Qmozilla/public-suffix-list.txt\\E"
     }, 
     {
@@ -57,6 +54,9 @@
     }, 
     {
       "pattern":"\\Qorg/slf4j/impl/StaticLoggerBinder.class\\E"
+    }, 
+    {
+      "pattern":"\\Qsimplelogger.properties\\E"
     }, 
     {
       "pattern":"\\Qsun/datatransfer/resources/flavormap.properties\\E"
@@ -93,6 +93,9 @@
     }, 
     {
       "name":"org.eclipse.jgit.internal.transport.sshd.SshdText"
+    }, 
+    {
+      "name":"org.eclipse.jgit.internal.transport.sshd.agent.connector.Texts"
     }, 
     {
       "name":"org.eclipse.jgit.lfs.internal.LfsText"

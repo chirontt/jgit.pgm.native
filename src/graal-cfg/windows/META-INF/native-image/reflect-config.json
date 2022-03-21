@@ -251,63 +251,16 @@
   "name":"org.apache.commons.logging.LogFactory"
 },
 {
-  "name":"org.apache.commons.logging.impl.Log4JLogger",
-  "methods":[{"name":"<init>","parameterTypes":["java.lang.String"] }]
+  "name":"org.apache.commons.logging.impl.LogFactoryImpl",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.commons.logging.impl.LogFactoryImpl",
+  "name":"org.apache.commons.logging.impl.SLF4JLogFactory",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"org.apache.commons.logging.impl.WeakHashtable",
   "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"org.apache.log4j.Appender"
-},
-{
-  "name":"org.apache.log4j.AppenderSkeleton",
-  "allPublicMethods":true
-},
-{
-  "name":"org.apache.log4j.Category"
-},
-{
-  "name":"org.apache.log4j.CategoryKey"
-},
-{
-  "name":"org.apache.log4j.ConsoleAppender",
-  "allPublicMethods":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"org.apache.log4j.Layout",
-  "allPublicMethods":true
-},
-{
-  "name":"org.apache.log4j.Level",
-  "fields":[{"name":"TRACE"}]
-},
-{
-  "name":"org.apache.log4j.Logger"
-},
-{
-  "name":"org.apache.log4j.PatternLayout",
-  "allPublicMethods":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"org.apache.log4j.Priority"
-},
-{
-  "name":"org.apache.log4j.WriterAppender",
-  "allPublicMethods":true
-},
-{
-  "name":"org.apache.log4j.helpers.Loader"
-},
-{
-  "name":"org.apache.log4j.spi.OptionHandler"
 },
 {
   "name":"org.bouncycastle.jcajce.provider.asymmetric.DH$Mappings",
@@ -765,10 +718,16 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.eclipse.jgit.pgm.DiffTool"
+},
+{
   "name":"org.eclipse.jgit.pgm.DiffTree"
 },
 {
-  "name":"org.eclipse.jgit.pgm.Fetch"
+  "name":"org.eclipse.jgit.pgm.Fetch",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"org.eclipse.jgit.pgm.Gc"
@@ -1138,6 +1097,10 @@
 },
 {
   "name":"sun.security.rsa.RSASignature$SHA256withRSA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.rsa.RSASignature$SHA384withRSA",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {

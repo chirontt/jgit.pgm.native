@@ -32,9 +32,6 @@
       "pattern":"\\Qjetty-dir.css\\E"
     }, 
     {
-      "pattern":"\\Qlog4j.properties\\E"
-    }, 
-    {
       "pattern":"\\Qmozilla/public-suffix-list.txt\\E"
     }, 
     {
@@ -59,6 +56,9 @@
       "pattern":"\\Qorg/slf4j/impl/StaticLoggerBinder.class\\E"
     }, 
     {
+      "pattern":"\\Qsimplelogger.properties\\E"
+    }, 
+    {
       "pattern":"\\Qsun/datatransfer/resources/flavormap.properties\\E"
     }
   ]},
@@ -73,7 +73,7 @@
     }, 
     {
       "name":"org.eclipse.jgit.awtui.UIText",
-      "locales":[""]
+      "locales":["und"]
     }, 
     {
       "name":"org.eclipse.jgit.gitrepo.internal.RepoText"
@@ -82,7 +82,8 @@
       "name":"org.eclipse.jgit.gpg.bc.internal.BCText"
     }, 
     {
-      "name":"org.eclipse.jgit.internal.JGitText"
+      "name":"org.eclipse.jgit.internal.JGitText",
+      "locales":["und"]
     }, 
     {
       "name":"org.eclipse.jgit.internal.storage.dfs.DfsText"
@@ -94,11 +95,17 @@
       "name":"org.eclipse.jgit.internal.transport.sshd.SshdText"
     }, 
     {
+      "name":"org.eclipse.jgit.internal.transport.sshd.agent.connector.Texts"
+    }, 
+    {
       "name":"org.eclipse.jgit.lfs.internal.LfsText"
     }, 
     {
       "name":"org.eclipse.jgit.pgm.internal.CLIText",
-      "locales":[""]
+      "locales":[
+        "", 
+        "und"
+      ]
     }, 
     {
       "name":"org.eclipse.jgit.transport.http.apache.internal.HttpApacheText"
