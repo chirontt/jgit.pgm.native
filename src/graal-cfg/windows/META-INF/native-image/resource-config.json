@@ -32,6 +32,9 @@
       "pattern":"\\QMETA-INF/services/org.eclipse.jgit.transport.sshd.agent.ConnectorFactory\\E"
     }, 
     {
+      "pattern":"\\QMETA-INF/services/org.slf4j.spi.SLF4JServiceProvider\\E"
+    }, 
+    {
       "pattern":"\\Qcom/sun/jna/win32-x86-64/jnidispatch.dll\\E"
     }, 
     {
@@ -99,10 +102,7 @@
     }, 
     {
       "name":"org.eclipse.jgit.internal.transport.sshd.SshdText",
-      "locales":[
-        "", 
-        "und"
-      ]
+      "locales":["und"]
     }, 
     {
       "name":"org.eclipse.jgit.internal.transport.sshd.agent.connector.Texts"
@@ -112,7 +112,10 @@
     }, 
     {
       "name":"org.eclipse.jgit.pgm.internal.CLIText",
-      "locales":["und"]
+      "locales":[
+        "", 
+        "und"
+      ]
     }, 
     {
       "name":"org.eclipse.jgit.transport.http.apache.internal.HttpApacheText"

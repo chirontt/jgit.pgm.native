@@ -134,6 +134,7 @@
                                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
                                         <Main-Class>${jgit.mainClass}</Main-Class>
+                                        <Implementation-Version>${jgit.release.version}</Implementation-Version>
                                         <Multi-Release>true</Multi-Release>
                                     </manifestEntries>
                                 </transformer>

@@ -86,7 +86,10 @@
     }, 
     {
       "name":"org.eclipse.jgit.internal.JGitText",
-      "locales":["und"]
+      "locales":[
+        "", 
+        "und"
+      ]
     }, 
     {
       "name":"org.eclipse.jgit.internal.storage.dfs.DfsText"

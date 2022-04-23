@@ -126,6 +126,7 @@ task uberJar(type: Jar) {
     manifest {
         attributes(
             'Main-Class': project.mainClassName,
+            'Implementation-Version': jgitReleaseVersion,
             'Created-By': System.getProperty('java.runtime.version') + ' (' + System.getProperty('java.vendor') + ')',
             'Built-By': System.getProperty('user.name'),
             'Gradle-Version': 'Gradle ' + gradle.getGradleVersion(),
