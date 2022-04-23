@@ -57,6 +57,17 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"com.sun.jna.CallbackProxy",
+  "queriedMethods":[{"name":"callback","parameterTypes":["java.lang.Object[]"] }]
+},
+{
+  "name":"com.sun.jna.platform.win32.WinDef$HWND",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.jna.win32.DLLCallback"
+},
+{
   "name":"java.awt.Image"
 },
 {
@@ -130,7 +141,45 @@
   "methods":[{"name":"getContextClassLoader","parameterTypes":[] }]
 },
 {
+  "name":"java.lang.Throwable",
+  "queriedMethods":[{"name":"addSuppressed","parameterTypes":["java.lang.Throwable"] }]
+},
+{
+  "name":"java.lang.invoke.MethodHandle",
+  "queriedMethods":[
+    {"name":"bindTo","parameterTypes":["java.lang.Object"] }, 
+    {"name":"invokeWithArguments","parameterTypes":["java.lang.Object[]"] }
+  ]
+},
+{
+  "name":"java.lang.invoke.MethodHandles",
+  "queriedMethods":[
+    {"name":"lookup","parameterTypes":[] }, 
+    {"name":"privateLookupIn","parameterTypes":["java.lang.Class","java.lang.invoke.MethodHandles$Lookup"] }
+  ]
+},
+{
+  "name":"java.lang.invoke.MethodHandles$Lookup",
+  "queriedMethods":[
+    {"name":"findSpecial","parameterTypes":["java.lang.Class","java.lang.String","java.lang.invoke.MethodType","java.lang.Class"] }, 
+    {"name":"in","parameterTypes":["java.lang.Class"] }, 
+    {"name":"unreflectSpecial","parameterTypes":["java.lang.reflect.Method","java.lang.Class"] }
+  ]
+},
+{
+  "name":"java.lang.invoke.MethodType",
+  "queriedMethods":[{"name":"methodType","parameterTypes":["java.lang.Class","java.lang.Class[]"] }]
+},
+{
+  "name":"java.lang.reflect.Method",
+  "methods":[{"name":"isDefault","parameterTypes":[] }],
+  "queriedMethods":[{"name":"isVarArgs","parameterTypes":[] }]
+},
+{
   "name":"java.net.URL"
+},
+{
+  "name":"java.nio.Buffer"
 },
 {
   "name":"java.nio.ByteBuffer"
@@ -155,13 +204,29 @@
   "name":"java.security.AlgorithmParametersSpi"
 },
 {
+  "name":"java.security.KeyFactory",
+  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String","java.lang.String"] }]
+},
+{
+  "name":"java.security.KeyPairGenerator",
+  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String","java.lang.String"] }]
+},
+{
   "name":"java.security.KeyStoreSpi"
+},
+{
+  "name":"java.security.MessageDigest",
+  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String","java.lang.String"] }]
 },
 {
   "name":"java.security.MessageDigestSpi"
 },
 {
   "name":"java.security.SecureRandomParameters"
+},
+{
+  "name":"java.security.Signature",
+  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String","java.lang.String"] }]
 },
 {
   "name":"java.security.cert.PKIXRevocationChecker"
@@ -183,6 +248,21 @@
 },
 {
   "name":"java.util.List"
+},
+{
+  "name":"javax.crypto.Cipher",
+  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String","java.lang.String"] }]
+},
+{
+  "name":"javax.crypto.KeyAgreement",
+  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String","java.lang.String"] }]
+},
+{
+  "name":"javax.crypto.Mac",
+  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String","java.lang.String"] }]
+},
+{
+  "name":"javax.crypto.spec.GCMParameterSpec"
 },
 {
   "name":"javax.security.auth.x500.X500Principal",
@@ -248,6 +328,17 @@
   "methods":[{"name":"createUI","parameterTypes":["javax.swing.JComponent"] }]
 },
 {
+  "name":"net.i2p.crypto.eddsa.EdDSAKey"
+},
+{
+  "name":"net.i2p.crypto.eddsa.EdDSASecurityProvider",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"net.i2p.crypto.eddsa.KeyFactory",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.apache.commons.logging.LogFactory"
 },
 {
@@ -260,6 +351,41 @@
 },
 {
   "name":"org.apache.commons.logging.impl.WeakHashtable",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.sshd.common.SshConstants",
+  "allPublicFields":true
+},
+{
+  "name":"org.apache.sshd.common.io.nio2.Nio2ServiceFactoryFactory",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.sshd.common.session.SessionListener",
+  "methods":[
+    {"name":"sessionClosed","parameterTypes":["org.apache.sshd.common.session.Session"] }, 
+    {"name":"sessionCreated","parameterTypes":["org.apache.sshd.common.session.Session"] }, 
+    {"name":"sessionDisconnect","parameterTypes":["org.apache.sshd.common.session.Session","int","java.lang.String","java.lang.String","boolean"] }, 
+    {"name":"sessionEstablished","parameterTypes":["org.apache.sshd.common.session.Session"] }, 
+    {"name":"sessionEvent","parameterTypes":["org.apache.sshd.common.session.Session","org.apache.sshd.common.session.SessionListener$Event"] }, 
+    {"name":"sessionNegotiationEnd","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map","java.util.Map","java.util.Map","java.lang.Throwable"] }, 
+    {"name":"sessionNegotiationOptionsCreated","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map"] }, 
+    {"name":"sessionNegotiationStart","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map","java.util.Map"] }, 
+    {"name":"sessionPeerIdentificationReceived","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.String","java.util.List"] }, 
+    {"name":"sessionPeerIdentificationSend","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.String","java.util.List"] }
+  ]
+},
+{
+  "name":"org.apache.sshd.common.util.security.bouncycastle.BouncyCastleSecurityProviderRegistrar",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.sshd.common.util.security.eddsa.EdDSASecurityProviderRegistrar",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.COMPOSITE$Mappings",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -311,6 +437,50 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.dh.KeyPairGeneratorSpi",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.ec.KeyAgreementSpi$DH",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.ec.KeyFactorySpi$EC",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.ec.KeyPairGeneratorSpi$EC",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.ec.SignatureSpi$ecDSA256",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.edec.KeyAgreementSpi$X25519",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.edec.KeyAgreementSpi$X448",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.edec.KeyFactorySpi$X25519",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.edec.KeyFactorySpi$X448",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.edec.KeyPairGeneratorSpi$X25519",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.edec.KeyPairGeneratorSpi$X448",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.bouncycastle.jcajce.provider.asymmetric.rsa.KeyFactorySpi",
   "allPublicMethods":true,
   "allPublicConstructors":true
@@ -348,6 +518,10 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.bouncycastle.jcajce.provider.digest.MD5$Digest",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.bouncycastle.jcajce.provider.digest.MD5$Mappings",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -368,11 +542,27 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.bouncycastle.jcajce.provider.digest.SHA1$Digest",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.bouncycastle.jcajce.provider.digest.SHA1$Mappings",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.bouncycastle.jcajce.provider.digest.SHA224$Digest",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.bouncycastle.jcajce.provider.digest.SHA224$Mappings",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.digest.SHA256$Digest",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.digest.SHA256$HashMac",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -384,7 +574,15 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.bouncycastle.jcajce.provider.digest.SHA384$Digest",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.bouncycastle.jcajce.provider.digest.SHA384$Mappings",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.digest.SHA512$Digest",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -421,6 +619,10 @@
 },
 {
   "name":"org.bouncycastle.jcajce.provider.keystore.PKCS12$Mappings",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.symmetric.AES$ECB",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -608,6 +810,10 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.bouncycastle.jce.provider.BouncyCastleProvider",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.eclipse.jgit.awtui.UIText",
   "allPublicFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
@@ -617,11 +823,20 @@
   "methods":[{"name":"install","parameterTypes":[] }]
 },
 {
+  "name":"org.eclipse.jgit.console.ConsoleCredentialsProvider",
+  "methods":[{"name":"install","parameterTypes":[] }]
+},
+{
   "name":"org.eclipse.jgit.diff.DiffAlgorithm$SupportedAlgorithm",
   "methods":[{"name":"values","parameterTypes":[] }]
 },
 {
   "name":"org.eclipse.jgit.internal.JGitText",
+  "allPublicFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.internal.transport.sshd.SshdText",
   "allPublicFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },

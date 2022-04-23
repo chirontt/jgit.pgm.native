@@ -1,2 +1,17 @@
 [
+  {
+    "interfaces":["com.sun.jna.platform.win32.Kernel32"]}
+  ,
+  {
+    "interfaces":["com.sun.jna.platform.win32.User32"]}
+  ,
+  {
+    "interfaces":["org.apache.sshd.common.channel.ChannelListener"]}
+  ,
+  {
+    "interfaces":["org.apache.sshd.common.forward.PortForwardingEventListener"]}
+  ,
+  {
+    "interfaces":["org.apache.sshd.common.session.SessionListener"]}
+  
 ]

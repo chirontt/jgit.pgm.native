@@ -1,10 +1,10 @@
 plugins {
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.9.10'
+    id 'org.graalvm.buildtools.native' version '0.9.11'
 }
 
 tasks.wrapper {
-    gradleVersion = '7.4.1'
+    gradleVersion = '7.4.2'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -15,8 +15,9 @@ description = 'JGit PGM native executable built by GraalVM'
 ext {
     mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
     jgitReleaseVersion = '6.1.0.202203080745-r'
-    graalvmVersion = '22.0.0.2'
+    slf4jVersion = '2.0.0-alpha7'
     xzVersion = '1.9'
+    graalvmVersion = '22.0.0.2'
     currentPlatform = getCurrentPlatform()
     nativeImageDirName = "native-image-$currentPlatform"
 }
@@ -41,7 +42,10 @@ compileJava {
 }
 
 dependencies {
-    implementation "org.eclipse.jgit:org.eclipse.jgit.pgm:$jgitReleaseVersion"
+    implementation("org.eclipse.jgit:org.eclipse.jgit.pgm:$jgitReleaseVersion") {
+        exclude group: 'org.slf4j', module: '*'
+    }
+    implementation "org.slf4j:slf4j-simple:$slf4jVersion"
 
     //optional, but required by GraalVM native-image build
     implementation "org.tukaani:xz:$xzVersion"

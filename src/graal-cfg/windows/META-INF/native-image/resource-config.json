@@ -29,6 +29,12 @@
       "pattern":"\\QMETA-INF/services/org.eclipse.jgit.transport.SshSessionFactory\\E"
     }, 
     {
+      "pattern":"\\QMETA-INF/services/org.eclipse.jgit.transport.sshd.agent.ConnectorFactory\\E"
+    }, 
+    {
+      "pattern":"\\Qcom/sun/jna/win32-x86-64/jnidispatch.dll\\E"
+    }, 
+    {
       "pattern":"\\Qjetty-dir.css\\E"
     }, 
     {
@@ -51,9 +57,6 @@
     }, 
     {
       "pattern":"\\Qorg/eclipse/jetty/version/build.properties\\E"
-    }, 
-    {
-      "pattern":"\\Qorg/slf4j/impl/StaticLoggerBinder.class\\E"
     }, 
     {
       "pattern":"\\Qsimplelogger.properties\\E"
@@ -83,7 +86,10 @@
     }, 
     {
       "name":"org.eclipse.jgit.internal.JGitText",
-      "locales":["und"]
+      "locales":[
+        "", 
+        "und"
+      ]
     }, 
     {
       "name":"org.eclipse.jgit.internal.storage.dfs.DfsText"
@@ -92,7 +98,11 @@
       "name":"org.eclipse.jgit.internal.transport.jsch.JSchText"
     }, 
     {
-      "name":"org.eclipse.jgit.internal.transport.sshd.SshdText"
+      "name":"org.eclipse.jgit.internal.transport.sshd.SshdText",
+      "locales":[
+        "", 
+        "und"
+      ]
     }, 
     {
       "name":"org.eclipse.jgit.internal.transport.sshd.agent.connector.Texts"
@@ -102,10 +112,7 @@
     }, 
     {
       "name":"org.eclipse.jgit.pgm.internal.CLIText",
-      "locales":[
-        "", 
-        "und"
-      ]
+      "locales":["und"]
     }, 
     {
       "name":"org.eclipse.jgit.transport.http.apache.internal.HttpApacheText"
