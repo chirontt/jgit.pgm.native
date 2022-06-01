@@ -76,7 +76,10 @@
     }, 
     {
       "name":"org.eclipse.jgit.awtui.UIText",
-      "locales":["und"]
+      "locales":[
+        "", 
+        "und"
+      ]
     }, 
     {
       "name":"org.eclipse.jgit.gitrepo.internal.RepoText"
@@ -86,10 +89,7 @@
     }, 
     {
       "name":"org.eclipse.jgit.internal.JGitText",
-      "locales":[
-        "", 
-        "und"
-      ]
+      "locales":["und"]
     }, 
     {
       "name":"org.eclipse.jgit.internal.storage.dfs.DfsText"
@@ -99,10 +99,7 @@
     }, 
     {
       "name":"org.eclipse.jgit.internal.transport.sshd.SshdText",
-      "locales":[
-        "", 
-        "und"
-      ]
+      "locales":["und"]
     }, 
     {
       "name":"org.eclipse.jgit.internal.transport.sshd.agent.connector.Texts"

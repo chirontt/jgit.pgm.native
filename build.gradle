@@ -17,7 +17,7 @@ ext {
     jgitReleaseVersion = '6.1.0.202203080745-r'
     slf4jVersion = '2.0.0-alpha7'
     xzVersion = '1.9'
-    graalvmVersion = '22.0.0.2'
+    graalvmVersion = '22.1.0.1'
     currentPlatform = getCurrentPlatform()
     nativeImageDirName = "native-image-$currentPlatform"
 }
@@ -181,33 +181,14 @@ graalvmNative {
             buildArgs.add('--initialize-at-build-time=' + buildTimeInitClasses.join(','))
             buildArgs.add('--initialize-at-run-time=' + runTimeInitClasses.join(','))
             buildArgs.add('--native-image-info')
-            buildArgs.add('--allow-incomplete-classpath')
             buildArgs.add("-H:Path=$buildDir/$nativeImageDirName")
             buildArgs.add("-H:TempDirectory=$buildDir/tmp/$nativeImageDirName")
             buildArgs.add('-H:+TraceNativeToolUsage')
 
             if (currentPlatform == 'windows') {
-                //temp fix for the link errors since GraalVM 21.3.0 for JDK17 version in Windows
-                //(see https://github.com/oracle/graal/issues/4072#issuecomment-1025211870)
-                buildArgs.add('-H:NativeLinkerOption=/export:JDK_LoadSystemLibrary')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_CallMethodByName')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_CallMethodByNameV')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_CallStaticMethodByName')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ClassString')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_GetEnv')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_GetFieldByName')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_GetStaticFieldByName')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_IsInstanceOfByName')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_NewObjectByName')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_NewStringPlatform')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_SetFieldByName')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowArrayIndexOutOfBoundsException')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowByName')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowIOException')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowIllegalArgumentException')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowInternalError')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowNullPointerException')
-                buildArgs.add('-H:NativeLinkerOption=/export:JNU_ThrowOutOfMemoryError')
+                //temp fix for the "Unsupported OptionOrigin" error in GraalVM 22.1.0 version in Windows
+                //(see https://github.com/oracle/graal/issues/4502)
+                useArgFile = false
             }
 
             useFatJar = false

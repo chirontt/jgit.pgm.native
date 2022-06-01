@@ -6,6 +6,10 @@
   "name":"[Lsun.java2d.loops.GraphicsPrimitive;"
 },
 {
+  "name":"java.awt.AWTError",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String"] }]
+},
+{
   "name":"java.awt.AWTEvent",
   "fields":[
     {"name":"bdata"}, 

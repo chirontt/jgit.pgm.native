@@ -16,7 +16,7 @@
         <native.maven.plugin.version>0.9.11</native.maven.plugin.version>
         <jgit.release.version>6.1.0.202203080745-r</jgit.release.version>
         <slf4j.version>2.0.0-alpha7</slf4j.version>
-        <graalvm.version>22.0.0.2</graalvm.version>
+        <graalvm.version>22.1.0.1</graalvm.version>
         <xz.version>1.9</xz.version>
         <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
         <jgit.args></jgit.args>
@@ -180,7 +180,6 @@
                                 <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
                                 <buildArg>--native-image-info</buildArg>
                                 <buildArg>--verbose</buildArg>
-                                <buildArg>--allow-incomplete-classpath</buildArg>
                                 <buildArg>-H:+TraceNativeToolUsage</buildArg>
                                 <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
@@ -225,33 +224,14 @@
                                 <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
                                 <buildArg>--native-image-info</buildArg>
                                 <buildArg>--verbose</buildArg>
-                                <buildArg>--allow-incomplete-classpath</buildArg>
                                 <buildArg>-H:+TraceNativeToolUsage</buildArg>
                                 <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
-                                <!-- temp fix for the link errors since GraalVM 21.3.0 for JDK17 version in Windows
-                                     (see https://github.com/oracle/graal/issues/4072#issuecomment-1025211870) -->
-                                <buildArg>-H:NativeLinkerOption=/export:JDK_LoadSystemLibrary</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_CallMethodByName</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_CallMethodByNameV</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_CallStaticMethodByName</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_ClassString</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_GetEnv</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_GetFieldByName</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_GetStaticFieldByName</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_IsInstanceOfByName</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_NewObjectByName</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_NewStringPlatform</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_SetFieldByName</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowArrayIndexOutOfBoundsException</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowByName</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowIOException</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowIllegalArgumentException</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowInternalError</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowNullPointerException</buildArg>
-                                <buildArg>-H:NativeLinkerOption=/export:JNU_ThrowOutOfMemoryError</buildArg>
                             </buildArgs>
                             <skip>${skip.in.windows}</skip>
+                            <!-- temp fix for the "Unsupported OptionOrigin" error in GraalVM 22.1.0 version in Windows
+                                 (see https://github.com/oracle/graal/issues/4502) -->
+                            <useArgFile>false</useArgFile>
                             <!-- use the shaded uber jar for native image compiling -->
                             <classpath>
                                 <param>
