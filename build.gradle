@@ -9,12 +9,12 @@ tasks.wrapper {
 }
 
 group = 'com.github.chirontt'
-version = '6.1.0'
+version = '6.2.0'
 description = 'JGit PGM native executable built by GraalVM'
 
 ext {
     mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
-    jgitReleaseVersion = '6.1.0.202203080745-r'
+    jgitReleaseVersion = '6.2.0.202206071550-r'
     slf4jVersion = '2.0.0-alpha7'
     xzVersion = '1.9'
     graalvmVersion = '22.1.0.1'
