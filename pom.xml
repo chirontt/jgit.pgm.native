@@ -4,7 +4,7 @@
 
     <groupId>com.github.chirontt</groupId>
     <artifactId>jgit.pgm.native</artifactId>
-    <version>6.2.0</version>
+    <version>6.3.0</version>
     <packaging>jar</packaging>
 
     <name>jgit</name> <!-- name of the resulting native executable -->
@@ -13,10 +13,10 @@
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <native.maven.plugin.version>0.9.11</native.maven.plugin.version>
-        <jgit.release.version>6.2.0.202206071550-r</jgit.release.version>
-        <slf4j.version>2.0.0-alpha7</slf4j.version>
-        <graalvm.version>22.1.0.1</graalvm.version>
+        <native.maven.plugin.version>0.9.13</native.maven.plugin.version>
+        <jgit.release.version>6.3.0.202209071007-r</jgit.release.version>
+        <slf4j.version>2.0.0</slf4j.version>
+        <graalvm.version>22.2.0</graalvm.version>
         <xz.version>1.9</xz.version>
         <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
         <jgit.args></jgit.args>
@@ -229,9 +229,6 @@
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
                             </buildArgs>
                             <skip>${skip.in.windows}</skip>
-                            <!-- temp fix for the "Unsupported OptionOrigin" error in GraalVM 22.1.0 version in Windows
-                                 (see https://github.com/oracle/graal/issues/4502) -->
-                            <useArgFile>false</useArgFile>
                             <!-- use the shaded uber jar for native image compiling -->
                             <classpath>
                                 <param>
