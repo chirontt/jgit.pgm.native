@@ -184,6 +184,9 @@ graalvmNative {
             buildArgs.add("-H:Path=$buildDir/$nativeImageDirName")
             buildArgs.add("-H:TempDirectory=$buildDir/tmp/$nativeImageDirName")
             buildArgs.add('-H:+TraceNativeToolUsage')
+            buildArgs.add('-H:ClassInitialization=org.bouncycastle.crypto.CryptoServicesRegistrar:rerun')
+            buildArgs.add('-H:ClassInitialization=org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun')
+            buildArgs.add('-H:ClassInitialization=org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun')
 
             useFatJar = false
         }

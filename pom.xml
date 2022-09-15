@@ -183,6 +183,9 @@
                                 <buildArg>-H:+TraceNativeToolUsage</buildArg>
                                 <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
+                                <buildArg>-H:ClassInitialization=org.bouncycastle.crypto.CryptoServicesRegistrar:rerun</buildArg>
+                                <buildArg>-H:ClassInitialization=org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun</buildArg>
+                                <buildArg>-H:ClassInitialization=org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun</buildArg>
                             </buildArgs>
                             <skip>${skip.in.linux}</skip>
                             <!-- use the shaded uber jar for native image compiling -->
@@ -227,6 +230,9 @@
                                 <buildArg>-H:+TraceNativeToolUsage</buildArg>
                                 <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
+                                <buildArg>-H:ClassInitialization=org.bouncycastle.crypto.CryptoServicesRegistrar:rerun</buildArg>
+                                <buildArg>-H:ClassInitialization=org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun</buildArg>
+                                <buildArg>-H:ClassInitialization=org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun</buildArg>
                             </buildArgs>
                             <skip>${skip.in.windows}</skip>
                             <!-- use the shaded uber jar for native image compiling -->
