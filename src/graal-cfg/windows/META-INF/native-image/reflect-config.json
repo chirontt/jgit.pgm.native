@@ -353,10 +353,6 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.apache.commons.logging.impl.SLF4JLogFactory",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"org.apache.commons.logging.impl.WeakHashtable",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },

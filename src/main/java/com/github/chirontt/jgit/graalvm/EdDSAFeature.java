@@ -5,11 +5,8 @@ import java.security.Security;
 import org.graalvm.nativeimage.hosted.Feature;
 import org.graalvm.nativeimage.hosted.RuntimeClassInitialization;
 
-import com.oracle.svm.core.annotate.AutomaticFeature;
-
 import net.i2p.crypto.eddsa.EdDSASecurityProvider;
 
-@AutomaticFeature
 public class EdDSAFeature implements Feature {
 
     @Override

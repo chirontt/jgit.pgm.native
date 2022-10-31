@@ -6,13 +6,10 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.graalvm.nativeimage.hosted.Feature;
 import org.graalvm.nativeimage.hosted.RuntimeClassInitialization;
 
-import com.oracle.svm.core.annotate.AutomaticFeature;
-
 /**
  * derived from
  * https://github.com/micronaut-projects/micronaut-oracle-cloud/pull/17
  */
-@AutomaticFeature
 public class BouncyCastleFeature implements Feature {
 
     @Override

@@ -1,6 +1,6 @@
 plugins {
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.9.13'
+    id 'org.graalvm.buildtools.native' version '0.9.16'
 }
 
 tasks.wrapper {
@@ -15,9 +15,9 @@ description = 'JGit PGM native executable built by GraalVM'
 ext {
     mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
     jgitReleaseVersion = '6.3.0.202209071007-r'
-    slf4jVersion = '2.0.0'
+    slf4jVersion = '2.0.3'
     xzVersion = '1.9'
-    graalvmVersion = '22.2.0'
+    graalvmVersion = '22.3.0'
     currentPlatform = getCurrentPlatform()
     nativeImageDirName = "native-image-$currentPlatform"
 }
@@ -50,8 +50,8 @@ dependencies {
     //optional, but required by GraalVM native-image build
     implementation "org.tukaani:xz:$xzVersion"
 
-    //for compiling GraalVM substitution classes
-    compileOnly "org.graalvm.nativeimage:svm:$graalvmVersion"
+    //for compiling GraalVM Feature implementation classes
+    compileOnly "org.graalvm.sdk:graal-sdk:$graalvmVersion"
 }
 
 sourceSets {
@@ -150,6 +150,12 @@ graalvmNative {
             verbose = true
             fallback = false
 
+            //list of GraalVM Feature implementation classes
+            def featureClasses = [
+                'com.github.chirontt.jgit.graalvm.BouncyCastleFeature',
+                'com.github.chirontt.jgit.graalvm.EdDSAFeature',
+            ]
+
             //packages/classes to be initialized at native image build time
             def buildTimeInitClasses = [
                 'com.google.gson',
@@ -172,21 +178,31 @@ graalvmNative {
                 'org.eclipse.jgit.util.FileUtils',
             ]
 
+            //packages/classes to be re-initialized at native image run time
+            def runTimeReInitClasses = [
+                //all BouncyCastle classes are required to be initialized at build time
+                //(specified in the BouncyCastleFeature class), but due to SecureRandom seeding
+                //in their static initialization blocks, some BouncyCastle classes need be
+                //re-initialized at native image run time:
+                'org.bouncycastle.crypto.CryptoServicesRegistrar:rerun',
+                'org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun',
+                'org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun',
+            ]
+
             if (currentPlatform == 'linux') {
                 jvmArgs.add('-Djava.awt.headless=false')  //needed for Linux
             }
 
             buildArgs.add('--gc=epsilon')  //no garbage collector
             buildArgs.add('--enable-url-protocols=http,https')
+            buildArgs.add('--features=' + featureClasses.join(','))
             buildArgs.add('--initialize-at-build-time=' + buildTimeInitClasses.join(','))
             buildArgs.add('--initialize-at-run-time=' + runTimeInitClasses.join(','))
+            buildArgs.add('-H:ClassInitialization=' + runTimeReInitClasses.join(','))
             buildArgs.add('--native-image-info')
             buildArgs.add("-H:Path=$buildDir/$nativeImageDirName")
             buildArgs.add("-H:TempDirectory=$buildDir/tmp/$nativeImageDirName")
             buildArgs.add('-H:+TraceNativeToolUsage')
-            buildArgs.add('-H:ClassInitialization=org.bouncycastle.crypto.CryptoServicesRegistrar:rerun')
-            buildArgs.add('-H:ClassInitialization=org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun')
-            buildArgs.add('-H:ClassInitialization=org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun')
 
             useFatJar = false
         }
