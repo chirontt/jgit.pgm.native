@@ -1,6 +1,6 @@
 plugins {
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.9.16'
+    id 'org.graalvm.buildtools.native' version '0.9.17'
 }
 
 tasks.wrapper {
@@ -142,6 +142,7 @@ task uberJar(type: Jar) {
 }
 
 graalvmNative {
+    toolchainDetection = false
     binaries {
         main {
             imageName = project.name

@@ -13,7 +13,7 @@
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <native.maven.plugin.version>0.9.16</native.maven.plugin.version>
+        <native.maven.plugin.version>0.9.17</native.maven.plugin.version>
         <jgit.release.version>6.3.0.202209071007-r</jgit.release.version>
         <slf4j.version>2.0.3</slf4j.version>
         <graalvm.version>22.3.0</graalvm.version>
@@ -187,10 +187,14 @@
                             <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
                             <imageName>${project.name}</imageName>
                             <mainClass>${jgit.mainClass}</mainClass>
+                            <debug>true</debug>
+                            <verbose>true</verbose>
+                            <fallback>false</fallback>
+                            <jvmArgs>
+                                <arg>-Djava.awt.headless=false</arg>
+                            </jvmArgs>
                             <buildArgs>
-                                <buildArg>-Djava.awt.headless=false</buildArg> <!-- needed for Linux -->
                                 <buildArg>--gc=epsilon</buildArg>  <!-- no garbage collector -->
-                                <buildArg>--no-fallback</buildArg>
                                 <buildArg>--enable-http</buildArg>
                                 <buildArg>--enable-https</buildArg>
                                 <buildArg>--features=${feature.classes}</buildArg>
@@ -198,7 +202,6 @@
                                 <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
                                 <buildArg>-H:ClassInitialization=${run.time.re.init}</buildArg>
                                 <buildArg>--native-image-info</buildArg>
-                                <buildArg>--verbose</buildArg>
                                 <buildArg>-H:+TraceNativeToolUsage</buildArg>
                                 <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
@@ -234,9 +237,11 @@
                             <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
                             <imageName>${project.name}</imageName>
                             <mainClass>${jgit.mainClass}</mainClass>
+                            <debug>false</debug>
+                            <verbose>true</verbose>
+                            <fallback>false</fallback>
                             <buildArgs>
                                 <buildArg>--gc=epsilon</buildArg>  <!-- no garbage collector -->
-                                <buildArg>--no-fallback</buildArg>
                                 <buildArg>--enable-http</buildArg>
                                 <buildArg>--enable-https</buildArg>
                                 <buildArg>--features=${feature.classes}</buildArg>
@@ -244,7 +249,6 @@
                                 <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
                                 <buildArg>-H:ClassInitialization=${run.time.re.init}</buildArg>
                                 <buildArg>--native-image-info</buildArg>
-                                <buildArg>--verbose</buildArg>
                                 <buildArg>-H:+TraceNativeToolUsage</buildArg>
                                 <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
                                 <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
