@@ -101,7 +101,7 @@
       "name":"org.eclipse.jgit.internal.storage.dfs.DfsText"
     }, 
     {
-      "name":"org.eclipse.jgit.internal.transport.jsch.JSchText"
+      "name":"org.eclipse.jgit.internal.transport.ssh.jsch.JSchText"
     }, 
     {
       "name":"org.eclipse.jgit.internal.transport.sshd.SshdText",

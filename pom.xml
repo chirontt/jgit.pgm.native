@@ -35,7 +35,7 @@
         </build.time.init>
         <!-- packages/classes to be initialized at native image run time -->
         <run.time.init>
-            org.apache.sshd.common.config.keys.loader.AESPrivateKeyObfuscator$LazyKeyLengthsHolder,org.eclipse.jgit.internal.storage.file.WindowCache,org.eclipse.jgit.lib.internal.WorkQueue,org.eclipse.jgit.lib.RepositoryCache,org.eclipse.jgit.transport.HttpAuthMethod,org.eclipse.jgit.util.FileUtils
+            org.apache.sshd.common.config.keys.loader.AESPrivateKeyObfuscator$LazyKeyLengthsHolder,org.eclipse.jgit.internal.storage.file.WindowCache,org.eclipse.jgit.lib.internal.WorkQueue,org.eclipse.jgit.lib.RepositoryCache,org.eclipse.jgit.transport.HttpAuthMethod
         </run.time.init>
         <!-- packages/classes to be re-initialized at native image run time -->
         <!-- all BouncyCastle classes are required to be initialized at build time
@@ -43,7 +43,7 @@
              in their static initialization blocks, some BouncyCastle classes need be
              re-initialized at native image run time -->
         <run.time.re.init>
-            org.bouncycastle.crypto.CryptoServicesRegistrar:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun
+            org.bouncycastle.crypto.CryptoServicesRegistrar:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun,org.eclipse.jgit.util.FileUtils:rerun
         </run.time.re.init>
         <!-- flags to skip plugin execution or not in each environment -->
         <skip.in.linux>true</skip.in.linux>
