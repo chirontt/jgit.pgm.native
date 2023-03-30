@@ -4,7 +4,7 @@
 
     <groupId>com.github.chirontt</groupId>
     <artifactId>jgit.pgm.native</artifactId>
-    <version>6.4.0</version>
+    <version>6.5.0</version>
     <packaging>jar</packaging>
 
     <name>jgit</name> <!-- name of the resulting native executable -->
@@ -13,10 +13,10 @@
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <native.maven.plugin.version>0.9.18</native.maven.plugin.version>
-        <jgit.release.version>6.4.0.202211300538-r</jgit.release.version>
-        <slf4j.version>2.0.5</slf4j.version>
-        <graalvm.version>22.3.0</graalvm.version>
+        <native.maven.plugin.version>0.9.20</native.maven.plugin.version>
+        <jgit.release.version>6.5.0.202303070854-r</jgit.release.version>
+        <slf4j.version>2.0.7</slf4j.version>
+        <graalvm.version>22.3.1</graalvm.version>
         <xz.version>1.9</xz.version>
         <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
         <jgit.args></jgit.args>
@@ -35,7 +35,7 @@
         </build.time.init>
         <!-- packages/classes to be initialized at native image run time -->
         <run.time.init>
-            org.apache.sshd.common.config.keys.loader.AESPrivateKeyObfuscator$LazyKeyLengthsHolder,org.eclipse.jgit.internal.storage.file.WindowCache,org.eclipse.jgit.lib.internal.WorkQueue,org.eclipse.jgit.lib.RepositoryCache,org.eclipse.jgit.transport.HttpAuthMethod
+            org.apache.sshd.common.config.keys.loader.AESPrivateKeyObfuscator$LazyKeyLengthsHolder,org.eclipse.jgit.internal.storage.file.WindowCache,org.eclipse.jgit.internal.transport.sshd.agent.connector.$Proxy48,org.eclipse.jgit.internal.transport.sshd.agent.connector.$Proxy50,org.eclipse.jgit.internal.transport.sshd.agent.connector.Sockets$SockAddr,org.eclipse.jgit.lib.internal.WorkQueue,org.eclipse.jgit.lib.RepositoryCache,org.eclipse.jgit.transport.HttpAuthMethod
         </run.time.init>
         <!-- packages/classes to be re-initialized at native image run time -->
         <!-- all BouncyCastle classes are required to be initialized at build time

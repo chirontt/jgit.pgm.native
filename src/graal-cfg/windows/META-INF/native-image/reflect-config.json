@@ -58,7 +58,7 @@
 },
 {
   "name":"com.sun.jna.CallbackProxy",
-  "queriedMethods":[{"name":"callback","parameterTypes":["java.lang.Object[]"] }]
+  "methods":[{"name":"callback","parameterTypes":["java.lang.Object[]"] }]
 },
 {
   "name":"com.sun.jna.platform.win32.WinDef$HWND",
@@ -142,25 +142,25 @@
 },
 {
   "name":"java.lang.Throwable",
-  "queriedMethods":[{"name":"addSuppressed","parameterTypes":["java.lang.Throwable"] }]
+  "methods":[{"name":"addSuppressed","parameterTypes":["java.lang.Throwable"] }]
 },
 {
   "name":"java.lang.invoke.MethodHandle",
-  "queriedMethods":[
+  "methods":[
     {"name":"bindTo","parameterTypes":["java.lang.Object"] }, 
     {"name":"invokeWithArguments","parameterTypes":["java.lang.Object[]"] }
   ]
 },
 {
   "name":"java.lang.invoke.MethodHandles",
-  "queriedMethods":[
+  "methods":[
     {"name":"lookup","parameterTypes":[] }, 
     {"name":"privateLookupIn","parameterTypes":["java.lang.Class","java.lang.invoke.MethodHandles$Lookup"] }
   ]
 },
 {
   "name":"java.lang.invoke.MethodHandles$Lookup",
-  "queriedMethods":[
+  "methods":[
     {"name":"findSpecial","parameterTypes":["java.lang.Class","java.lang.String","java.lang.invoke.MethodType","java.lang.Class"] }, 
     {"name":"in","parameterTypes":["java.lang.Class"] }, 
     {"name":"unreflectSpecial","parameterTypes":["java.lang.reflect.Method","java.lang.Class"] }
@@ -168,12 +168,14 @@
 },
 {
   "name":"java.lang.invoke.MethodType",
-  "queriedMethods":[{"name":"methodType","parameterTypes":["java.lang.Class","java.lang.Class[]"] }]
+  "methods":[{"name":"methodType","parameterTypes":["java.lang.Class","java.lang.Class[]"] }]
 },
 {
   "name":"java.lang.reflect.Method",
-  "methods":[{"name":"isDefault","parameterTypes":[] }],
-  "queriedMethods":[{"name":"isVarArgs","parameterTypes":[] }]
+  "methods":[
+    {"name":"isDefault","parameterTypes":[] }, 
+    {"name":"isVarArgs","parameterTypes":[] }
+  ]
 },
 {
   "name":"java.net.URL"
@@ -328,6 +330,10 @@
   "methods":[{"name":"createUI","parameterTypes":["javax.swing.JComponent"] }]
 },
 {
+  "name":"net.i2p.crypto.eddsa.EdDSAEngine",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"net.i2p.crypto.eddsa.EdDSAKey"
 },
 {
@@ -372,6 +378,7 @@
     {"name":"sessionDisconnect","parameterTypes":["org.apache.sshd.common.session.Session","int","java.lang.String","java.lang.String","boolean"] }, 
     {"name":"sessionEstablished","parameterTypes":["org.apache.sshd.common.session.Session"] }, 
     {"name":"sessionEvent","parameterTypes":["org.apache.sshd.common.session.Session","org.apache.sshd.common.session.SessionListener$Event"] }, 
+    {"name":"sessionException","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.Throwable"] }, 
     {"name":"sessionNegotiationEnd","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map","java.util.Map","java.util.Map","java.lang.Throwable"] }, 
     {"name":"sessionNegotiationOptionsCreated","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map"] }, 
     {"name":"sessionNegotiationStart","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map","java.util.Map"] }, 
@@ -412,6 +419,10 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.EXTERNAL$Mappings",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.bouncycastle.jcajce.provider.asymmetric.EdEC$Mappings",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -432,7 +443,15 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.LMS$Mappings",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.bouncycastle.jcajce.provider.asymmetric.RSA$Mappings",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.asymmetric.SPHINCSPlus$Mappings",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -494,6 +513,10 @@
 },
 {
   "name":"org.bouncycastle.jcajce.provider.digest.Blake2s$Mappings",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.bouncycastle.jcajce.provider.digest.Blake3$Mappings",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -868,6 +891,10 @@
   "methods":[{"name":"values","parameterTypes":[] }]
 },
 {
+  "name":"org.eclipse.jgit.lib.CoreConfig$TrustPackedRefsStat",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
   "name":"org.eclipse.jgit.pgm.AbstractFetchCommand",
   "allDeclaredFields":true,
   "allDeclaredMethods":true
@@ -992,6 +1019,9 @@
   "name":"org.eclipse.jgit.pgm.MergeBase"
 },
 {
+  "name":"org.eclipse.jgit.pgm.MergeTool"
+},
+{
   "name":"org.eclipse.jgit.pgm.Push"
 },
 {
@@ -1111,6 +1141,10 @@
   "methods":[{"name":"<init>","parameterTypes":["org.kohsuke.args4j.CmdLineParser","org.kohsuke.args4j.OptionDef","org.kohsuke.args4j.spi.Setter"] }]
 },
 {
+  "name":"org.eclipse.jgit.pgm.opt.InstantHandler",
+  "methods":[{"name":"<init>","parameterTypes":["org.kohsuke.args4j.CmdLineParser","org.kohsuke.args4j.OptionDef","org.kohsuke.args4j.spi.Setter"] }]
+},
+{
   "name":"org.eclipse.jgit.pgm.opt.ObjectIdHandler",
   "methods":[{"name":"<init>","parameterTypes":["org.kohsuke.args4j.CmdLineParser","org.kohsuke.args4j.OptionDef","org.kohsuke.args4j.spi.Setter"] }]
 },
@@ -1141,6 +1175,10 @@
 {
   "name":"org.eclipse.jgit.pgm.opt.UntrackedFilesHandler",
   "methods":[{"name":"<init>","parameterTypes":["org.kohsuke.args4j.CmdLineParser","org.kohsuke.args4j.OptionDef","org.kohsuke.args4j.spi.Setter"] }]
+},
+{
+  "name":"org.eclipse.jgit.util.sha1.SHA1$Sha1Implementation",
+  "methods":[{"name":"values","parameterTypes":[] }]
 },
 {
   "name":"org.kohsuke.args4j.spi.BooleanOptionHandler",

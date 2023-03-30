@@ -1,23 +1,23 @@
 plugins {
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.9.18'
+    id 'org.graalvm.buildtools.native' version '0.9.20'
 }
 
 tasks.wrapper {
-    gradleVersion = '7.6'
+    gradleVersion = '8.0.2'
     distributionType = Wrapper.DistributionType.ALL
 }
 
 group = 'com.github.chirontt'
-version = '6.4.0'
+version = '6.5.0'
 description = 'JGit PGM native executable built by GraalVM'
 
 ext {
     mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
-    jgitReleaseVersion = '6.4.0.202211300538-r'
-    slf4jVersion = '2.0.5'
+    jgitReleaseVersion = '6.5.0.202303070854-r'
+    slf4jVersion = '2.0.7'
     xzVersion = '1.9'
-    graalvmVersion = '22.3.0'
+    graalvmVersion = '22.3.1'
     currentPlatform = getCurrentPlatform()
     nativeImageDirName = "native-image-$currentPlatform"
 }
@@ -173,8 +173,11 @@ graalvmNative {
             def runTimeInitClasses = [
                 'org.apache.sshd.common.config.keys.loader.AESPrivateKeyObfuscator$LazyKeyLengthsHolder',
                 'org.eclipse.jgit.internal.storage.file.WindowCache',
-                'org.eclipse.jgit.lib.internal.WorkQueue',
+                'org.eclipse.jgit.internal.transport.sshd.agent.connector.$Proxy48',
+                'org.eclipse.jgit.internal.transport.sshd.agent.connector.$Proxy50',
+                'org.eclipse.jgit.internal.transport.sshd.agent.connector.Sockets$SockAddr',
                 'org.eclipse.jgit.lib.RepositoryCache',
+                'org.eclipse.jgit.lib.internal.WorkQueue',
                 'org.eclipse.jgit.transport.HttpAuthMethod',
             ]
 

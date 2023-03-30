@@ -35,6 +35,12 @@
       "pattern":"\\QMETA-INF/services/org.slf4j.spi.SLF4JServiceProvider\\E"
     }, 
     {
+      "pattern":"\\Qcom/sun/jna/linux-aarch64/libjnidispatch.so\\E"
+    }, 
+    {
+      "pattern":"\\Qcom/sun/jna/linux-x86-64/libjnidispatch.so\\E"
+    }, 
+    {
       "pattern":"\\Qjetty-dir.css\\E"
     }, 
     {
@@ -89,7 +95,10 @@
     }, 
     {
       "name":"org.eclipse.jgit.internal.JGitText",
-      "locales":["und"]
+      "locales":[
+        "", 
+        "und"
+      ]
     }, 
     {
       "name":"org.eclipse.jgit.internal.storage.dfs.DfsText"
@@ -99,7 +108,10 @@
     }, 
     {
       "name":"org.eclipse.jgit.internal.transport.sshd.SshdText",
-      "locales":["und"]
+      "locales":[
+        "", 
+        "und"
+      ]
     }, 
     {
       "name":"org.eclipse.jgit.internal.transport.sshd.agent.connector.Texts"
@@ -118,7 +130,11 @@
       "name":"org.eclipse.jgit.transport.http.apache.internal.HttpApacheText"
     }, 
     {
-      "name":"org.kohsuke.args4j.Messages"
+      "name":"org.kohsuke.args4j.Messages",
+      "locales":[
+        "en", 
+        "und"
+      ]
     }, 
     {
       "name":"org.kohsuke.args4j.spi.Messages"
