@@ -1,25 +1,25 @@
 plugins {
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.9.23'
+    id 'org.graalvm.buildtools.native' version '0.9.28'
 }
 
 tasks.wrapper {
-    gradleVersion = '8.1.1'
+    gradleVersion = '8.4'
     distributionType = Wrapper.DistributionType.ALL
 }
 
 group = 'com.github.chirontt'
-version = '6.6.0'
+version = '6.7.0'
 description = 'JGit PGM native executable built by GraalVM'
 
 ext {
     mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
-    jgitReleaseVersion = '6.6.0.202305301015-r'
-    slf4jVersion = '2.0.7'
+    jgitReleaseVersion = '6.7.0.202309050840-r'
+    commonsCompressVersion = '1.25.0'
+    slf4jVersion = '2.0.9'
     xzVersion = '1.9'
-    graalvmVersion = '22.3.2'
+    graalvmVersion = '22.3.4'
     currentPlatform = getCurrentPlatform()
-    nativeImageDirName = "native-image-$currentPlatform"
 }
 
 //detect the OS (assuming 64-bit, on Intel/AMD hardware)
@@ -43,8 +43,11 @@ compileJava {
 
 dependencies {
     implementation("org.eclipse.jgit:org.eclipse.jgit.pgm:$jgitReleaseVersion") {
+        //exclude vulnerable transitive dependency versions
+        exclude group: 'org.apache.commons', module: 'commons-compress'
         exclude group: 'org.slf4j', module: '*'
     }
+    implementation "org.apache.commons:commons-compress:$commonsCompressVersion"
     implementation "org.slf4j:slf4j-simple:$slf4jVersion"
 
     //optional, but required by GraalVM native-image build
@@ -88,33 +91,7 @@ task copyFontConfigFiles(type: Copy) {
     from ("$jdkHome/lib") {
         include 'fontconfig.bfc', 'fontconfig.properties.src'
     }
-    into "$buildDir/$nativeImageDirName/lib"
-}
-
-//remove unneeded .dll/.txt files
-task removeUnneededDllFiles {
-    doLast {
-        if (file("$buildDir/$nativeImageDirName").exists()) {
-            ant.move(todir: "$buildDir/tmp/$nativeImageDirName") {
-                fileset(dir: "$buildDir/$nativeImageDirName") {
-                    include name: '*.dll'
-                    include name: '*.pdb'
-                    include name: '*.txt'
-                    //keep the shim DLLs
-                    exclude name: 'java.dll'
-                    exclude name: 'jvm.dll'
-                }
-            }
-        }
-        if (file("$buildDir/$nativeImageDirName/reports").exists()) {
-            ant.move(file: "$buildDir/$nativeImageDirName/reports",
-                     tofile: "$buildDir/tmp/$nativeImageDirName/reports")
-        }
-        if (file("$buildDir/$nativeImageDirName/sources").exists()) {
-            ant.move(file: "$buildDir/$nativeImageDirName/sources",
-                     tofile: "$buildDir/tmp/$nativeImageDirName/sources")
-        }
-    }
+    into "$buildDir/native/nativeCompile/lib"
 }
 
 //create a stand-alone executable uber jar
@@ -194,11 +171,23 @@ graalvmNative {
                 'org.bouncycastle.jcajce.provider.drbg.DRBG:rerun',
                 'org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun',
                 'org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun',
+                'org.eclipse.jgit.gpg.bc.internal.BouncyCastleGpgKeyLocator:rerun',
+                'org.eclipse.jgit.util.FS:rerun',
                 'org.eclipse.jgit.util.FileUtils:rerun',
+                'org.eclipse.jgit.util.SystemReader:rerun',
+                'org.eclipse.jgit.util.SystemReader$Default:rerun',
+                'org.eclipse.jgit.util.sha1.SHA1:rerun',
             ]
 
+            //if (currentPlatform == 'linux') {
+                jvmArgs.add('-Djava.awt.headless=false')
+            //}
             if (currentPlatform == 'linux') {
-                jvmArgs.add('-Djava.awt.headless=false')  //needed for Linux
+                runTimeReInitClasses.add('org.eclipse.jgit.util.FS_POSIX:rerun')
+            }
+            else if (currentPlatform == 'windows') {
+                runTimeReInitClasses.add('org.eclipse.jgit.util.FS_Win32:rerun')
+                runTimeReInitClasses.add('org.eclipse.jgit.util.FS_Win32_Cygwin:rerun')
             }
 
             buildArgs.add('--gc=epsilon')  //no garbage collector
@@ -207,9 +196,9 @@ graalvmNative {
             buildArgs.add('--initialize-at-build-time=' + buildTimeInitClasses.join(','))
             buildArgs.add('--initialize-at-run-time=' + runTimeInitClasses.join(','))
             buildArgs.add('-H:ClassInitialization=' + runTimeReInitClasses.join(','))
+            buildArgs.add('-H:+AddAllCharsets')
             buildArgs.add('--native-image-info')
-            buildArgs.add("-H:Path=$buildDir/$nativeImageDirName")
-            buildArgs.add("-H:TempDirectory=$buildDir/tmp/$nativeImageDirName")
+            buildArgs.add('-march=compatibility') //only available in GraalVM for JDK 17+
             buildArgs.add('-H:+TraceNativeToolUsage')
 
             useFatJar = false
@@ -223,7 +212,7 @@ tasks.named("nativeCompile") {
     classpathJar = uberJar.archiveFile
 
     if (currentPlatform == 'windows') {
-        finalizedBy copyFontConfigFiles, removeUnneededDllFiles
+        finalizedBy copyFontConfigFiles
     }
 }
 

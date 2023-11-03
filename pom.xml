@@ -4,7 +4,7 @@
 
     <groupId>com.github.chirontt</groupId>
     <artifactId>jgit.pgm.native</artifactId>
-    <version>6.6.0</version>
+    <version>6.7.0</version>
     <packaging>jar</packaging>
 
     <name>jgit</name> <!-- name of the resulting native executable -->
@@ -13,10 +13,11 @@
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <native.maven.plugin.version>0.9.23</native.maven.plugin.version>
-        <jgit.release.version>6.6.0.202305301015-r</jgit.release.version>
-        <slf4j.version>2.0.7</slf4j.version>
-        <graalvm.version>22.3.2</graalvm.version>
+        <native.maven.plugin.version>0.9.28</native.maven.plugin.version>
+        <jgit.release.version>6.7.0.202309050840-r</jgit.release.version>
+        <commons-compress.version>1.25.0</commons-compress.version>
+        <slf4j.version>2.0.9</slf4j.version>
+        <graalvm.version>22.3.4</graalvm.version>
         <xz.version>1.9</xz.version>
         <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
         <jgit.args></jgit.args>
@@ -24,7 +25,6 @@
              can be specified on the command line with -Dsys.props="..."
         -->
         <sys.props></sys.props>
-        <native.image.dir.name>native-image-${current.platform}</native.image.dir.name>
         <!-- list of GraalVM Feature implementation classes -->
         <feature.classes>
             com.github.chirontt.jgit.graalvm.BouncyCastleFeature,com.github.chirontt.jgit.graalvm.EdDSAFeature
@@ -43,7 +43,7 @@
              in their static initialization blocks, some BouncyCastle classes need be
              re-initialized at native image run time -->
         <run.time.re.init>
-            org.bouncycastle.crypto.CryptoServicesRegistrar:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun,org.eclipse.jgit.util.FileUtils:rerun
+            org.bouncycastle.crypto.CryptoServicesRegistrar:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun,org.eclipse.jgit.gpg.bc.internal.BouncyCastleGpgKeyLocator:rerun,org.eclipse.jgit.util.FS:rerun,org.eclipse.jgit.util.FileUtils:rerun,org.eclipse.jgit.util.SystemReader:rerun,org.eclipse.jgit.util.SystemReader$Default:rerun,org.eclipse.jgit.util.sha1.SHA1:rerun
         </run.time.re.init>
         <!-- flags to skip plugin execution or not in each environment -->
         <skip.in.linux>true</skip.in.linux>
@@ -58,10 +58,21 @@
             <version>${jgit.release.version}</version>
             <exclusions>
                 <exclusion>
+                    <!-- exclude the transitive dependency with vulnerability -->
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-compress</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>org.slf4j</groupId>
                     <artifactId>*</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <!-- include the transitive dependency without vulnerability -->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>${commons-compress.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -184,7 +195,6 @@
                         </goals>
                         <phase>package</phase>
                         <configuration>
-                            <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
                             <imageName>${project.name}</imageName>
                             <mainClass>${jgit.mainClass}</mainClass>
                             <debug>true</debug>
@@ -200,11 +210,11 @@
                                 <buildArg>--features=${feature.classes}</buildArg>
                                 <buildArg>--initialize-at-build-time=${build.time.init}</buildArg>
                                 <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
-                                <buildArg>-H:ClassInitialization=${run.time.re.init}</buildArg>
+                                <buildArg>-H:ClassInitialization=${run.time.re.init},org.eclipse.jgit.util.FS_POSIX:rerun</buildArg>
+                                <buildArg>-H:+AddAllCharsets</buildArg>
                                 <buildArg>--native-image-info</buildArg>
+                                <buildArg>-march=compatibility</buildArg> <!-- only available in GraalVM for JDK 17+ -->
                                 <buildArg>-H:+TraceNativeToolUsage</buildArg>
-                                <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
-                                <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
                             </buildArgs>
                             <skip>${skip.in.linux}</skip>
                             <!-- use the shaded uber jar for native image compiling -->
@@ -234,12 +244,14 @@
                         </goals>
                         <phase>package</phase>
                         <configuration>
-                            <!-- outputDir>${project.build.directory}/${nativeImageDirName}</outputDir -->
                             <imageName>${project.name}</imageName>
                             <mainClass>${jgit.mainClass}</mainClass>
                             <debug>false</debug>
                             <verbose>true</verbose>
                             <fallback>false</fallback>
+                            <jvmArgs>
+                                <arg>-Djava.awt.headless=false</arg>
+                            </jvmArgs>
                             <buildArgs>
                                 <buildArg>--gc=epsilon</buildArg>  <!-- no garbage collector -->
                                 <buildArg>--enable-http</buildArg>
@@ -247,11 +259,11 @@
                                 <buildArg>--features=${feature.classes}</buildArg>
                                 <buildArg>--initialize-at-build-time=${build.time.init}</buildArg>
                                 <buildArg>--initialize-at-run-time=${run.time.init}</buildArg>
-                                <buildArg>-H:ClassInitialization=${run.time.re.init}</buildArg>
+                                <buildArg>-H:ClassInitialization=${run.time.re.init},org.eclipse.jgit.util.FS_Win32:rerun,org.eclipse.jgit.util.FS_Win32_Cygwin:rerun</buildArg>
+                                <buildArg>-H:+AddAllCharsets</buildArg>
                                 <buildArg>--native-image-info</buildArg>
+                                <buildArg>-march=compatibility</buildArg> <!-- only available in GraalVM for JDK 17+ -->
                                 <buildArg>-H:+TraceNativeToolUsage</buildArg>
-                                <buildArg>-H:TempDirectory=${project.build.directory}/tmp/${native.image.dir.name}</buildArg>
-                                <buildArg>-H:Path=${project.build.directory}/${native.image.dir.name}</buildArg>
                             </buildArgs>
                             <skip>${skip.in.windows}</skip>
                             <!-- use the shaded uber jar for native image compiling -->
@@ -263,38 +275,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <!-- remove unneeded .dll/.txt files -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>remove-unneeded-dll-files</id>
-                        <phase>package</phase>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <target>
-                        <move todir="${project.build.directory}/tmp/${native.image.dir.name}"
-                              failonerror="false" quiet="true">
-                            <fileset dir="${project.build.directory}/${native.image.dir.name}">
-                                <include name="*.dll"/>
-                                <include name="*.txt"/>
-                                <!-- keep the shim DLLs -->
-                                <exclude name="java.dll"/>
-                                <exclude name="jvm.dll"/>
-                            </fileset>
-                        </move>
-                        <move file="${project.build.directory}/${native.image.dir.name}/reports"
-                              tofile="${project.build.directory}/tmp/${native.image.dir.name}/reports"
-                              failonerror="false" quiet="true"/>
-                    </target>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -350,7 +330,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${project.build.directory}/${native.image.dir.name}/lib</outputDirectory>
+                                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>${java.home}/lib</directory>

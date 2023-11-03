@@ -13,8 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        java-version: [11, 17]
-        graalvm-version: ['22.3.2']
+        java-version: [17, 21]
         graalvm-distribution: ['graalvm-community']
       fail-fast: false
 
@@ -35,11 +34,24 @@ jobs:
       - name: Download Liberica NIK ${{ matrix.graalvm-distribution }} for Java ${{ matrix.java-version }} (Linux)
         if: runner.os == 'Linux' && matrix.java-version == 17
         run: |
-          download_url="https://download.bell-sw.com/vm/23.0.0/bellsoft-liberica-vm-core-openjdk17.0.7+7-23.0.0+1-linux-amd64.tar.gz"
+          download_url="https://download.bell-sw.com/vm/23.0.2/bellsoft-liberica-vm-core-openjdk17.0.9+11-23.0.2+1-linux-amd64.tar.gz"
           wget -O $RUNNER_TEMP/java_package.tar.gz $download_url
 
+      - name: Download Liberica NIK ${{ matrix.graalvm-distribution }} for Java ${{ matrix.java-version }} (Linux)
+        if: runner.os == 'Linux' && matrix.java-version == 21
+        run: |
+          download_url="https://download.bell-sw.com/vm/23.1.1/bellsoft-liberica-vm-core-openjdk21.0.1+12-23.1.1+1-linux-amd64.tar.gz"
+          wget -O $RUNNER_TEMP/java_package.tar.gz $download_url
+
+      - name: Download Liberica NIK ${{ matrix.graalvm-distribution }} for Java ${{ matrix.java-version }} (Windows)
+        if: runner.os == 'Windows' && matrix.java-version == 21
+        shell: cmd
+        run: |
+          set download_url="https://download.bell-sw.com/vm/23.1.1/bellsoft-liberica-vm-core-openjdk21.0.1+12-23.1.1+1-windows-amd64.zip"
+          C:\msys64\usr\bin\wget.exe -O %RUNNER_TEMP%\java_package.zip %download_url%
+
       - name: Set up Liberica NIK ${{ matrix.graalvm-distribution }} for Java ${{ matrix.java-version }} (Linux)
-        if: runner.os == 'Linux' && matrix.java-version == 17
+        if: runner.os == 'Linux'
         uses: actions/setup-java@v3
         with:
           distribution: jdkfile
@@ -47,26 +59,31 @@ jobs:
           jdkFile: ${{ runner.temp }}/java_package.tar.gz
           architecture: x64
 
+      - name: Set up Liberica NIK ${{ matrix.graalvm-distribution }} for Java ${{ matrix.java-version }} (Windows)
+        if: runner.os == 'Windows' && matrix.java-version == 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: jdkfile
+          java-version: ${{ matrix.java-version }}
+          jdkFile: ${{ runner.temp }}/java_package.zip
+          architecture: x64
+
+      - name: Set up a Developer Command Prompt for Microsoft Visual C++ (Windows)
+        if: runner.os == 'Windows' && matrix.java-version == 21
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: Set up GraalVM ${{ matrix.graalvm-distribution }} for Java ${{ matrix.java-version }}
-        if: runner.os != 'Linux' && matrix.java-version == 17
+        if: runner.os == 'Windows' && matrix.java-version == 17
         uses: graalvm/setup-graalvm@v1
         with:
           java-version: ${{ matrix.java-version }}
           distribution: ${{ matrix.graalvm-distribution }}
-          components: 'native-image'
-
-      - name: Set up GraalVM ${{ matrix.graalvm-version }} for Java 11
-        if: matrix.java-version == 11
-        uses: graalvm/setup-graalvm@v1
-        with:
-          java-version: ${{ matrix.java-version }}
-          version: ${{ matrix.graalvm-version }}
-          components: 'native-image'
 
       - name: Report Java version
         run: |
           java -version
           javac -version
+          native-image --version
 
       - name: Install libxi-dev in Linux
         if: runner.os == 'Linux'
@@ -79,4 +96,23 @@ jobs:
       - name: Build with Gradle Wrapper (Windows)
         run: .\gradlew.bat --no-daemon --info nativeCompile
         if: runner.os == 'Windows'
+
+      - name: Package Linux artifacts
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v3
+        with:
+          name: jgit ${{ runner.os }} native image with SubstrateVM for Java ${{ matrix.java-version }}
+          path: |
+            build/native/nativeCompile/
+            !build/native/nativeCompile/reports
+
+      - name: Package Windows artifacts
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v3
+        with:
+          name: jgit ${{ runner.os }} native image with SubstrateVM for Java ${{ matrix.java-version }}
+          path: |
+            build/native/nativeCompile/
+            !build/native/nativeCompile/native-image-*.args
+            !build/native/nativeCompile/reports
 
