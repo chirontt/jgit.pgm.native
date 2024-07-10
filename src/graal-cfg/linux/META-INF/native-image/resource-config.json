@@ -1,147 +1,101 @@
 {
   "resources":{
-  "includes":[
-    {
-      "pattern":"\\QMETA-INF/services/java.nio.file.spi.FileSystemProvider\\E"
-    }, 
-    {
-      "pattern":"\\QMETA-INF/services/java.security.Provider\\E"
-    }, 
-    {
-      "pattern":"\\QMETA-INF/services/org.apache.commons.logging.LogFactory\\E"
-    }, 
-    {
-      "pattern":"\\QMETA-INF/services/org.apache.sshd.server.subsystem.SubsystemFactory\\E"
-    }, 
-    {
-      "pattern":"\\QMETA-INF/services/org.eclipse.jetty.http.HttpFieldPreEncoder\\E"
-    }, 
-    {
-      "pattern":"\\QMETA-INF/services/org.eclipse.jgit.lib.GpgSignatureVerifierFactory\\E"
-    }, 
-    {
-      "pattern":"\\QMETA-INF/services/org.eclipse.jgit.lib.GpgSigner\\E"
-    }, 
-    {
-      "pattern":"\\QMETA-INF/services/org.eclipse.jgit.pgm.TextBuiltin\\E"
-    }, 
-    {
-      "pattern":"\\QMETA-INF/services/org.eclipse.jgit.transport.SshSessionFactory\\E"
-    }, 
-    {
-      "pattern":"\\QMETA-INF/services/org.eclipse.jgit.transport.sshd.agent.ConnectorFactory\\E"
-    }, 
-    {
-      "pattern":"\\QMETA-INF/services/org.slf4j.spi.SLF4JServiceProvider\\E"
-    }, 
-    {
-      "pattern":"\\Qcom/sun/jna/linux-aarch64/libjnidispatch.so\\E"
-    }, 
-    {
-      "pattern":"\\Qcom/sun/jna/linux-x86-64/libjnidispatch.so\\E"
-    }, 
-    {
-      "pattern":"\\Qjetty-dir.css\\E"
-    }, 
-    {
-      "pattern":"\\Qmozilla/public-suffix-list.txt\\E"
-    }, 
-    {
-      "pattern":"\\Qorg/apache/http/client/version.properties\\E"
-    }, 
-    {
-      "pattern":"\\Qorg/apache/sshd/sshd-version.properties\\E"
-    }, 
-    {
-      "pattern":"\\Qorg/eclipse/jetty/favicon.ico\\E"
-    }, 
-    {
-      "pattern":"\\Qorg/eclipse/jetty/http/encoding.properties\\E"
-    }, 
-    {
-      "pattern":"\\Qorg/eclipse/jetty/http/mime.properties\\E"
-    }, 
-    {
-      "pattern":"\\Qorg/eclipse/jetty/version/build.properties\\E"
-    }, 
-    {
-      "pattern":"\\Qsimplelogger.properties\\E"
-    }, 
-    {
-      "pattern":"\\Qsun/datatransfer/resources/flavormap.properties\\E"
-    }
-  ]},
-  "bundles":[
-    {
-      "name":"com.sun.swing.internal.plaf.basic.resources.basic",
-      "classNames":["com.sun.swing.internal.plaf.basic.resources.basic"]
-    }, 
-    {
-      "name":"com.sun.swing.internal.plaf.metal.resources.metal",
-      "classNames":["com.sun.swing.internal.plaf.metal.resources.metal"]
-    }, 
-    {
-      "name":"org.eclipse.jgit.awtui.UIText",
-      "locales":[
-        "", 
-        "und"
-      ]
-    }, 
-    {
-      "name":"org.eclipse.jgit.gitrepo.internal.RepoText"
-    }, 
-    {
-      "name":"org.eclipse.jgit.gpg.bc.internal.BCText"
-    }, 
-    {
-      "name":"org.eclipse.jgit.internal.JGitText",
-      "locales":[
-        "", 
-        "und"
-      ]
-    }, 
-    {
-      "name":"org.eclipse.jgit.internal.storage.dfs.DfsText"
-    }, 
-    {
-      "name":"org.eclipse.jgit.internal.transport.ssh.jsch.JSchText"
-    }, 
-    {
-      "name":"org.eclipse.jgit.internal.transport.sshd.SshdText",
-      "locales":[
-        "", 
-        "und"
-      ]
-    }, 
-    {
-      "name":"org.eclipse.jgit.internal.transport.sshd.agent.connector.Texts"
-    }, 
-    {
-      "name":"org.eclipse.jgit.lfs.internal.LfsText"
-    }, 
-    {
-      "name":"org.eclipse.jgit.pgm.internal.CLIText",
-      "locales":[
-        "", 
-        "und"
-      ]
-    }, 
-    {
-      "name":"org.eclipse.jgit.transport.http.apache.internal.HttpApacheText"
-    }, 
-    {
-      "name":"org.kohsuke.args4j.Messages",
-      "locales":[
-        "en", 
-        "und"
-      ]
-    }, 
-    {
-      "name":"org.kohsuke.args4j.spi.Messages"
-    }, 
-    {
-      "name":"sun.awt.resources.awt",
-      "classNames":["sun.awt.resources.awt"]
-    }
-  ]
+  "includes":[{
+    "pattern":"\\QMETA-INF/services/java.nio.file.spi.FileSystemProvider\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.security.Provider\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/org.apache.commons.logging.LogFactory\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/org.apache.sshd.server.subsystem.SubsystemFactory\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/org.eclipse.jetty.http.HttpFieldPreEncoder\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/org.eclipse.jgit.lib.GpgSignatureVerifierFactory\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/org.eclipse.jgit.lib.GpgSigner\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/org.eclipse.jgit.pgm.TextBuiltin\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/org.eclipse.jgit.transport.SshSessionFactory\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/org.eclipse.jgit.transport.sshd.agent.ConnectorFactory\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/org.slf4j.spi.SLF4JServiceProvider\\E"
+  }, {
+    "pattern":"\\Qcom/sun/jna/linux-aarch64/libjnidispatch.so\\E"
+  }, {
+    "pattern":"\\Qcom/sun/jna/linux-x86-64/libjnidispatch.so\\E"
+  }, {
+    "pattern":"\\Qjetty-dir.css\\E"
+  }, {
+    "pattern":"\\Qmozilla/public-suffix-list.txt\\E"
+  }, {
+    "pattern":"\\Qorg/apache/http/client/version.properties\\E"
+  }, {
+    "pattern":"\\Qorg/apache/sshd/sshd-version.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jetty/favicon.ico\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jetty/http/encoding.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jetty/http/mime.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jetty/version/build.properties\\E"
+  }, {
+    "pattern":"\\Qsimplelogger.properties\\E"
+  }, {
+    "pattern":"\\Qsun/datatransfer/resources/flavormap.properties\\E"
+  }, {
+    "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt67b/nfkc.nrm\\E"
+  }, {
+    "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt67b/uprops.icu\\E"
+  }, {
+    "pattern":"java.base:\\Qsun/net/idn/uidna.spp\\E"
+  }, {
+    "pattern":"java.datatransfer:\\Qsun/datatransfer/resources/flavormap.properties\\E"
+  }, {
+    "pattern":"java.desktop:\\Qjavax/swing/plaf/metal/icons/ocean/question.png\\E"
+  }]},
+  "bundles":[{
+    "name":"com.sun.swing.internal.plaf.basic.resources.basic",
+    "classNames":["com.sun.swing.internal.plaf.basic.resources.basic"]
+  }, {
+    "name":"com.sun.swing.internal.plaf.metal.resources.metal",
+    "classNames":["com.sun.swing.internal.plaf.metal.resources.metal"]
+  }, {
+    "name":"org.eclipse.jgit.awtui.UIText",
+    "locales":["", "und"]
+  }, {
+    "name":"org.eclipse.jgit.gitrepo.internal.RepoText"
+  }, {
+    "name":"org.eclipse.jgit.gpg.bc.internal.BCText"
+  }, {
+    "name":"org.eclipse.jgit.internal.JGitText",
+    "locales":["", "und"]
+  }, {
+    "name":"org.eclipse.jgit.internal.storage.dfs.DfsText"
+  }, {
+    "name":"org.eclipse.jgit.internal.transport.ssh.jsch.JSchText"
+  }, {
+    "name":"org.eclipse.jgit.internal.transport.sshd.SshdText",
+    "locales":["und"]
+  }, {
+    "name":"org.eclipse.jgit.internal.transport.sshd.agent.connector.Texts"
+  }, {
+    "name":"org.eclipse.jgit.lfs.internal.LfsText"
+  }, {
+    "name":"org.eclipse.jgit.pgm.internal.CLIText",
+    "locales":["", "und"]
+  }, {
+    "name":"org.eclipse.jgit.transport.http.apache.internal.HttpApacheText"
+  }, {
+    "name":"org.kohsuke.args4j.Messages",
+    "locales":["en", "und"]
+  }, {
+    "name":"org.kohsuke.args4j.spi.Messages"
+  }, {
+    "name":"sun.awt.resources.awt",
+    "classNames":["sun.awt.resources.awt"]
+  }]
 }

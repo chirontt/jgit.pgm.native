@@ -1,24 +1,24 @@
 plugins {
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.9.28'
+    id 'org.graalvm.buildtools.native' version '0.10.2'
 }
 
 tasks.wrapper {
-    gradleVersion = '8.4'
+    gradleVersion = '8.8'
     distributionType = Wrapper.DistributionType.ALL
 }
 
 group = 'com.github.chirontt'
-version = '6.7.0'
+version = '6.10.0'
 description = 'JGit PGM native executable built by GraalVM'
 
 ext {
     mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
-    jgitReleaseVersion = '6.7.0.202309050840-r'
-    commonsCompressVersion = '1.25.0'
-    slf4jVersion = '2.0.9'
+    jgitReleaseVersion = '6.10.0.202406032230-r'
+    commonsCompressVersion = '1.26.1'
+    slf4jVersion = '2.0.13'
     xzVersion = '1.9'
-    graalvmVersion = '22.3.4'
+    graalvmVersion = '22.3.5'
     currentPlatform = getCurrentPlatform()
 }
 

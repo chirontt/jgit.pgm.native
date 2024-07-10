@@ -76,42 +76,7 @@
 },
 {
   "name":"java.awt.event.KeyEvent",
-  "fields":[
-    {"name":"VK_A"}, 
-    {"name":"VK_BACK_SLASH"}, 
-    {"name":"VK_BACK_SPACE"}, 
-    {"name":"VK_C"}, 
-    {"name":"VK_CONTEXT_MENU"}, 
-    {"name":"VK_COPY"}, 
-    {"name":"VK_CUT"}, 
-    {"name":"VK_DELETE"}, 
-    {"name":"VK_DOWN"}, 
-    {"name":"VK_END"}, 
-    {"name":"VK_ENTER"}, 
-    {"name":"VK_ESCAPE"}, 
-    {"name":"VK_F10"}, 
-    {"name":"VK_F2"}, 
-    {"name":"VK_F8"}, 
-    {"name":"VK_H"}, 
-    {"name":"VK_HOME"}, 
-    {"name":"VK_INSERT"}, 
-    {"name":"VK_KP_DOWN"}, 
-    {"name":"VK_KP_LEFT"}, 
-    {"name":"VK_KP_RIGHT"}, 
-    {"name":"VK_KP_UP"}, 
-    {"name":"VK_LEFT"}, 
-    {"name":"VK_O"}, 
-    {"name":"VK_PAGE_DOWN"}, 
-    {"name":"VK_PAGE_UP"}, 
-    {"name":"VK_PASTE"}, 
-    {"name":"VK_RIGHT"}, 
-    {"name":"VK_SLASH"}, 
-    {"name":"VK_SPACE"}, 
-    {"name":"VK_TAB"}, 
-    {"name":"VK_UP"}, 
-    {"name":"VK_V"}, 
-    {"name":"VK_X"}
-  ]
+  "fields":[{"name":"VK_A"}, {"name":"VK_BACK_SLASH"}, {"name":"VK_BACK_SPACE"}, {"name":"VK_C"}, {"name":"VK_CONTEXT_MENU"}, {"name":"VK_COPY"}, {"name":"VK_CUT"}, {"name":"VK_DELETE"}, {"name":"VK_DOWN"}, {"name":"VK_END"}, {"name":"VK_ENTER"}, {"name":"VK_ESCAPE"}, {"name":"VK_F10"}, {"name":"VK_F2"}, {"name":"VK_F8"}, {"name":"VK_H"}, {"name":"VK_HOME"}, {"name":"VK_INSERT"}, {"name":"VK_KP_DOWN"}, {"name":"VK_KP_LEFT"}, {"name":"VK_KP_RIGHT"}, {"name":"VK_KP_UP"}, {"name":"VK_LEFT"}, {"name":"VK_O"}, {"name":"VK_PAGE_DOWN"}, {"name":"VK_PAGE_UP"}, {"name":"VK_PASTE"}, {"name":"VK_RIGHT"}, {"name":"VK_SLASH"}, {"name":"VK_SPACE"}, {"name":"VK_TAB"}, {"name":"VK_UP"}, {"name":"VK_V"}, {"name":"VK_X"}]
 },
 {
   "name":"java.awt.event.MouseMotionListener[]"
@@ -139,6 +104,7 @@
 },
 {
   "name":"java.lang.Thread",
+  "fields":[{"name":"threadLocalRandomProbe"}],
   "methods":[{"name":"getContextClassLoader","parameterTypes":[] }]
 },
 {
@@ -147,25 +113,15 @@
 },
 {
   "name":"java.lang.invoke.MethodHandle",
-  "methods":[
-    {"name":"bindTo","parameterTypes":["java.lang.Object"] }, 
-    {"name":"invokeWithArguments","parameterTypes":["java.lang.Object[]"] }
-  ]
+  "methods":[{"name":"bindTo","parameterTypes":["java.lang.Object"] }, {"name":"invokeWithArguments","parameterTypes":["java.lang.Object[]"] }]
 },
 {
   "name":"java.lang.invoke.MethodHandles",
-  "methods":[
-    {"name":"lookup","parameterTypes":[] }, 
-    {"name":"privateLookupIn","parameterTypes":["java.lang.Class","java.lang.invoke.MethodHandles$Lookup"] }
-  ]
+  "methods":[{"name":"lookup","parameterTypes":[] }, {"name":"privateLookupIn","parameterTypes":["java.lang.Class","java.lang.invoke.MethodHandles$Lookup"] }]
 },
 {
   "name":"java.lang.invoke.MethodHandles$Lookup",
-  "methods":[
-    {"name":"findSpecial","parameterTypes":["java.lang.Class","java.lang.String","java.lang.invoke.MethodType","java.lang.Class"] }, 
-    {"name":"in","parameterTypes":["java.lang.Class"] }, 
-    {"name":"unreflectSpecial","parameterTypes":["java.lang.reflect.Method","java.lang.Class"] }
-  ]
+  "methods":[{"name":"findSpecial","parameterTypes":["java.lang.Class","java.lang.String","java.lang.invoke.MethodType","java.lang.Class"] }, {"name":"in","parameterTypes":["java.lang.Class"] }, {"name":"unreflectSpecial","parameterTypes":["java.lang.reflect.Method","java.lang.Class"] }]
 },
 {
   "name":"java.lang.invoke.MethodType",
@@ -173,10 +129,7 @@
 },
 {
   "name":"java.lang.reflect.Method",
-  "methods":[
-    {"name":"isDefault","parameterTypes":[] }, 
-    {"name":"isVarArgs","parameterTypes":[] }
-  ]
+  "methods":[{"name":"isDefault","parameterTypes":[] }, {"name":"isVarArgs","parameterTypes":[] }]
 },
 {
   "name":"java.nio.Buffer"
@@ -192,10 +145,7 @@
 },
 {
   "name":"java.rmi.MarshalledObject",
-  "methods":[
-    {"name":"<init>","parameterTypes":["java.lang.Object"] }, 
-    {"name":"get","parameterTypes":[] }
-  ]
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Object"] }, {"name":"get","parameterTypes":[] }]
 },
 {
   "name":"java.rmi.Remote"
@@ -250,6 +200,26 @@
   "name":"java.util.List"
 },
 {
+  "name":"java.util.concurrent.ForkJoinTask",
+  "fields":[{"name":"aux"}, {"name":"status"}]
+},
+{
+  "name":"java.util.concurrent.atomic.AtomicBoolean",
+  "fields":[{"name":"value"}]
+},
+{
+  "name":"java.util.concurrent.atomic.AtomicMarkableReference",
+  "fields":[{"name":"pair"}]
+},
+{
+  "name":"java.util.concurrent.atomic.AtomicReference",
+  "fields":[{"name":"value"}]
+},
+{
+  "name":"java.util.concurrent.atomic.Striped64",
+  "fields":[{"name":"base"}, {"name":"cellsBusy"}]
+},
+{
   "name":"javax.crypto.KeyAgreement",
   "methods":[{"name":"getInstance","parameterTypes":["java.lang.String","java.lang.String"] }]
 },
@@ -267,10 +237,7 @@
 },
 {
   "name":"javax.swing.plaf.basic.BasicOptionPaneUI",
-  "methods":[
-    {"name":"createUI","parameterTypes":["javax.swing.JComponent"] }, 
-    {"name":"loadActionMap","parameterTypes":["javax.swing.plaf.basic.LazyActionMap"] }
-  ]
+  "methods":[{"name":"createUI","parameterTypes":["javax.swing.JComponent"] }, {"name":"loadActionMap","parameterTypes":["javax.swing.plaf.basic.LazyActionMap"] }]
 },
 {
   "name":"javax.swing.plaf.basic.BasicPanelUI",
@@ -290,10 +257,7 @@
 },
 {
   "name":"javax.swing.plaf.basic.BasicTableUI",
-  "methods":[
-    {"name":"createUI","parameterTypes":["javax.swing.JComponent"] }, 
-    {"name":"loadActionMap","parameterTypes":["javax.swing.plaf.basic.LazyActionMap"] }
-  ]
+  "methods":[{"name":"createUI","parameterTypes":["javax.swing.JComponent"] }, {"name":"loadActionMap","parameterTypes":["javax.swing.plaf.basic.LazyActionMap"] }]
 },
 {
   "name":"javax.swing.plaf.basic.BasicViewportUI",
@@ -343,7 +307,7 @@
 },
 {
   "name":"org.apache.commons.logging.impl.Jdk14Logger",
-  "methods":[{"name":"<init>","parameterTypes":["java.lang.String"] }]
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String"] }, {"name":"setLogFactory","parameterTypes":["org.apache.commons.logging.LogFactory"] }]
 },
 {
   "name":"org.apache.commons.logging.impl.Log4JLogger"
@@ -366,18 +330,7 @@
 },
 {
   "name":"org.apache.sshd.common.session.SessionListener",
-  "methods":[
-    {"name":"sessionClosed","parameterTypes":["org.apache.sshd.common.session.Session"] }, 
-    {"name":"sessionCreated","parameterTypes":["org.apache.sshd.common.session.Session"] }, 
-    {"name":"sessionEstablished","parameterTypes":["org.apache.sshd.common.session.Session"] }, 
-    {"name":"sessionEvent","parameterTypes":["org.apache.sshd.common.session.Session","org.apache.sshd.common.session.SessionListener$Event"] }, 
-    {"name":"sessionException","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.Throwable"] }, 
-    {"name":"sessionNegotiationEnd","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map","java.util.Map","java.util.Map","java.lang.Throwable"] }, 
-    {"name":"sessionNegotiationOptionsCreated","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map"] }, 
-    {"name":"sessionNegotiationStart","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map","java.util.Map"] }, 
-    {"name":"sessionPeerIdentificationReceived","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.String","java.util.List"] }, 
-    {"name":"sessionPeerIdentificationSend","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.String","java.util.List"] }
-  ]
+  "methods":[{"name":"sessionClosed","parameterTypes":["org.apache.sshd.common.session.Session"] }, {"name":"sessionCreated","parameterTypes":["org.apache.sshd.common.session.Session"] }, {"name":"sessionEstablished","parameterTypes":["org.apache.sshd.common.session.Session"] }, {"name":"sessionEvent","parameterTypes":["org.apache.sshd.common.session.Session","org.apache.sshd.common.session.SessionListener$Event"] }, {"name":"sessionException","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.Throwable"] }, {"name":"sessionNegotiationEnd","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map","java.util.Map","java.util.Map","java.lang.Throwable"] }, {"name":"sessionNegotiationOptionsCreated","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map"] }, {"name":"sessionNegotiationStart","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map","java.util.Map"] }, {"name":"sessionPeerIdentificationReceived","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.String","java.util.List"] }, {"name":"sessionPeerIdentificationSend","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.String","java.util.List"] }]
 },
 {
   "name":"org.apache.sshd.common.util.security.bouncycastle.BouncyCastleSecurityProviderRegistrar",
@@ -825,6 +778,22 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.eclipse.jgit.awtui.CommitGraphPane",
+  "methods":[{"name":"coalesceEvents","parameterTypes":["java.awt.AWTEvent","java.awt.AWTEvent"] }]
+},
+{
+  "name":"org.eclipse.jgit.awtui.CommitGraphPane$DateCellRender",
+  "methods":[{"name":"coalesceEvents","parameterTypes":["java.awt.AWTEvent","java.awt.AWTEvent"] }]
+},
+{
+  "name":"org.eclipse.jgit.awtui.CommitGraphPane$GraphCellRender",
+  "methods":[{"name":"coalesceEvents","parameterTypes":["java.awt.AWTEvent","java.awt.AWTEvent"] }]
+},
+{
+  "name":"org.eclipse.jgit.awtui.CommitGraphPane$NameCellRender",
+  "methods":[{"name":"coalesceEvents","parameterTypes":["java.awt.AWTEvent","java.awt.AWTEvent"] }]
+},
+{
   "name":"org.eclipse.jgit.awtui.UIText",
   "allPublicFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
@@ -877,6 +846,10 @@
 },
 {
   "name":"org.eclipse.jgit.lib.CoreConfig$SymLinks",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.lib.CoreConfig$TrustLooseRefStat",
   "methods":[{"name":"values","parameterTypes":[] }]
 },
 {
@@ -1087,6 +1060,9 @@
   "name":"org.eclipse.jgit.pgm.debug.MakeCacheTree"
 },
 {
+  "name":"org.eclipse.jgit.pgm.debug.ReadChangedPathFilter"
+},
+{
   "name":"org.eclipse.jgit.pgm.debug.ReadDirCache"
 },
 {
@@ -1290,7 +1266,7 @@
 },
 {
   "name":"sun.security.provider.NativePRNG",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"<init>","parameterTypes":["java.security.SecureRandomParameters"] }]
 },
 {
   "name":"sun.security.provider.SHA",
