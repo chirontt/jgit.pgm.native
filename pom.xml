@@ -4,7 +4,7 @@
 
     <groupId>com.github.chirontt</groupId>
     <artifactId>jgit.pgm.native</artifactId>
-    <version>6.10.0</version>
+    <version>7.1.0</version>
     <packaging>jar</packaging>
 
     <name>jgit</name> <!-- name of the resulting native executable -->
@@ -13,12 +13,11 @@
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <native.maven.plugin.version>0.10.2</native.maven.plugin.version>
-        <jgit.release.version>6.10.0.202406032230-r</jgit.release.version>
-        <commons-compress.version>1.26.1</commons-compress.version>
-        <slf4j.version>2.0.13</slf4j.version>
+        <native.maven.plugin.version>0.10.5</native.maven.plugin.version>
+        <jgit.release.version>7.1.0.202411261347-r</jgit.release.version>
+        <slf4j.version>2.0.16</slf4j.version>
         <graalvm.version>22.3.5</graalvm.version>
-        <xz.version>1.9</xz.version>
+        <xz.version>1.10</xz.version>
         <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
         <jgit.args></jgit.args>
         <!-- system properties for the application when run by exec:exec command;
@@ -43,7 +42,7 @@
              in their static initialization blocks, some BouncyCastle classes need be
              re-initialized at native image run time -->
         <run.time.re.init>
-            org.bouncycastle.crypto.CryptoServicesRegistrar:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun,org.eclipse.jgit.gpg.bc.internal.BouncyCastleGpgKeyLocator:rerun,org.eclipse.jgit.util.FS:rerun,org.eclipse.jgit.util.FileUtils:rerun,org.eclipse.jgit.util.SystemReader:rerun,org.eclipse.jgit.util.SystemReader$Default:rerun,org.eclipse.jgit.util.sha1.SHA1:rerun
+            org.apache.sshd.common.random.JceRandom:rerun,org.apache.sshd.common.random.JceRandom$Cache:rerun,org.bouncycastle.crypto.CryptoServicesRegistrar:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$Default:rerun,org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV:rerun,org.eclipse.jgit.gpg.bc.internal.BouncyCastleGpgKeyLocator:rerun,org.eclipse.jgit.util.FS:rerun,org.eclipse.jgit.util.FileUtils:rerun,org.eclipse.jgit.util.SystemReader:rerun,org.eclipse.jgit.util.SystemReader$Default:rerun,org.eclipse.jgit.util.sha1.SHA1:rerun
         </run.time.re.init>
         <!-- flags to skip plugin execution or not in each environment -->
         <skip.in.linux>true</skip.in.linux>
@@ -58,21 +57,10 @@
             <version>${jgit.release.version}</version>
             <exclusions>
                 <exclusion>
-                    <!-- exclude the transitive dependency with vulnerability -->
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-compress</artifactId>
-                </exclusion>
-                <exclusion>
                     <groupId>org.slf4j</groupId>
                     <artifactId>*</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <!-- include the transitive dependency without vulnerability -->
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-compress</artifactId>
-            <version>${commons-compress.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -105,12 +93,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>3.13.0</version>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -135,7 +123,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.2</version>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
