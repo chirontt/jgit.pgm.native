@@ -225,7 +225,7 @@
 },
 {
   "name":"javax.crypto.Mac",
-  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String","java.lang.String"] }]
+  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String","java.lang.String"] }, {"name":"getInstance","parameterTypes":["java.lang.String","java.security.Provider"] }]
 },
 {
   "name":"javax.crypto.spec.GCMParameterSpec"
@@ -286,21 +286,6 @@
 {
   "name":"javax.swing.plaf.metal.MetalTextFieldUI",
   "methods":[{"name":"createUI","parameterTypes":["javax.swing.JComponent"] }]
-},
-{
-  "name":"net.i2p.crypto.eddsa.EdDSAEngine",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"net.i2p.crypto.eddsa.EdDSAKey"
-},
-{
-  "name":"net.i2p.crypto.eddsa.EdDSASecurityProvider",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"net.i2p.crypto.eddsa.KeyFactory",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"org.apache.commons.logging.LogFactory"
@@ -811,6 +796,10 @@
   "methods":[{"name":"values","parameterTypes":[] }]
 },
 {
+  "name":"org.eclipse.jgit.dircache.DirCache$DirCacheVersion",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
   "name":"org.eclipse.jgit.internal.JGitText",
   "allPublicFields":true,
   "methods":[{"name":"<init>","parameterTypes":[] }]
@@ -857,6 +846,14 @@
   "methods":[{"name":"values","parameterTypes":[] }]
 },
 {
+  "name":"org.eclipse.jgit.lib.CoreConfig$TrustStat",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.lib.GpgConfig$GpgFormat",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
   "name":"org.eclipse.jgit.pgm.AbstractFetchCommand",
   "allDeclaredFields":true,
   "allDeclaredMethods":true
@@ -868,13 +865,19 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.AmazonS3Client"
+  "name":"org.eclipse.jgit.pgm.AmazonS3Client",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.Archive"
+  "name":"org.eclipse.jgit.pgm.Archive",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.Blame"
+  "name":"org.eclipse.jgit.pgm.Blame",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.Branch",
@@ -883,10 +886,14 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.Checkout"
+  "name":"org.eclipse.jgit.pgm.Checkout",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.Clean"
+  "name":"org.eclipse.jgit.pgm.Clean",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.Clone",
@@ -907,7 +914,9 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.ConvertRefStorage"
+  "name":"org.eclipse.jgit.pgm.ConvertRefStorage",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.Daemon",
@@ -916,7 +925,9 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.Describe"
+  "name":"org.eclipse.jgit.pgm.Describe",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.Diff",
@@ -925,10 +936,14 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.DiffTool"
+  "name":"org.eclipse.jgit.pgm.DiffTool",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.DiffTree"
+  "name":"org.eclipse.jgit.pgm.DiffTree",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.Fetch",
@@ -937,7 +952,9 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.Gc"
+  "name":"org.eclipse.jgit.pgm.Gc",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.Glog",
@@ -946,7 +963,9 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.IndexPack"
+  "name":"org.eclipse.jgit.pgm.IndexPack",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.Init",
@@ -955,10 +974,14 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.Log"
+  "name":"org.eclipse.jgit.pgm.Log",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.LsFiles"
+  "name":"org.eclipse.jgit.pgm.LsFiles",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.LsRemote",
@@ -967,7 +990,9 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.LsTree"
+  "name":"org.eclipse.jgit.pgm.LsTree",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.Main",
@@ -975,22 +1000,34 @@
   "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.Merge"
+  "name":"org.eclipse.jgit.pgm.Merge",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.MergeBase"
+  "name":"org.eclipse.jgit.pgm.MergeBase",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.MergeTool"
+  "name":"org.eclipse.jgit.pgm.MergeTool",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.Push"
+  "name":"org.eclipse.jgit.pgm.Push",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.ReceivePack"
+  "name":"org.eclipse.jgit.pgm.ReceivePack",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.Reflog"
+  "name":"org.eclipse.jgit.pgm.Reflog",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.Remote",
@@ -999,16 +1036,24 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.Repo"
+  "name":"org.eclipse.jgit.pgm.Repo",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.Reset"
+  "name":"org.eclipse.jgit.pgm.Reset",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.RevList"
+  "name":"org.eclipse.jgit.pgm.RevList",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.RevParse"
+  "name":"org.eclipse.jgit.pgm.RevParse",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.RevWalkTextBuiltin",
@@ -1016,13 +1061,19 @@
   "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.Rm"
+  "name":"org.eclipse.jgit.pgm.Rm",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.Show"
+  "name":"org.eclipse.jgit.pgm.Show",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.ShowRef"
+  "name":"org.eclipse.jgit.pgm.ShowRef",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.Status",
@@ -1031,7 +1082,9 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.Tag"
+  "name":"org.eclipse.jgit.pgm.Tag",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.TextBuiltin",
@@ -1039,7 +1092,9 @@
   "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.UploadPack"
+  "name":"org.eclipse.jgit.pgm.UploadPack",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.Version",
@@ -1048,49 +1103,79 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.BenchmarkReftable"
+  "name":"org.eclipse.jgit.pgm.debug.BenchmarkReftable",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.DiffAlgorithms"
+  "name":"org.eclipse.jgit.pgm.debug.DiffAlgorithms",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.LfsStore"
+  "name":"org.eclipse.jgit.pgm.debug.LfsStore",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.MakeCacheTree"
+  "name":"org.eclipse.jgit.pgm.debug.MakeCacheTree",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.ReadChangedPathFilter"
+  "name":"org.eclipse.jgit.pgm.debug.ReadChangedPathFilter",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.ReadDirCache"
+  "name":"org.eclipse.jgit.pgm.debug.ReadDirCache",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.ReadReftable"
+  "name":"org.eclipse.jgit.pgm.debug.ReadReftable",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.RebuildCommitGraph"
+  "name":"org.eclipse.jgit.pgm.debug.RebuildCommitGraph",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.ShowCacheTree"
+  "name":"org.eclipse.jgit.pgm.debug.ShowCacheTree",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.ShowCommands"
+  "name":"org.eclipse.jgit.pgm.debug.ShowCommands",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.ShowDirCache"
+  "name":"org.eclipse.jgit.pgm.debug.ShowDirCache",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.ShowPackDelta"
+  "name":"org.eclipse.jgit.pgm.debug.ShowPackDelta",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.TextHashFunctions"
+  "name":"org.eclipse.jgit.pgm.debug.TextHashFunctions",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.VerifyReftable"
+  "name":"org.eclipse.jgit.pgm.debug.VerifyReftable",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
-  "name":"org.eclipse.jgit.pgm.debug.WriteReftable"
+  "name":"org.eclipse.jgit.pgm.debug.WriteReftable",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"org.eclipse.jgit.pgm.internal.CLIText",
@@ -1140,6 +1225,14 @@
 {
   "name":"org.eclipse.jgit.pgm.opt.UntrackedFilesHandler",
   "methods":[{"name":"<init>","parameterTypes":["org.kohsuke.args4j.CmdLineParser","org.kohsuke.args4j.OptionDef","org.kohsuke.args4j.spi.Setter"] }]
+},
+{
+  "name":"org.eclipse.jgit.submodule.SubmoduleWalk$IgnoreSubmoduleMode",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.transport.HttpConfig$HttpRedirectMode",
+  "methods":[{"name":"values","parameterTypes":[] }]
 },
 {
   "name":"org.eclipse.jgit.util.sha1.SHA1$Sha1Implementation",

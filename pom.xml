@@ -4,18 +4,18 @@
 
     <groupId>com.github.chirontt</groupId>
     <artifactId>jgit.pgm.native</artifactId>
-    <version>7.1.0</version>
+    <version>7.2.0</version>
     <packaging>jar</packaging>
 
     <name>jgit</name> <!-- name of the resulting native executable -->
     <description>JGit PGM native executable built by GraalVM</description>
 
     <properties>
-        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <native.maven.plugin.version>0.10.5</native.maven.plugin.version>
-        <jgit.release.version>7.1.0.202411261347-r</jgit.release.version>
-        <slf4j.version>2.0.16</slf4j.version>
+        <native.maven.plugin.version>0.10.6</native.maven.plugin.version>
+        <jgit.release.version>7.2.0.202503040940-r</jgit.release.version>
+        <slf4j.version>2.0.17</slf4j.version>
         <graalvm.version>22.3.5</graalvm.version>
         <xz.version>1.10</xz.version>
         <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
@@ -26,7 +26,7 @@
         <sys.props></sys.props>
         <!-- list of GraalVM Feature implementation classes -->
         <feature.classes>
-            com.github.chirontt.jgit.graalvm.BouncyCastleFeature,com.github.chirontt.jgit.graalvm.EdDSAFeature
+            com.github.chirontt.jgit.graalvm.BouncyCastleFeature
         </feature.classes>
         <!-- packages/classes to be initialized at native image build time -->
         <build.time.init>
@@ -49,6 +49,13 @@
         <skip.in.macos>true</skip.in.macos>
         <skip.in.windows>true</skip.in.windows>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>eclipse.releases.repository</id>
+            <url>https://repo.eclipse.org/content/groups/releases/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -206,11 +213,11 @@
                             </buildArgs>
                             <skip>${skip.in.linux}</skip>
                             <!-- use the shaded uber jar for native image compiling -->
-                            <!-- classpath>
+                            <classpath>
                                 <param>
                                     ${project.build.directory}/${project.artifactId}-${project.version}-no-deps.jar
                                 </param>
-                            </classpath -->
+                            </classpath>
                         </configuration>
                     </execution>
                     <!-- native image test in Windows -->

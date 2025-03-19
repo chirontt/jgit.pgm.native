@@ -1,10 +1,13 @@
 # Native executable for command-line JGit program (PGM)
 
-JGit PGM, part of the Eclipse [JGit](https://git.eclipse.org/c/jgit/jgit.git/) [project](http://www.eclipse.org/jgit/),
+[![Github Actions Build Status](https://github.com/chirontt/jgit.pgm.native/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/chirontt/jgit.pgm.native/actions/workflows/gradle-build.yml)
+[![Github Actions Build Status](https://github.com/chirontt/jgit.pgm.native/actions/workflows/maven-build.yml/badge.svg)](https://github.com/chirontt/jgit.pgm.native/actions/workflows/maven-build.yml)
+
+[JGit PGM](https://github.com/eclipse-jgit/jgit/tree/master/org.eclipse.jgit.pgm), part of the Eclipse [JGit](https://github.com/eclipse-jgit/jgit) [project](https://projects.eclipse.org/projects/technology.jgit),
 is the stand-alone command-line Java program which provides Git commands similar
 to the native [git](https://git-scm.com) commands, to access Git repositories.
 
-Usually distributed as a jar package, JGit [PGM](https://git.eclipse.org/c/jgit/jgit.git/tree/org.eclipse.jgit.pgm)
+Usually distributed as a jar package, JGit [PGM](https://github.com/eclipse-jgit/jgit/tree/master/org.eclipse.jgit.pgm)
 is also distributed as a stand-alone, self-contained (with all dependencies), executable shell archive,
 from Maven Central, like
 [this](https://repo1.maven.org/maven2/org/eclipse/jgit/org.eclipse.jgit.pgm/6.7.0.202309050840-r/org.eclipse.jgit.pgm-6.7.0.202309050840-r.sh)
@@ -18,7 +21,7 @@ This project aims to produce platform-specific, native executable `jgit` of the 
 using the [GraalVM native-image](https://www.graalvm.org/reference-manual/native-image) utility,
 complementing the shell archive distribution.
 
-Gradle and Maven build scripts are provided for building the project. The latest JGit version used here is 6.7.0.
+Gradle and Maven build scripts are provided for building the project. The latest JGit version used here is [7.2.0](https://projects.eclipse.org/projects/technology.jgit/releases/7.2.0).
 
 ## Build pre-requisites
 
@@ -26,6 +29,19 @@ The [GraalVM native-image](https://www.graalvm.org/reference-manual/native-image
 shows how to set up GraalVM and its native-image utility for common platforms.
 [Gluon](https://gluonhq.com/) also provides some setup [details](https://docs.gluonhq.com/#_platforms)
 for GraalVM native-image creation.
+
+Actually, because this PGM application can produce a graphical window showing the commit logs,
+via the command `jgit glog`, e.g.:
+
+<img src="jgit-glog.jpg"/>
+
+and thus for a *Swing-based application* like this PGM project, an implementation of GraalVM called
+the [Liberica Native Image Kit](https://bell-sw.com/pages/downloads/native-image-kit/)
+can produce a *working* native executable better than the stock
+[GraalVM-CE](https://github.com/graalvm/graalvm-ce-builds) software could, for some reason.
+This Liberica NIK software is used in the GitHub Actions
+[build scripts](https://github.com/chirontt/jgit.pgm.native/tree/main/.github/workflows)
+of this project to successfully build and generate the relevant *working* native images for Linux and Windows.
 
 The GraalVM native-image utility will use the configuration files in
 `src/graal-cfg/<platform>/META-INF/native-image` folder to assist in the native image generation.
@@ -48,28 +64,28 @@ To produce a native executable, execute the `nativeCompile` task:
 The `nativeCompile` task would take a while to compile the application and link into an executable file.
 The resulting `jgit` executable file is:
 
-	build/native-image-linux/jgit
+	build/native/nativeCompile/jgit
 
 (or if building on a Windows machine, the executable file is:
 
-	build\native-image-windows\jgit.exe
+	build\native\nativeCompile\jgit.exe
 
 )
 
 which can then be run directly (with relevant parameters):
 
-	./build/native-image-linux/jgit --version
-	./build/native-image-linux/jgit ls-remote <some-repo-url>
-	./build/native-image-linux/jgit clone <some-repo-url>
-	./build/native-image-linux/jgit glog
+	./build/native/nativeCompile/jgit --version
+	./build/native/nativeCompile/jgit ls-remote <some-repo-url>
+	./build/native/nativeCompile/jgit clone <some-repo-url>
+	./build/native/nativeCompile/jgit glog
 	etc.
 
 (or if building on a Windows machine:
 
-	build\native-image-windows\jgit.exe --version
-	build\native-image-windows\jgit.exe ls-remote <some-repo-url>
-	build\native-image-windows\jgit.exe clone <some-repo-url>
-	build\native-image-windows\jgit.exe glog
+	build\native\nativeCompile\jgit.exe --version
+	build\native\nativeCompile\jgit.exe ls-remote <some-repo-url>
+	build\native\nativeCompile\jgit.exe clone <some-repo-url>
+	build\native\nativeCompile\jgit.exe glog
 	etc.
 
 )
@@ -93,28 +109,28 @@ To produce a native executable, execute the `package` task:
 The `package` task would take a while to compile the application and link into an executable file.
 The resulting `jgit` executable file is:
 
-	target/native-image-linux/jgit
+	target/jgit
 
 (or if building on a Windows machine, the executable file is:
 
-	target\native-image-windows\jgit.exe
+	target\jgit.exe
 
 )
 
 which can then be run directly (with relevant parameters):
 
-	./target/native-image-linux/jgit --version
-	./target/native-image-linux/jgit ls-remote <some-repo-url>
-	./target/native-image-linux/jgit clone <some-repo-url>
-	./target/native-image-linux/jgit glog
+	./target/jgit --version
+	./target/jgit ls-remote <some-repo-url>
+	./target/jgit clone <some-repo-url>
+	./target/jgit glog
 	etc.
 
 (or if building on a Windows machine:
 
-	target\native-image-windows\jgit.exe --version
-	target\native-image-windows\jgit.exe ls-remote <some-repo-url>
-	target\native-image-windows\jgit.exe clone <some-repo-url>
-	target\native-image-windows\jgit.exe glog
+	target\jgit.exe --version
+	target\jgit.exe ls-remote <some-repo-url>
+	target\jgit.exe clone <some-repo-url>
+	target\jgit.exe glog
 	etc.
 
 )
