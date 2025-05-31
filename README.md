@@ -10,8 +10,8 @@ to the native [git](https://git-scm.com) commands, to access Git repositories.
 Usually distributed as a jar package, JGit [PGM](https://github.com/eclipse-jgit/jgit/tree/master/org.eclipse.jgit.pgm)
 is also distributed as a stand-alone, self-contained (with all dependencies), executable shell archive,
 from Maven Central, like
-[this](https://repo1.maven.org/maven2/org/eclipse/jgit/org.eclipse.jgit.pgm/6.7.0.202309050840-r/org.eclipse.jgit.pgm-6.7.0.202309050840-r.sh)
-of the 6.7.0 version. This shell archive is then normally renamed to `jgit` locally for ease of typing.
+[this](https://repo1.maven.org/maven2/org/eclipse/jgit/org.eclipse.jgit.pgm/7.2.1.202505142326-r/org.eclipse.jgit.pgm-7.2.1.202505142326-r.sh)
+of the 7.2.1 version. This shell archive is then normally renamed to `jgit` locally for ease of typing.
 
 On Linux, the shell archive can be run directly.
 On Windows, the shell archive can be run with the `java` command, like:
@@ -21,7 +21,7 @@ This project aims to produce platform-specific, native executable `jgit` of the 
 using the [GraalVM native-image](https://www.graalvm.org/reference-manual/native-image) utility,
 complementing the shell archive distribution.
 
-Gradle and Maven build scripts are provided for building the project. The latest JGit version used here is [7.2.0](https://projects.eclipse.org/projects/technology.jgit/releases/7.2.0).
+Gradle and Maven build scripts are provided for building the project. The latest JGit version used here is [7.3.0](https://projects.eclipse.org/projects/technology.jgit/releases/7.3.0).
 
 ## Build pre-requisites
 
