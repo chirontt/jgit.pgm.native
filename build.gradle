@@ -4,17 +4,17 @@ plugins {
 }
 
 tasks.wrapper {
-    gradleVersion = '8.13'
+    gradleVersion = '8.14.2'
     distributionType = Wrapper.DistributionType.ALL
 }
 
 group = 'com.github.chirontt'
-version = '7.2.0'
+version = '7.3.0'
 description = 'JGit PGM native executable built by GraalVM'
 
 ext {
     mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
-    jgitReleaseVersion = '7.2.0.202503040940-r'
+    jgitReleaseVersion = '7.3.0.202506031305-r'
     slf4jVersion = '2.0.17'
     xzVersion = '1.10'
     graalvmVersion = '22.3.5'
