@@ -1,22 +1,22 @@
 plugins {
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.10.6'
+    id 'org.graalvm.buildtools.native' version '0.11.3'
 }
 
 tasks.wrapper {
-    gradleVersion = '8.14.2'
+    gradleVersion = '9.2.1'
     distributionType = Wrapper.DistributionType.ALL
 }
 
 group = 'com.github.chirontt'
-version = '7.3.0'
+version = '7.5.0'
 description = 'JGit PGM native executable built by GraalVM'
 
 ext {
     mainClassName = 'com.github.chirontt.jgit.graalvm.NativeMain'
-    jgitReleaseVersion = '7.3.0.202506031305-r'
+    jgitReleaseVersion = '7.5.0.202512021534-r'
     slf4jVersion = '2.0.17'
-    xzVersion = '1.10'
+    xzVersion = '1.11'
     graalvmVersion = '22.3.5'
     currentPlatform = getCurrentPlatform()
 }
@@ -136,12 +136,18 @@ graalvmNative {
             def buildTimeInitClasses = [
                 'com.google.gson',
                 'com.sun.beans.introspect.ClassInfo',
+                'com.sun.beans.introspect.ClassInfo$1',
                 'com.sun.beans.introspect.PropertyInfo',
+                'com.sun.beans.util.Cache$Kind$1',
+                'com.sun.beans.util.Cache$Kind$2',
+                'com.sun.beans.util.Cache$Kind$3',
                 'java.beans.Introspector',
+                'java.beans.Introspector$1',
                 'org.apache.sshd',
                 'org.eclipse.jetty',
                 'org.eclipse.jgit',
                 'org.slf4j',
+                'sun.security.jgss.GSSManagerImpl',
             ]
 
             //packages/classes to be initialized at native image run time

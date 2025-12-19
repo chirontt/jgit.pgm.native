@@ -4,7 +4,7 @@
 
     <groupId>com.github.chirontt</groupId>
     <artifactId>jgit.pgm.native</artifactId>
-    <version>7.3.0</version>
+    <version>7.5.0</version>
     <packaging>jar</packaging>
 
     <name>jgit</name> <!-- name of the resulting native executable -->
@@ -13,11 +13,11 @@
     <properties>
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <native.maven.plugin.version>0.10.6</native.maven.plugin.version>
-        <jgit.release.version>7.3.0.202506031305-r</jgit.release.version>
+        <native.maven.plugin.version>0.11.3</native.maven.plugin.version>
+        <jgit.release.version>7.5.0.202512021534-r</jgit.release.version>
         <slf4j.version>2.0.17</slf4j.version>
         <graalvm.version>22.3.5</graalvm.version>
-        <xz.version>1.10</xz.version>
+        <xz.version>1.11</xz.version>
         <jgit.mainClass>com.github.chirontt.jgit.graalvm.NativeMain</jgit.mainClass>
         <jgit.args></jgit.args>
         <!-- system properties for the application when run by exec:exec command;
@@ -30,7 +30,7 @@
         </feature.classes>
         <!-- packages/classes to be initialized at native image build time -->
         <build.time.init>
-            com.google.gson,com.sun.beans.introspect.ClassInfo,com.sun.beans.introspect.PropertyInfo,java.beans.Introspector,org.apache.sshd,org.eclipse.jetty,org.eclipse.jgit,org.slf4j
+            com.google.gson,com.sun.beans.introspect.ClassInfo,com.sun.beans.introspect.ClassInfo$1,com.sun.beans.introspect.PropertyInfo,com.sun.beans.util.Cache$Kind$1,com.sun.beans.util.Cache$Kind$2,com.sun.beans.util.Cache$Kind$3,java.beans.Introspector,java.beans.Introspector$1,org.apache.sshd,org.eclipse.jetty,org.eclipse.jgit,org.slf4j,sun.security.jgss.GSSManagerImpl
         </build.time.init>
         <!-- packages/classes to be initialized at native image run time -->
         <run.time.init>
